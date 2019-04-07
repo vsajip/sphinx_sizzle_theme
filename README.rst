@@ -9,5 +9,6 @@ Installation
 
 To install, run::
 
-    pip install sizzle-sphinx
+    pip install sphinx_sizzle_theme
 
+and then specify the theme name `sizzle` when you build your documentation.
