@@ -1,0 +1,219 @@
+{%- macro css() %}
+    <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+    {%- for cssfile in css_files %}
+    <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
+    {%- endfor %}
+{%- endmacro %}
+{%- macro script() %}
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '{{ url_root }}',
+        VERSION:     '{{ release|e }}',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '{{ '' if no_search_suffix else file_suffix }}',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
+      };
+    </script>
+    {%- for scriptfile in script_files %}
+    <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+    {%- endfor %}
+{%- endmacro %}
+{%- macro navigation() %}
+  <div class="navsidebar">
+    {%- if sidebars != None %}
+      {#- new style sidebar: explicitly include/exclude templates #}
+      {%- for sidebartemplate in sidebars %}
+      {%- include sidebartemplate %}
+      {%- endfor %}
+    {% else %}
+      {% include "globaltoc.html" %}
+    {%- endif %}
+  </div>
+{%- endmacro %}
+{% macro prev_next() -%}
+  {% if prev or next %}
+  <div class="prev-next">
+    {% if prev %}
+      <div class="pull-left">
+        <a class="btn btn-default prev" href="{{ prev.link|e }}" title="{{ _('previous chapter')}} (use the left arrow)"><i class="fa fa-chevron-left mr-1em" aria-hidden="true"></i>{{ prev.title }}</a>
+      </div>
+    {% endif %}
+    {%- if next and next.title != '&lt;no title&gt;' %}
+      <div class="pull-right">
+        <a class="btn btn-default next" href="{{ next.link|e }}" title="{{ _('next chapter')}} (use the right arrow)">{{ next.title }}&nbsp;<i class="fa fa-chevron-right ml-1em" aria-hidden="true"></i></a>
+      </div>
+    {%- endif %}
+    </div>
+  {% endif %}
+{%- endmacro %}
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% if pagename == 'index' %}
+<title>{{ title|striptags|e }}{{ titlesuffix }}</title>
+{% else %}
+<title>{{ project }} - {{ title|striptags|e }}{{ titlesuffix }}</title>
+{% endif %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.css" integrity="sha256-xOpS+e/dER8z72w+qryCieOGysQI8cELAVt3MHG0phY=" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro|Source+Sans+Pro|Source+Serif+Pro|Roboto" rel="stylesheet">
+{{ css() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js" integrity="sha256-BUeQcbeHGtOD0tfPelPN+k+dX9fDwzXAA7qHwPH92HA=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/loglevel/1.6.0/loglevel.min.js" integrity="sha256-DnwpDc+jlE6GTbls7TzJBMgt3foTyFnnoS6nESMqsWk=" crossorigin="anonymous"></script>
+{%- block scripts %}
+{{- script() }}
+{%- endblock %}
+{% block extrahead %}{% endblock %}
+</head>
+<body class="full-height test">
+<noscript>
+  <div>
+    <div id="noscript-message">JavaScript is not enabled. It is needed for this website to work.</div>
+  </div>
+</noscript>
+<div id="whole-page" class="container-fluid content full-height hidden">
+  <div id="header-row" class="row">
+    <div id="header-container" class="col-md-12">
+      <div id="hdr-left">
+      {% include "logo-text.html" %}
+      </div>
+      <div id="hdr-centre" class="text-center stretch">
+        <h3>{{ title }}</h3>
+      </div>
+      <div id="hdr-search" title="Enter something to search for and then either press Enter or click the magnifying glass">
+        <div class="input-group">
+          <input type="text" class="form-control" id="search-query" placeholder="Search docs ...">
+          <div class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </div>
+        </div>
+      </div>
+{% if pagename != 'genindex' %}
+      <div id="hdr-index">
+        <a href="genindex.html" class="btn btn-default" title="Go to the index"><i class="fa fa-list"></i></a>
+      </div>
+{% endif %}
+      <div id="hdr-right">
+        {{ prev_next() }}
+      </div>
+    </div>
+  </div>
+  <div id="content-row" class="row">
+    <div id="page-content" class="col-md-12 flex-col">
+      <div id="content-container">
+        <div id="nav">
+          {{ navigation() }}
+        </div>
+        <div id="content" class="stretch">
+          <div class="body">
+            {% block body %}{% endblock %}
+          </div>
+        </div>
+      </div>
+      <div class="hidden"></div>
+    </div>
+  </div>
+  <div id="footer-row" class="row">
+    <div class="col-md-12">
+        <span></span><span class="pull-right">&copy; Copyright {{ copyright }}. Built with Sphinx {{ sphinx_version }}: theme based on <a href="https://github.com/guzzle/guzzle_sphinx_theme/">Guzzle</a>.</span>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  'use strict';
+  var $search = $('#search-query');
+  var $filter = $('#toc-filter-query');
+  var $toclist = $('.sidebar-toc > ul').find('li');
+  var $nav = $('#nav');
+
+  $('#whole-page').removeClass('hidden');
+  var nav_width = $nav.width();
+
+{% if pagename == 'search' %}
+  var params = $.getQueryParameters();
+  if (params.q) {
+      var query = params.q[0];
+      $search.val(query).focus();
+  }
+{% endif %}
+  function perform_search() {
+    var q = $search.val().trim();
+
+    if (q) {
+      var url = 'search.html?q=' + q + '&check_keywords=yes&area=default';
+
+      location.href = url;
+    }
+  }
+
+  function apply_filter() {
+    var s = $filter.val().trim().toLowerCase();
+
+    $toclist.find('a').removeClass('hidden');
+    $toclist.each(function() {
+      var $this = $(this);
+      var $link = $this.find('> a');
+      var t = $link.text().toLowerCase();
+      var show = t.indexOf(s) >= 0;
+
+      if (!show) {
+        $link.addClass('hidden');
+      }
+    });
+  }
+
+  $search.on('keypress', function(e) {
+    if (e.which == 13) {
+      perform_search();
+    }
+  });
+  $search.parents('.input-group').find('.input-group-addon').on('click', perform_search);
+  $filter.on('keyup', function(e) {
+    apply_filter();
+  });
+
+  function adjust_size() {
+
+    var h = $('#page-content').height();
+
+    $('#nav, #content').height(h);
+  }
+
+  var counter = 0;
+
+  function track_mouse(e) {
+    var x = e.offsetX;
+
+    if (x < 15) {
+      ++counter;
+    }
+    else {
+      counter = 0;
+    }
+    if (counter >= 20) {
+      $('#content').off('mousemove', track_mouse);
+      $nav.show();
+    }
+  };
+
+  function hide_nav() {
+    $nav.hide();
+    counter = 0;
+    $('#content').on('mousemove', track_mouse);
+  }
+
+  $('.hidetoc').on('click', hide_nav);
+
+  adjust_size();
+  $(window).on('resize', adjust_size);
+});</script>
+</body>
+</html>

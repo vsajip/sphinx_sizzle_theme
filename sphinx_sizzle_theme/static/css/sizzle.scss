@@ -1,0 +1,1190 @@
+$body-pad: 45px;
+$toc-pad: 22px;
+$lvl-pad: 8px;
+body {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
+a.headerlink {
+  visibility: hidden;
+  color: #ddd;
+  padding: 0 4px;
+  text-decoration: none;
+}
+
+h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, h4:hover > a.headerlink, h5:hover > a.headerlink, h6:hover > a.headerlink, dt:hover > a.headerlink, .code-block-caption:hover > a.headerlink {
+  visibility: visible;
+}
+
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  color: #5C7C98;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: black;
+  font-weight: normal;
+  padding: 0;
+  font-family: "Source Serif Pro", "serif";
+}
+
+/*
+ * VMS don't want these margins.
+h1, h2, h3 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+ * VMS
+ */
+
+h1 {
+  font-size: 38px;
+  padding: 10px 10px 10px $body-pad;
+/* VMS margin: 20px 0 35px -45px; VMS */
+  background-color: aliceblue;
+/* VMS  width: calc(100% + 90px); VMS */
+  border-bottom: 1px solid #D8E4EF;
+}
+
+h2 {
+  font-size: 34px;
+  padding: .2em 0;
+  border-bottom: 1px solid #ddd;
+}
+
+h3 {
+  margin-top: 35px;
+  font-size: 28px;
+}
+
+h4 {
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+h5 {
+  margin-top: 25px;
+  font-size: 20px;
+}
+
+/* VMS not needed
+div.clearer {
+  clear: both;
+}
+
+.container-wrapper {
+  padding: 0;
+  position: relative;
+}
+
+div.related {
+  display: none;
+}
+
+ * VMS
+ */
+
+.sidebar-block h2 {
+  border-bottom: none;
+  margin: 0 0 17px 0;
+  font-size: 14px;
+  font-family: Roboto, "Open Sans", Helvetica, Arial, sans-serif;
+  padding: 0 0 6px 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #606060;
+}
+
+.sidebar-tocheading h2 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 0;
+}
+
+.sidebar-toc {
+  a {
+    font-family: Roboto, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #444;
+    text-decoration: none;
+  }
+  ul {
+    margin: 0 0 4px 0;
+    list-style-type: none;
+    color: #000;
+    padding-left: 0;
+  }
+}
+
+.navsidebar {
+  border-right: 1px solid #e0e0e0;
+  background: #fafafa;
+  padding-left: $toc-pad;
+  padding-right: $toc-pad;
+}
+
+p {
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: #333;
+}
+
+code, pre, tt {
+  font-size: 15px;
+  font-family: "Source Code Pro", Consolas, monospace;
+}
+
+code {
+  color: #8D1A38;
+}
+
+tt {
+  color: #8D1A38;
+  padding: 0 2px;
+}
+
+code {
+  line-height: 23px;
+  margin: 20px 0;
+  word-wrap: normal;
+  background-color: #fff;
+}
+
+pre {
+  line-height: 23px;
+  margin: 20px 0;
+  word-wrap: normal;
+  background-color: #fff;
+  color: #333;
+  background-color: #fff;
+  overflow: auto;
+  border-width: 0 0 0 2px;
+  border-color: #eee;
+  border-style: solid;
+  padding: 14px 0 14px 20px;
+  padding-right: 0;
+  margin: 20px 0;
+}
+
+div.highlight {
+  background-color: white;
+}
+
+a.internal em {
+  font-style: normal;
+}
+
+dl {
+  dd {
+    margin: 3px 0 10px 30px;
+  }
+  &.method {
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.breadcrumb {
+  font-size: 15px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+blockquote {
+  border-width: .1em 0 .1em 0;
+  border-color: #e5eef2;
+  border-style: solid;
+  background-color: #f3f8f9;
+  color: #000;
+  margin: 20px 0;
+  padding: 15px 20px;
+  font-size: 16px;
+}
+
+.sidebar-toc {
+  ul li {
+    &.toctree-l3 a {
+      /* white-space: nowrap; */
+    }
+    a {
+      display: block;
+      &:hover {
+        background-color: #428bca;
+        color: #fff;
+      }
+    }
+    &.current > a {
+      background-color: #e6e6e6;
+      color: #444;
+      &:hover {
+        background-color: #e6e6e6;
+        color: #444;
+      }
+    }
+  }
+  font-size: 15px;
+  > ul {
+    padding: 0 !important;
+    list-style-type: none;
+    margin: 0;
+  }
+  li.toctree-l1 {
+    padding-left: 0;
+  }
+  ul li {
+    &.toctree-l1 a {
+      padding-left: $toc-pad;
+      margin-left: -$toc-pad;
+      margin-right: -$toc-pad;
+    }
+    &.toctree-l2 a {
+      padding-left: $toc-pad + $lvl-pad;
+    }
+    &.toctree-l3 a {
+      padding-left: $toc-pad + 2*$lvl-pad;
+    }
+    &.toctree-l4 a {
+      padding-left: $toc-pad + 3*$lvl-pad;
+    }
+  }
+  li {
+    &.toctree-l2 {
+      /* padding-left: $lvl-pad; */
+    }
+    &.toctree-l3 {
+      /* padding-left: 2*$lvl-pad; */
+    }
+    &.toctree-l4 {
+      /* padding-left: 3*$lvl-pad; */
+    }
+  }
+}
+
+.text-logo {
+  font-size: 18px;
+  text-align: center;
+  display: block;
+  padding: 8px;
+  color: #fff;
+  font-family: Roboto, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  text-decoration: none;
+  font-weight: bold;
+  /*
+    background-color: #337ab7;
+  */
+  &:hover, &:focus {
+    font-size: 18px;
+    text-align: center;
+    display: block;
+    padding: 8px;
+    color: #fff;
+    margin: 0;
+    text-decoration: none;
+    font-weight: bold;
+    /*
+      background-color: #337ab7;
+    */
+  }
+}
+
+html, .full-height {
+  height: 100%;
+  margin: 0;
+}
+
+.ml-1em {
+  margin-left: 1em;
+}
+
+.mr-1em {
+  margin-right: 1em;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+
+#header-row, #footer-row {
+  align-self: stretch;
+}
+
+#header-row {
+  background-image: linear-gradient(to right, #337ab7, #337ab7, white);
+  border-bottom: 1px solid #eee;
+}
+
+#hdr-centre {
+  h4, h3 {
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+  }
+}
+
+#header-container {
+  display: flex;
+  align-items: center;
+}
+
+#toc-filter {
+  margin-bottom: 4px;
+}
+
+#nav, #content {
+  overflow-y: auto;
+  /*
+   * need to set min-width, otherwise the line above causes overflow-x to
+   * also be interpreted as auto, see
+   * https://www.brunildo.org/test/Overflowxy2.html
+   * https://stackoverflow.com/questions/18135204/setting-overflow-y-causes-overflow-x-to-change-as-well
+   * https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
+   */
+  min-width: 21em;
+}
+
+#content-row {
+  flex-grow: 2;
+  align-self: stretch;
+  display: flex;
+  overflow-y: auto;
+}
+
+#page-content {
+  padding-left: 0;
+  padding-right: 0;
+  flex: 1 1 auto;
+  overflow-y: hidden;
+}
+
+ul {
+  &.search {
+    margin: 10px 0 0 20px;
+    padding: 0;
+    li {
+      padding: 5px 0 5px 20px;
+      background: url(file.png) no-repeat 0 7px;
+      a {
+        font-weight: bold;
+      }
+      div.context {
+        color: #888;
+        margin: 2px 0 0 30px;
+        text-align: left;
+      }
+    }
+  }
+  &.keywordmatches li.goodmatch a {
+    font-weight: bold;
+  }
+}
+
+table {
+  margin-bottom: 20px;
+  &.indextable {
+    width: 100%;
+    td {
+      text-align: left;
+      vertical-align: top;
+    }
+    dl, dd {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    tr {
+      &.pcap {
+        height: 10px;
+      }
+      &.cap {
+        margin-top: 10px;
+        background-color: #f2f2f2;
+      }
+    }
+  }
+}
+
+img.toggler {
+  margin-right: 3px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+div {
+  &.modindex-jumpbox, &.genindex-jumpbox {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 1em 0 1em 0;
+    padding: 0.4em;
+  }
+}
+
+.body {
+  padding: 0 $body-pad;
+}
+
+div.body p.caption {
+  text-align: inherit;
+}
+
+table.field-list {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+}
+
+.field-list ul {
+  padding-left: 0;
+}
+
+.first {
+  margin-top: 0 !important;
+}
+
+p.rubric {
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left;
+  float: left;
+  margin-right: 1em;
+}
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right;
+  float: right;
+  margin-left: 1em;
+}
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+div.topic {
+  border: 1px solid #e8e8e8;
+  padding: 7px 7px 0 7px;
+  margin: 10px 0 10px 0;
+  background-color: #f8f8f8;
+}
+
+p.topic-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+div.topic.contents {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 24px 36px 18px 36px;
+  > ul {
+    padding-left: 20px;
+  }
+}
+
+noscript > div {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: darkred;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#noscript-message {
+  color: darkred;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+#content-container {
+  display: flex;
+}
+
+.section > h1, .body > h1 {
+  margin-left: -$body-pad;
+  margin-right: -$body-pad;
+  margin-top: 0;
+}
+
+.stretch {
+  flex-grow: 1;
+}
+
+#footer-row {
+  padding: 2px;
+  font-size: 90%;
+  color: #555;
+  max-width: none;
+  background-color: #EDF0F2;
+  border-top: 1px solid #E0E0E0;
+}
+
+#main-search form .input-group {
+  width: 100%;
+  input {
+    padding: 4px;
+    width: 100%;
+    border-radius: 5px;
+    margin: 0;
+    font-size: 15px;
+  }
+}
+
+.admonition {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-left-width: 6px;
+  border-radius: 3px;
+  dt {
+    font-weight: bold;
+  }
+  dl {
+    margin-bottom: 0;
+  }
+}
+
+.admonition-title {
+  margin: 0px 0 5px;
+  padding: 0;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1.1;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.admonition {
+  &.danger, &.error {
+    border-left-color: #d9534f;
+  }
+  &.danger .admonition-title, &.error .admonition-title {
+    color: #d9534f;
+  }
+  &.important, &.warning, &.attention, &.caution {
+    border-left-color: #f0ad4e;
+  }
+  &.important .admonition-title, &.warning .admonition-title, &.attention .admonition-title, &.caution .admonition-title {
+    color: #9B581F;
+  }
+  &.note, &.hint {
+    border-left-color: #31708f;
+  }
+  &.note .admonition-title, &.hint .admonition-title {
+    color: #31708f;
+  }
+  &.tip {
+    border-left-color: #3c763d;
+    .admonition-title {
+      color: #3c763d;
+    }
+  }
+}
+
+div {
+  &.body p.centered {
+    text-align: center;
+    margin-top: 25px;
+  }
+  &.seealso {
+    background-color: #ffc;
+    border: 1px solid #ff6;
+  }
+  &.admonition {
+    tt.xref, a tt {
+      border-bottom: 1px solid #fafafa;
+    }
+    p.last {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* -- other body styles ----------------------------------------------------- */
+
+ol {
+  &.arabic {
+    list-style: decimal;
+  }
+  &.loweralpha {
+    list-style: lower-alpha;
+  }
+  &.upperalpha {
+    list-style: upper-alpha;
+  }
+  &.lowerroman {
+    list-style: lower-roman;
+  }
+  &.upperroman {
+    list-style: upper-roman;
+  }
+}
+
+.highlighted {
+  background-color: #fbe54e;
+}
+
+dl.glossary dt {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.refcount {
+  color: #060;
+}
+
+.optional {
+  font-size: 1.3em;
+}
+
+.versionmodified {
+  font-style: italic;
+}
+
+.system-message {
+  background-color: #fda;
+  padding: 5px;
+  border: 3px solid red;
+}
+
+.footnote:target {
+  background-color: #ffa;
+}
+
+.line-block {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  .line-block {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 1.5em;
+  }
+}
+
+.guilabel, .menuselection {
+  font-family: sans-serif;
+}
+
+.accelerator {
+  text-decoration: underline;
+}
+
+.classifier {
+  font-style: oblique;
+}
+
+abbr, acronym {
+  border-bottom: dotted 1px;
+  cursor: help;
+}
+
+dt:target, .highlight {
+  background: #FAF3E8;
+}
+
+.code-block-caption {
+  margin-bottom: -20px;
+  .caption-text {
+    display: inline-block;
+    padding: 6px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.1;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fff;
+    background-color: #337ab7;
+  }
+}
+
+td.linenos pre {
+  padding: 5px 0px;
+  border: 0;
+  background-color: transparent;
+  color: #aaa;
+}
+
+table.highlighttable {
+  margin-left: 0.5em;
+  td {
+    padding: 0 0.5em 0 0.5em;
+  }
+}
+
+tt {
+  &.descname {
+    background-color: transparent;
+    font-weight: bold;
+    padding-right: 0.08em;
+  }
+  &.descclassname {
+    background-color: transparent;
+  }
+  &.descname, &.descclassname {
+    font-size: 0.95em;
+  }
+  &.xref {
+    background-color: transparent;
+    font-weight: bold;
+  }
+}
+
+a tt {
+  background-color: transparent;
+  font-weight: bold;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  background-color: transparent;
+}
+
+.viewcode-link {
+  float: right;
+}
+
+.viewcode-back {
+  float: right;
+  font-family: sans-serif;
+}
+
+div.viewcode-block:target {
+  margin: -1px -10px;
+  padding: 0 10px;
+}
+
+img.math {
+  vertical-align: middle;
+}
+
+div.body div.math p {
+  text-align: center;
+}
+
+span.eqno {
+  float: right;
+}
+
+.overflow-height-500px {
+  overflow: auto;
+  height: 500px;
+}
+
+.overflow-height-250px {
+  overflow: auto;
+  height: 250px;
+}
+
+#mobile-toggle {
+  height: 40px;
+  width: 100%;
+  display: none;
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 0px;
+    margin: 0px;
+    background-color: #fff;
+  }
+  h1 {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+    font-size: 40px;
+  }
+  #left-column {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    float: none;
+    margin: 40px 0 0 0;
+  }
+  .footer-relations {
+    padding: 12px 0;
+  }
+  #right-column {
+    margin-left: 0;
+    margin-top: 0;
+    padding: 50px 20px 8px 20px;
+    width: 100%;
+    float: none;
+  }
+  .document {
+    position: relative;
+    padding: 0;
+    width: 100%;
+  }
+  .body {
+    padding: 0px;
+  }
+  #mobile-toggle {
+    display: block;
+  }
+  p {
+    padding: 0;
+  }
+}
+
+/* Account for when the left column is closed then page is expanded.
+-------------------------------------------------- */
+
+@media screen and (min-width: 769px) {
+  #left-column {
+    display: block !important;
+  }
+}
+
+
+.field-body li {
+  list-style-type: none;
+}
+
+tr.field td:first-child {
+  display: none;
+}
+
+#hdr-search, #hdr-right .prev, #hdr-index {
+  margin-right: 8px;
+}
+
+#hdr-search .input-group-addon {
+  cursor: pointer;
+}
+
+.hll {
+  background-color: #ffffcc;
+}
+
+.c {
+  color: #999988;
+  font-style: italic;
+}
+
+/* Comment */
+
+.err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+
+/* Error */
+
+.k, .o {
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Keyword */
+/* Operator */
+
+.cm {
+  color: #999988;
+  font-style: italic;
+}
+
+/* Comment.Multiline */
+
+.cp {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Comment.Preproc */
+
+.c1 {
+  color: #999988;
+  font-style: italic;
+}
+
+/* Comment.Single */
+
+.cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Comment.Special */
+
+.gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+
+/* Generic.Deleted */
+
+.ge {
+  color: #000000;
+  font-style: italic;
+}
+
+/* Generic.Emph */
+
+.gr {
+  color: #aa0000;
+}
+
+/* Generic.Error */
+
+.gh {
+  color: #999999;
+}
+
+/* Generic.Heading */
+
+.gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+
+/* Generic.Inserted */
+
+.go {
+  color: #888888;
+}
+
+/* Generic.Output */
+
+.gp {
+  color: #555555;
+}
+
+/* Generic.Prompt */
+
+.gs {
+  font-weight: bold;
+}
+
+/* Generic.Strong */
+
+.gu {
+  color: #aaaaaa;
+}
+
+/* Generic.Subheading */
+
+.gt {
+  color: #aa0000;
+}
+
+/* Generic.Traceback */
+
+.kc, .kd, .kn, .kp, .kr {
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Keyword.Constant */
+/* Keyword.Declaration */
+/* Keyword.Namespace */
+/* Keyword.Pseudo */
+/* Keyword.Reserved */
+
+.kt {
+  color: #445588;
+  font-weight: bold;
+}
+
+/* Keyword.Type */
+
+.m {
+  color: #009999;
+}
+
+/* Literal.Number */
+
+.s {
+  color: #d01040;
+}
+
+/* Literal.String */
+
+.na {
+  color: #008080;
+}
+
+/* Name.Attribute */
+
+.nb {
+  color: #0086B3;
+}
+
+/* Name.Builtin */
+
+.nc {
+  color: #445588;
+  font-weight: bold;
+}
+
+/* Name.Class */
+
+.no {
+  color: #008080;
+}
+
+/* Name.Constant */
+
+.nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+
+/* Name.Decorator */
+
+.ni {
+  color: #800080;
+}
+
+/* Name.Entity */
+
+.ne, .nf, .nl {
+  color: #990000;
+  font-weight: bold;
+}
+
+/* Name.Exception */
+/* Name.Function */
+/* Name.Label */
+
+.nn {
+  color: #555555;
+}
+
+/* Name.Namespace */
+
+.nt {
+  color: #000080;
+}
+
+/* Name.Tag */
+
+.nv {
+  color: #008080;
+}
+
+/* Name.Variable */
+
+.ow {
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Operator.Word */
+
+.w {
+  color: #bbbbbb;
+}
+
+/* Text.Whitespace */
+
+.mf, .mh, .mi, .mo, .mn, .mrow {
+  color: #009999;
+}
+
+/* Literal.Number.Float */
+/* Literal.Number.Hex */
+/* Literal.Number.Integer */
+/* Literal.Number.Oct */
+/* Literal.Number.Number */
+/* Literal.Number.Row */
+
+.sb, .sc, .sd, .s2, .se, .sh, .si, .sx {
+  color: #d01040;
+}
+
+/* Literal.String.Backtick */
+/* Literal.String.Char */
+/* Literal.String.Doc */
+/* Literal.String.Double */
+/* Literal.String.Escape */
+/* Literal.String.Heredoc */
+/* Literal.String.Interpol */
+/* Literal.String.Other */
+
+.sr {
+  color: #009926;
+}
+
+/* Literal.String.Regex */
+
+.s1 {
+  color: #d01040;
+}
+
+/* Literal.String.Single */
+
+.ss {
+  color: #990073;
+}
+
+/* Literal.String.Symbol */
+
+.bp {
+  color: #999999;
+}
+
+/* Name.Builtin.Pseudo */
+
+.vc, .vg, .vi {
+  color: #008080;
+}
+
+/* Name.Variable.Class */
+/* Name.Variable.Global */
+/* Name.Variable.Instance */
+
+.il {
+  color: #009999;
+}
+
+/* Literal.Number.Integer.Long */
