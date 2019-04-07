@@ -189,6 +189,11 @@ $(document).ready(function() {
 
   var counter = 0;
 
+  function show_nav() {
+    $('#content').off('mousemove', track_mouse);
+    $nav.show();
+  }
+
   function track_mouse(e) {
     var x = e.offsetX;
 
@@ -199,8 +204,7 @@ $(document).ready(function() {
       counter = 0;
     }
     if (counter >= 20) {
-      $('#content').off('mousemove', track_mouse);
-      $nav.show();
+      show_nav();
     }
   };
 
@@ -212,6 +216,16 @@ $(document).ready(function() {
 
   $('.hidetoc').on('click', hide_nav);
 
+  $(document).on('keyup', function(e) {
+    if (e.ctrlKey) {
+      if (e.which == 37) {      // Ctrl+left arrow
+        hide_nav();
+      }
+      else if (e.which == 39) { // Ctrl+right arrow
+        show_nav();
+      }
+    }
+  });
   adjust_size();
   $(window).on('resize', adjust_size);
 });</script>
