@@ -122,7 +122,7 @@
   </div>
   <div id="footer-row" class="row">
     <div class="col-md-12">
-        <span></span><span class="pull-right">&copy; Copyright {{ copyright }}. Built with Sphinx {{ sphinx_version }}: theme based on <a href="https://github.com/guzzle/guzzle_sphinx_theme/">Guzzle</a>.</span>
+        <span></span><span class="pull-right">&copy; Copyright {{ copyright }}. Built with Sphinx {{ sphinx_version }} and the <a href="https://pypi.org/project/sphinx-sizzle-theme/">Sizzle</a> theme.</span>
     </div>
   </div>
 </div>
@@ -228,6 +228,12 @@ $(document).ready(function() {
   });
   adjust_size();
   $(window).on('resize', adjust_size);
+  var sizzle = $(document).data('sizzle');
+  if (sizzle && sizzle.on_load) {
+    sizzle.on_load.forEach(function(f) {
+      f();
+    });
+  }
 });</script>
 </body>
 </html>
