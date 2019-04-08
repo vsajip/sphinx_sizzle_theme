@@ -1,6 +1,8 @@
 $body-pad: 45px;
 $toc-pad: 22px;
-$lvl-pad: 8px;
+$lvl-pad: 10px;
+$comment-color: #3b3b3b;
+
 body {
   background-color: white;
   margin: 0;
@@ -908,7 +910,7 @@ tr.field td:first-child {
 }
 
 .c {
-  color: #999988;
+  color: $comment-color;
   font-style: italic;
 }
 
@@ -930,7 +932,7 @@ tr.field td:first-child {
 /* Operator */
 
 .cm {
-  color: #999988;
+  color: $comment-color;
   font-style: italic;
 }
 
@@ -945,7 +947,7 @@ tr.field td:first-child {
 /* Comment.Preproc */
 
 .c1 {
-  color: #999988;
+  color: $comment-color;
   font-style: italic;
 }
 
@@ -1141,8 +1143,12 @@ tr.field td:first-child {
 /* Literal.Number.Number */
 /* Literal.Number.Row */
 
-.sb, .sc, .sd, .s2, .se, .sh, .si, .sx {
+.sc, .sd, .s2, .se, .sh, .si, .sx {
   color: #d01040;
+}
+
+.sb, .sx {
+  color: #693386;
 }
 
 /* Literal.String.Backtick */
