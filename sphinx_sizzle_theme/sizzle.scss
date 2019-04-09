@@ -8,7 +8,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Roboto, "Open Sans", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
   line-height: 1.5;
 }
@@ -212,10 +212,8 @@ blockquote {
 }
 
 .sidebar-toc {
+  font-size: 17px;
   ul li {
-    &.toctree-l3 a {
-      /* white-space: nowrap; */
-    }
     a {
       display: block;
       &:hover {
@@ -232,7 +230,6 @@ blockquote {
       }
     }
   }
-  font-size: 15px;
   > ul {
     padding: 0 !important;
     list-style-type: none;
@@ -350,6 +347,9 @@ html, .full-height {
 
 #nav, #content {
   overflow-y: auto;
+}
+
+#nav {
   /*
    * need to set min-width, otherwise the line above causes overflow-x to
    * also be interpreted as auto, see
