@@ -192,12 +192,18 @@ $(document).ready(function() {
     apply_filter();
   });
 
-  function adjust_size() {
-
-    var h = $('#page-content').height();
-
-    $('#nav, #content').height(h);
-  }
+  $(document).on("click", ".summary .fa-arrow-circle-down", function(e) {
+    var $elem = $(e.target).parents("li");
+    var $next = $elem.next();
+    $elem.addClass("hidden");
+    $next.removeClass("hidden");
+  });
+  $(document).on("click", ".detail .fa-arrow-circle-up", function(e) {
+    var $elem = $(e.target).parents("li");
+    var $prev = $elem.prev();
+    $elem.addClass("hidden");
+    $prev.removeClass("hidden");
+  });
 
   var counter = 0;
 
@@ -238,8 +244,18 @@ $(document).ready(function() {
       }
     }
   });
+
+  function adjust_size() {
+
+    var h = $('#page-content').height();
+
+    $('#nav, #content').height(h);
+  }
+
   adjust_size();
+
   $(window).on('resize', adjust_size);
+
   var sizzle = $(document).data('sizzle');
   if (sizzle && sizzle.on_load) {
     sizzle.on_load.forEach(function(f) {

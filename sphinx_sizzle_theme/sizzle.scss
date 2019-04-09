@@ -186,6 +186,16 @@ a.internal em {
   font-style: normal;
 }
 
+li.summary, li.detail {
+  margin-bottom: 8px;
+}
+
+li.summary .fa-arrow-circle-down, li.detail .fa-arrow-circle-up {
+  margin-right: 0.3em;
+  cursor: pointer;
+  color: #333;
+}
+
 dl {
   dd {
     margin: 3px 0 10px 30px;

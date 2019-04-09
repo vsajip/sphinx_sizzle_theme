@@ -11,10 +11,26 @@ try:
 except ImportError:
     from urlparse import urljoin
 
+from docutils.nodes import strong, emphasis
+from docutils.parsers.rst.roles import set_classes
+
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
 __version__ = '0.0.4'
+
+def font_awesome(role, rawtext, text, lineno, inliner,
+                 options=None, content=None):
+    if options is None:
+        options = {}
+    classes = ['fa']
+    options.update({'classes': classes})
+    parts = text.split(',')
+    classes.append('fa-%s' % parts.pop(0))
+    classes.extend(parts)
+    set_classes(options)
+    node = emphasis(**options)
+    return [node], []
 
 def create_sitemap(app):
     filename = app.outdir + '/sitemap.xml'
@@ -63,8 +79,23 @@ class Translator(BaseTranslator):
     def visit_bullet_list(self, node):
         nda = node.non_default_attributes()
         if 'classes' in nda and 'detail-summary' in nda['classes']:
-            pass
-            # TODO generate special markup for this type of list
+            hidden_detail = ['detail', 'hidden']
+            summaries = []
+            for li in node.children:
+                summary = li.deepcopy()
+                summary.attributes['classes'].append('summary')
+                # lose all but the first children of the list item
+                summary.children = summary.children[:1]
+                para = summary.children[0]
+                para.children = para.children[:1]
+                para.insert(0, emphasis(classes=['fa', 'fa-arrow-circle-down']))
+                li.attributes['classes'].extend(hidden_detail)
+                li.children[0].insert(0, emphasis(classes=['fa', 'fa-arrow-circle-up']))
+                summaries.append(summary)
+            # now we have the summaries. Insert just before the detail items.
+            n = len(node.children)
+            for i in range(n - 1, -1, -1):
+                node.insert(i, summaries[i])
         super(Translator, self).visit_bullet_list(node)
 
 def setup(app):
@@ -72,4 +103,5 @@ def setup(app):
     app.set_translator('html', Translator)
     app.connect('html-page-context', on_page)
     app.connect('build-finished', on_build_finished)
+    app.add_role('fa', font_awesome)
     app.sitemap_urls = []
