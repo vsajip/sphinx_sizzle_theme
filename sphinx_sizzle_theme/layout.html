@@ -22,6 +22,9 @@
 {%- endmacro %}
 {%- macro navigation() %}
   <div class="navsidebar">
+    <div id="sidebar-search">
+      {{ sbox() }}
+    </div>
     {%- if sidebars != None %}
       {#- new style sidebar: explicitly include/exclude templates #}
       {%- for sidebartemplate in sidebars %}
@@ -47,6 +50,14 @@
     {%- endif %}
     </div>
   {% endif %}
+{%- endmacro %}
+{% macro sbox() -%}
+<div class="input-group" title="Enter something to search for and then either press Enter or click the magnifying glass">
+  <input type="text" class="form-control search-query" placeholder="Search docs ...">
+  <div class="input-group-addon">
+    <i class="fa fa-search"></i>
+  </div>
+</div>
 {%- endmacro %}
 <!DOCTYPE html>
 <html lang="en-gb">
@@ -85,13 +96,8 @@
       <div id="hdr-centre" class="text-center stretch">
         <h3>{{ title }}</h3>
       </div>
-      <div id="hdr-search" title="Enter something to search for and then either press Enter or click the magnifying glass">
-        <div class="input-group">
-          <input type="text" class="form-control" id="search-query" placeholder="Search docs ...">
-          <div class="input-group-addon">
-            <i class="fa fa-search"></i>
-          </div>
-        </div>
+      <div id="hdr-search">
+        {{ sbox() }}
       </div>
 {% if pagename != 'genindex' %}
       <div id="hdr-index">
@@ -127,7 +133,7 @@
 <script>
 $(document).ready(function() {
   'use strict';
-  var $search = $('#search-query');
+  var $search = $('.search-query');
   var $filter = $('#toc-filter-query');
   var $toclist = $('.sidebar-toc > ul').find('li');
   var $nav = $('#nav');
@@ -139,11 +145,19 @@ $(document).ready(function() {
   var params = $.getQueryParameters();
   if (params.q) {
       var query = params.q[0];
-      $search.val(query).focus();
+      $search.val(query).filter(':visible').focus();
   }
 {% endif %}
-  function perform_search() {
-    var q = $search.val().trim();
+  function perform_search(e) {
+    var $elem;
+
+    if (e.type === 'keypress') {
+      $elem = $(e.target);
+    }
+    else if (e.type === 'click') {
+      $elem = $(e.target).parents('.input-group').find('input');
+    }
+    var q = $elem.val().trim();
 
     if (q) {
       var url = 'search.html?q=' + q + '&check_keywords=yes&area=default';
@@ -170,7 +184,7 @@ $(document).ready(function() {
 
   $search.on('keypress', function(e) {
     if (e.which == 13) {
-      perform_search();
+      perform_search(e);
     }
   });
   $search.parents('.input-group').find('.input-group-addon').on('click', perform_search);

@@ -1200,4 +1200,18 @@ tr.field td:first-child {
   color: #009999;
 }
 
-/* Literal.Number.Integer.Long */
+@media screen and (min-width: 1100px) {
+
+  #sidebar-search {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 1100px) {
+
+  #hdr-search {
+    display: none;
+  }
+
+}
