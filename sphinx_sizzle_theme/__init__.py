@@ -88,15 +88,28 @@ class Translator(BaseTranslator):
                 summary.children = summary.children[:1]
                 para = summary.children[0]
                 para.children = para.children[:1]
-                para.insert(0, emphasis(classes=['fa', 'fa-arrow-circle-down']))
+                handle = emphasis(classes=['fa', 'fa-arrow-circle-down'])
+                handle.attributes['title'] = 'See more detail'
+                para.insert(0, handle)
                 li.attributes['classes'].extend(hidden_detail)
-                li.children[0].insert(0, emphasis(classes=['fa', 'fa-arrow-circle-up']))
+                handle = emphasis(classes=['fa', 'fa-arrow-circle-up'])
+                handle.attributes['title'] = 'See less detail'
+                li.children[0].insert(0, handle)
                 summaries.append(summary)
             # now we have the summaries. Insert just before the detail items.
             n = len(node.children)
             for i in range(n - 1, -1, -1):
                 node.insert(i, summaries[i])
         super(Translator, self).visit_bullet_list(node)
+
+    def visit_emphasis(self, node):
+        kwargs = {}
+        if node.attributes:
+            for k in ('title',):
+                if k in node.attributes:
+                    kwargs[k] = node.attributes[k]
+        self.body.append(self.starttag(node, 'em', '', **kwargs))
+
 
 def setup(app):
     app.add_html_theme('sizzle', path.abspath(path.dirname(__file__)))
