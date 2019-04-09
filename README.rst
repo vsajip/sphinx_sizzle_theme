@@ -18,8 +18,8 @@ and then specify the theme name `sizzle` when you build your documentation.
 Examples
 --------
 
-The following are examples of documentation themed using Sizzle::
+The following are examples of documentation themed using Sizzle:
 
-    https://docs.red-dove.com/distlib/
+https://docs.red-dove.com/distlib/
 
-    https://docs.red-dove.com/sarge/
+https://docs.red-dove.com/sarge/
