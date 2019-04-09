@@ -16,7 +16,7 @@
         SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
       };
     </script>
-    {%- for scriptfile in script_files %}
+    {%- for scriptfile in script_files[1:] %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
     {%- endfor %}
 {%- endmacro %}
@@ -63,10 +63,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.css" integrity="sha256-xOpS+e/dER8z72w+qryCieOGysQI8cELAVt3MHG0phY=" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro|Source+Sans+Pro|Source+Serif+Pro|Roboto" rel="stylesheet">
 {{ css() }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js" integrity="sha256-BUeQcbeHGtOD0tfPelPN+k+dX9fDwzXAA7qHwPH92HA=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/loglevel/1.6.0/loglevel.min.js" integrity="sha256-DnwpDc+jlE6GTbls7TzJBMgt3foTyFnnoS6nESMqsWk=" crossorigin="anonymous"></script>
 {%- block scripts %}
 {{- script() }}
 {%- endblock %}
