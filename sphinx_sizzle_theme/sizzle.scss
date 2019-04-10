@@ -186,6 +186,11 @@ div.highlight pre {
   font-family: "Iosevka SS09 Web", $mono-font;
 }
 
+.file .pre {
+  color: #555;
+  font-style: italic;
+}
+
 a.internal em {
   font-style: normal;
 }
