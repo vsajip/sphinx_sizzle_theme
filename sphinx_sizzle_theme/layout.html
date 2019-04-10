@@ -192,13 +192,13 @@ $(document).ready(function() {
     apply_filter();
   });
 
-  $(document).on("click", ".summary .fa-arrow-circle-down", function(e) {
+  $(document).on("click", ".summary .fa-caret-right", function(e) {
     var $elem = $(e.target).parents("li");
     var $next = $elem.next();
     $elem.addClass("hidden");
     $next.removeClass("hidden");
   });
-  $(document).on("click", ".detail .fa-arrow-circle-up", function(e) {
+  $(document).on("click", ".detail .fa-caret-down", function(e) {
     var $elem = $(e.target).parents("li");
     var $prev = $elem.prev();
     $elem.addClass("hidden");

@@ -190,10 +190,11 @@ li.summary, li.detail {
   margin-bottom: 8px;
 }
 
-li.summary .fa-arrow-circle-down, li.detail .fa-arrow-circle-up {
-  margin-right: 0.3em;
+li.summary .fa-caret-right, li.detail .fa-caret-down {
   cursor: pointer;
   color: #333;
+  position: relative;
+  top: -2px;
 }
 
 dl {

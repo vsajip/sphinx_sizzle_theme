@@ -11,7 +11,7 @@ try:
 except ImportError:
     from urlparse import urljoin
 
-from docutils.nodes import strong, emphasis
+from docutils.nodes import strong, emphasis, inline, Text
 from docutils.parsers.rst.roles import set_classes
 
 from sphinx.util.console import bold
@@ -30,6 +30,17 @@ def font_awesome(role, rawtext, text, lineno, inliner,
     classes.extend(parts)
     set_classes(options)
     node = emphasis(**options)
+    return [node], []
+
+def generic_span(role, rawText, text, lineno, inliner, options=None, context=None):
+    if options is None:
+        options = {}
+    if '|' in text:
+        ctext, text = text.split('|', 1)
+        options['classes'] = ctext.split(',')
+    content = Text(text)
+    node = inline(**options)
+    node.append(content)
     return [node], []
 
 def create_sitemap(app):
@@ -56,6 +67,15 @@ def on_page(app, pagename, templatename, context, doctree):
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
 
+def extract_keys(source, keys):
+    result = {}
+    if not isinstance(keys, (list, tuple)):
+        keys = keys.split()
+    for key in keys:
+        if key in source:
+            result[key] = source[key]
+    return result
+
 class Translator(BaseTranslator):
     def visit_table(self, node, name=''):
         """
@@ -76,40 +96,68 @@ class Translator(BaseTranslator):
         self.compact_p = self.context.pop()
         self.body.append('</table>\n')
 
+    def process_summary_detail_list(self, node):
+        hidden_detail = ['detail', 'hidden']
+        summaries = []
+        for li in node.children:
+            summary = li.deepcopy()
+            summary.attributes['classes'].append('summary')
+            # lose all but the first children of the list item
+            summary.children = summary.children[:1]
+            para = summary.children[0]
+            para.children = para.children[:1]
+            handle = inline(classes=['fa-li'])
+            icon = emphasis(classes=['fa', 'fa-caret-right'])
+            handle.append(icon)
+            handle.attributes['title'] = 'See more detail'
+            para.insert(0, handle)
+            li.attributes['classes'].extend(hidden_detail)
+            handle = inline(classes=['fa-li'])
+            icon = emphasis(classes=['fa', 'fa-caret-down'])
+            handle.append(icon)
+            handle.attributes['title'] = 'See less detail'
+            li.children[0].insert(0, handle)
+            summaries.append(summary)
+        # now we have the summaries. Insert just before the detail items.
+        n = len(node.children)
+        for i in range(n - 1, -1, -1):
+            node.insert(i, summaries[i])
+
+    def process_fa_styled(self, node):
+        pass  # print(node)
+
     def visit_bullet_list(self, node):
         nda = node.non_default_attributes()
-        if 'classes' in nda and 'detail-summary' in nda['classes']:
-            hidden_detail = ['detail', 'hidden']
-            summaries = []
-            for li in node.children:
-                summary = li.deepcopy()
-                summary.attributes['classes'].append('summary')
-                # lose all but the first children of the list item
-                summary.children = summary.children[:1]
-                para = summary.children[0]
-                para.children = para.children[:1]
-                handle = emphasis(classes=['fa', 'fa-arrow-circle-down'])
-                handle.attributes['title'] = 'See more detail'
-                para.insert(0, handle)
-                li.attributes['classes'].extend(hidden_detail)
-                handle = emphasis(classes=['fa', 'fa-arrow-circle-up'])
-                handle.attributes['title'] = 'See less detail'
-                li.children[0].insert(0, handle)
-                summaries.append(summary)
-            # now we have the summaries. Insert just before the detail items.
-            n = len(node.children)
-            for i in range(n - 1, -1, -1):
-                node.insert(i, summaries[i])
+        if 'classes' in nda:
+            classes = nda['classes']
+            if 'summary-detail' in classes:
+                self.process_summary_detail_list(node)
+                classes.append('fa-ul')
+            elif 'styled-list' in classes:
+                self.process_fa_styled(node)
+                classes.append('fa-ul')
         super(Translator, self).visit_bullet_list(node)
 
     def visit_emphasis(self, node):
         kwargs = {}
         if node.attributes:
-            for k in ('title',):
-                if k in node.attributes:
-                    kwargs[k] = node.attributes[k]
-        self.body.append(self.starttag(node, 'em', '', **kwargs))
+            kwargs = extract_keys(node.attributes, 'title')
+        if 'fa' in node.attributes['classes']:
+            tagname = 'i'
+        else:
+            tagname = 'em'
+        self.context.append(tagname)
+        self.body.append(self.starttag(node, tagname, '', **kwargs))
 
+    def depart_emphasis(self, node):
+        tagname = self.context.pop()
+        self.body.append('</%s>' % tagname)
+
+    def visit_inline(self, node):
+        kwargs = {}
+        if node.attributes:
+            kwargs = extract_keys(node.attributes, 'title')
+        self.body.append(self.starttag(node, 'span', '', **kwargs))
 
 def setup(app):
     app.add_html_theme('sizzle', path.abspath(path.dirname(__file__)))
@@ -117,4 +165,5 @@ def setup(app):
     app.connect('html-page-context', on_page)
     app.connect('build-finished', on_build_finished)
     app.add_role('fa', font_awesome)
+    app.add_role('span', generic_span)
     app.sitemap_urls = []
