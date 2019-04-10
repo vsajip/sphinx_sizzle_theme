@@ -197,6 +197,11 @@ li.summary .fa-caret-right, li.detail .fa-caret-down {
   top: -2px;
 }
 
+.styled-list .fa-li .fa {
+  position: relative;
+  top: -2px;
+}
+
 dl {
   dd {
     margin: 3px 0 10px 30px;

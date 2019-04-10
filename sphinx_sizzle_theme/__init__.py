@@ -123,8 +123,23 @@ class Translator(BaseTranslator):
         for i in range(n - 1, -1, -1):
             node.insert(i, summaries[i])
 
-    def process_fa_styled(self, node):
-        pass  # print(node)
+    def process_fa_styled(self, node, default_icon):
+        def is_icon(node):
+            if isinstance(node, Text):
+                return False
+            return 'fa' in node.attributes['classes']
+
+        for li in node.children:
+            para = li.children[0]
+            icon = None
+            if is_icon(para.children[0]):
+                icon = para.pop(0)
+            elif default_icon:
+                icon = emphasis(classes=['fa', default_icon])
+            handle = inline(classes=['fa-li'])
+            if icon:
+                handle.append(icon)
+            para.insert(0, handle)
 
     def visit_bullet_list(self, node):
         nda = node.non_default_attributes()
@@ -134,7 +149,15 @@ class Translator(BaseTranslator):
                 self.process_summary_detail_list(node)
                 classes.append('fa-ul')
             elif 'styled-list' in classes:
-                self.process_fa_styled(node)
+                fa_class = None
+                for c in classes:
+                    if c.startswith('using-'):
+                        fa_class = c
+                        break
+                if fa_class:
+                    classes.remove(fa_class)
+                    fa_class = fa_class.replace('using-', 'fa-')
+                self.process_fa_styled(node, fa_class)
                 classes.append('fa-ul')
         super(Translator, self).visit_bullet_list(node)
 
