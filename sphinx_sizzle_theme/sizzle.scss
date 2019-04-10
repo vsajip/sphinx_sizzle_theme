@@ -5,7 +5,7 @@ $comment-color: #3b3b3b;
 $body-font-size: 18px;
 $sans-font: Roboto, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $serif-font: "Source Serif Pro", serif;
-$mono-font: "Iosevka SS09 Web", "Source Code Pro", Consolas, monospace;
+$mono-font: "Roboto Mono", "Source Code Pro", Consolas, monospace;
 
 body {
   background-color: white;
@@ -181,8 +181,9 @@ pre {
   margin: 20px 0;
 }
 
-div.highlight {
+div.highlight pre {
   background-color: white;
+  font-family: "Iosevka SS09 Web", $mono-font;
 }
 
 a.internal em {
