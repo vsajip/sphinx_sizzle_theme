@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 
 try:
     from urllib.parse import urljoin
+    basestring = str
 except ImportError:
     from urlparse import urljoin
 
@@ -62,7 +63,17 @@ def on_build_finished(app, exception):
         create_sitemap(app)
 
 def on_page(app, pagename, templatename, context, doctree):
-    base_url = app.config['html_theme_options'].get('sitemap_url')
+    options = app.config['html_theme_options']
+    base_url = options.get('sitemap_url')
+    fonts = options.get('google_fonts')
+    if pagename == 'index':
+        if fonts:
+            if isinstance(fonts, basestring):
+                fonts = fonts.split(',')
+            elif not isinstance(fonts, list):
+                raise TypeError('The "fonts" theme option must be a string or '
+                                'a list')
+            context['theme_google_fonts'] = '|%s' % '|'.join(fonts)
     if pagename != 'search' and base_url:
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
