@@ -15,6 +15,7 @@
         HAS_SOURCE:  false,
         SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
       };
+      $(document).data('sizzle', {on_load: []});
     </script>
     {%- for scriptfile in script_files[1:] %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
@@ -207,9 +208,14 @@ $(document).ready(function() {
   });
 
   var counter = 0;
+  var timer = null;
 
   function show_nav() {
     $('#content').off('mousemove', track_mouse);
+    if (timer !== null) {
+      clearTimeout(timer);
+      timer = null;
+    }
     $nav.show();
   }
 
@@ -218,6 +224,9 @@ $(document).ready(function() {
 
     if (x < 15) {
       ++counter;
+      if (timer === null) {
+        timer = setTimeout(show_nav, 2000);
+      }
     }
     else {
       counter = 0;
@@ -247,7 +256,8 @@ $(document).ready(function() {
   });
 
   function adjust_size() {
-
+    // we need to set the height explicitly so that scrolling regions in the
+    // content area work properly.
     var h = $('#page-content').height();
 
     $('#nav, #content').height(h);
@@ -258,7 +268,7 @@ $(document).ready(function() {
   $(window).on('resize', adjust_size);
 
   var sizzle = $(document).data('sizzle');
-  if (sizzle && sizzle.on_load) {
+  if (sizzle.on_load) {
     sizzle.on_load.forEach(function(f) {
       f();
     });
