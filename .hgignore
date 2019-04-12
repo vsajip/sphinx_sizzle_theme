@@ -1,2 +1,3 @@
 (\.egg-info|__pycache__|build|dist|fonts)/
 sizzle.css
+watcher.conf
