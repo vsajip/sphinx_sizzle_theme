@@ -18,7 +18,7 @@ from docutils.parsers.rst.roles import set_classes
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 def font_awesome(role, rawtext, text, lineno, inliner,
                  options=None, content=None):
