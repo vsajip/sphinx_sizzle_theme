@@ -43,15 +43,6 @@ h4, h5, h6 {
   font-style: italic;
 }
 
-/*
- * VMS don't want these margins.
-h1, h2, h3 {
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
- * VMS
- */
-
 h1 {
   font-size: 38px;
   padding: 10px 10px 10px $body-pad;
@@ -68,17 +59,17 @@ h2 {
 }
 
 h3 {
-  margin-top: 35px;
+  margin-top: 28px;
   font-size: 28px;
 }
 
 h4 {
-  margin-top: 30px;
+  margin-top: 24px;
   font-size: 24px;
 }
 
 h5 {
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 20px;
 }
 
@@ -99,6 +90,14 @@ div.related {
  * VMS
  */
 
+.sidebar-block {
+  margin-top: 8px;
+}
+
+#sidebar-search {
+  margin-top: 8px;
+}
+
 .sidebar-block h2 {
   border-bottom: none;
   margin: 0 0 17px 0;
@@ -116,6 +115,12 @@ div.related {
   margin-bottom: 0;
 }
 
+.sidebar-tocheading .fa {
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+}
+
 .sidebar-toc {
   a {
     font-family: $sans-font;
@@ -131,8 +136,6 @@ div.related {
 }
 
 .navsidebar {
-  border-right: 1px solid #e0e0e0;
-  background: #fafafa;
   padding-left: $toc-pad;
   padding-right: $toc-pad;
 }
@@ -291,6 +294,11 @@ blockquote {
       /* padding-left: 3*$lvl-pad; */
     }
   }
+  .localtoc li a {
+    padding-left: $toc-pad;
+    margin-left: -$toc-pad;
+    margin-right: -$toc-pad;
+  }
 }
 
 .text-logo {
@@ -377,6 +385,8 @@ html, .full-height {
    * https://stackoverflow.com/questions/18135204/setting-overflow-y-causes-overflow-x-to-change-as-well
    * https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
    */
+  background: #fafafa;
+  border-right: 1px solid #e0e0e0;
   min-width: 21em;
 }
 
@@ -1233,5 +1243,4 @@ tr.field td:first-child {
   #hdr-search {
     display: none;
   }
-
 }

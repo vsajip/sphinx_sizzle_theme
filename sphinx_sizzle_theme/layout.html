@@ -101,7 +101,7 @@
       <div id="hdr-search">
         {{ sbox() }}
       </div>
-{% if pagename != 'genindex' %}
+{% if pagename != 'genindex' and theme_show_index %}
       <div id="hdr-index">
         <a href="genindex.html" class="btn btn-default" title="Go to the index"><i class="fa fa-list"></i></a>
       </div>
@@ -123,21 +123,25 @@
           </div>
         </div>
       </div>
-      <div class="hidden"></div>
     </div>
   </div>
   <div id="footer-row" class="row">
+{% block footer %}
     <div class="col-md-12">
-        <span></span><span class="pull-right">&copy; Copyright {{ copyright }}. Built with Sphinx {{ sphinx_version }} and the <a href="https://pypi.org/project/sphinx-sizzle-theme/">Sizzle</a> theme.</span>
+        <span></span><span class="pull-right">&copy; Copyright {{ copyright }}.
+        Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> {{ sphinx_version }} and the <a href="https://pypi.org/project/sphinx-sizzle-theme/">Sizzle</a> theme.</span>
     </div>
+{% endblock %}
   </div>
 </div>
 <script>
 $(document).ready(function() {
   'use strict';
   var $search = $('.search-query');
+{% if theme_show_filter %}
   var $filter = $('#toc-filter-query');
   var $toclist = $('.sidebar-toc > ul').find('li');
+{% endif %}
   var $nav = $('#nav');
 
   $('#whole-page').removeClass('hidden');
@@ -168,6 +172,7 @@ $(document).ready(function() {
     }
   }
 
+{% if theme_show_filter %}
   function apply_filter() {
     var s = $filter.val().trim().toLowerCase();
 
@@ -184,16 +189,18 @@ $(document).ready(function() {
     });
   }
 
+  $filter.on('keyup', function(e) {
+    apply_filter();
+  });
+
+{% endif %}
+
   $search.on('keypress', function(e) {
     if (e.which == 13) {
       perform_search(e);
     }
   });
   $search.parents('.input-group').find('.input-group-addon').on('click', perform_search);
-  $filter.on('keyup', function(e) {
-    apply_filter();
-  });
-
   $(document).on("click", ".summary .fa-caret-right", function(e) {
     var $elem = $(e.target).parents("li");
     var $next = $elem.next();
