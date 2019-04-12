@@ -1,0 +1,4 @@
+include LICENSE README.rst
+recursive-include sphinx_sizzle_theme/*
+global-exclude *.log __pycache__ *.pyc *.pyo
+prune sphinx_sizzle_theme.egg-info/*
