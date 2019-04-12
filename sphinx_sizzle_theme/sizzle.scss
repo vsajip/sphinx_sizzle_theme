@@ -185,7 +185,6 @@ pre {
 }
 
 div.highlight pre {
-  background-color: white;
   font-family: "Iosevka SS09 Web", $mono-font;
 }
 
@@ -385,9 +384,13 @@ html, .full-height {
    * https://stackoverflow.com/questions/18135204/setting-overflow-y-causes-overflow-x-to-change-as-well
    * https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
    */
-  background: #fafafa;
+  background-color: #fafafa;
   border-right: 1px solid #e0e0e0;
   min-width: 21em;
+
+  & .docutils.literal {
+    background-color: transparent;
+  }
 }
 
 #content-row {

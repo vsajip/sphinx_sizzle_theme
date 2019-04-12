@@ -92,7 +92,8 @@ html_theme = os.environ.get('DOCS_THEME', 'sizzle')
 
 THEME_OPTIONS = {
   'sizzle': {
-    'show_index': False
+    'show_index': False,
+    'show_filter': False
   }
 }
 
