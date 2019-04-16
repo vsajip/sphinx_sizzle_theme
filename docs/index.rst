@@ -59,6 +59,8 @@ links) and the header has the following elements:
   search box relocates to the top of the sidebar.
 * A link to the index. This is conditionally visible (controlled by
   the ``show_index`` theme option) and styled as a button
+* A link to the source for the current page, if available. This is conditionally
+  visible (controlled by the ``show_source`` option) and styled as a button
 * Links (styled as buttons) to take you to previous and next pages, if any
 
 The sidebar and content area can scroll independently.

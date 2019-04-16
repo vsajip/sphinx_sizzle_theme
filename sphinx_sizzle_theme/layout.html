@@ -106,6 +106,11 @@
         <a href="genindex.html" class="btn btn-default" title="Go to the index"><i class="fa fa-list"></i></a>
       </div>
 {% endif %}
+{%- if show_source and has_source and sourcename %}
+      <div id="hdr-source">
+        <a href="{{ pathto('_sources/' + sourcename, true)|e }}" class="btn btn-default" title="See the source for this page"><i class="fa fa-code"></i></a>
+      </div>
+{% endif %}
       <div id="hdr-right">
         {{ prev_next() }}
       </div>
