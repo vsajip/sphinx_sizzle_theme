@@ -99,9 +99,10 @@ Typography
 * The default body font is `Roboto <https://en.wikipedia.org/wiki/Roboto>`_,
   falling back to Guzzle's slightly less compact choice of
   `Open Sans <https://en.wikipedia.org/wiki/Open_Sans>`_.
-* The monospace font used for code blocks is `Iosevka <https://en.wikipedia.org/wiki/Iosevka>`_,
-  which is a condensed font allowing more content to be shown than the fallbacks
-  of `Roboto Mono <https://en.wikipedia.org/wiki/Roboto#Roboto_Mono>`_,
+* The monospace font used for code blocks is `Iosevka
+  <https://en.wikipedia.org/wiki/Iosevka>`_, which is a condensed font allowing
+  more content to be shown than the fallbacks of `Roboto Mono
+  <https://en.wikipedia.org/wiki/Roboto#Roboto_Mono>`_,
   `Source Code Pro <https://en.wikipedia.org/wiki/Source_Code_Pro>`_ and
   `Consolas <https://en.wikipedia.org/wiki/Consolas>`_. An example:
 
@@ -133,6 +134,9 @@ your projects:
 
   This approach is preferable when your usage of a particular style is
   systematic rather than *ad hoc*.
+
+  The section on :ref:`summary_detail` gives an example where the ``span`` role
+  can be useful.
 
 Use of JavaScript, CSS and font assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,6 +188,8 @@ was produced by this markup:
     * :fa:`star-o` Arcturus
     * :fa:`star-half-o` Betelgeuse
     * VY Canis Majoris
+
+.. _summary_detail:
 
 Summary-Detail Lists
 ~~~~~~~~~~~~~~~~~~~~
