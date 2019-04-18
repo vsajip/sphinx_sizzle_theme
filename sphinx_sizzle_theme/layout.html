@@ -62,6 +62,16 @@
   </div>
 </div>
 {%- endmacro %}
+{% macro sometoc() -%}
+  {% set toctree = toctree(maxdepth=theme_globaltoc_depth|toint, collapse=theme_globaltoc_collapse|tobool, includehidden=theme_globaltoc_includehidden|tobool) %}
+  {% if toctree %}
+    {{ toctree }}
+  {% else %}
+  <div class="localtoc">
+    {{ toc }}
+  </div>
+  {% endif %}
+{%- endmacro %}
 <!DOCTYPE html>
 <html lang="en-gb">
 <head>
@@ -95,7 +105,7 @@
   <div id="header-row" class="row">
     <div id="header-container" class="col-md-12">
       <div id="hdr-left">
-        <i class="fa fa-bars"></i>
+        <i class="fa fa-bars menu-toggle"></i>
         {% include "logo-text.html" %}
       </div>
       <div id="hdr-centre" class="text-center stretch">
@@ -127,6 +137,9 @@
           {{ navigation() }}
         </div>
         <div id="content" class="stretch">
+          <div id="mnav">
+            {{ sometoc() }}
+          </div>
           <div class="body">
             {% block body %}{% endblock %}
           </div>
@@ -269,6 +282,10 @@ $(document).ready(function() {
         show_nav();
       }
     }
+  });
+
+  $('.menu-toggle').on('click', function(e) {
+    $('#mnav').toggle();
   });
 
   function adjust_size() {

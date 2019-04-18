@@ -4,6 +4,7 @@ $toc-pad: 22px;
 $lvl-pad: 10px;
 $comment-color: #3b3b3b;
 $body-font-size: 18px;
+$nav-color: #fafafa;
 $sans-font: Roboto, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $serif-font: "Source Serif Pro", serif;
 $mono-font: "Roboto Mono", "Source Code Pro", Consolas, monospace;
@@ -391,7 +392,7 @@ html, .full-height {
    * https://stackoverflow.com/questions/18135204/setting-overflow-y-causes-overflow-x-to-change-as-well
    * https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue
    */
-  background-color: #fafafa;
+  background-color: $nav-color;
   border-right: 1px solid #e0e0e0;
   min-width: 21em;
 
@@ -1233,6 +1234,29 @@ tr.field td:first-child {
 
 #hdr-left .fa-bars {
   color: #337ab7;
+  cursor: pointer;
+}
+
+#mnav {
+  position: absolute;
+  top: 0;
+  padding-top: 4px;
+  padding-right: 8px;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  display: none;
+  background-color: $nav-color;
+  height: 80vh;
+  overflow-y: scroll;
+
+  ul {
+    list-style-type: none;
+    padding-left: $lvl-pad;
+  }
+  a {
+    color: #444;
+    font-size: 16px;
+  }
 }
 
 @media screen and (min-width: 1100px) {
@@ -1273,6 +1297,10 @@ tr.field td:first-child {
     padding: 0 $body-pad;
   }
 
+  h1 {
+    font-size: 30px;
+  }
+
   #hdr-left .fa-bars {
     display: none;
   }
@@ -1280,7 +1308,8 @@ tr.field td:first-child {
 
 @media screen and (max-width: 768px) {
 
-  #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row {
+  #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row,
+  .sidebar-tocheading .fa, #nav {
     display: none;
   }
 
@@ -1293,7 +1322,35 @@ tr.field td:first-child {
     margin-right: -$narrow-body-pad;
   }
 
-  #hdr-left .text-logo, #hdr-source, #hdr-centre h3 {
-    display: none;
+  body, code, pre, tt {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  h3 {
+    font-size: 24px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  h4 {
+    font-size: 20px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  h5 {
+    font-size: 18px;
+    margin-top: 12px;
+    margin-bottom: 6px;
   }
 }
