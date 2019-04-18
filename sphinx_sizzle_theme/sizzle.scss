@@ -1309,12 +1309,16 @@ tr.field td:first-child {
 @media screen and (max-width: 768px) {
 
   #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row,
-  .sidebar-tocheading .fa, #nav {
+  .sidebar-tocheading .fa, #nav, #hdr-right {
     display: none;
   }
 
   #header-row {
     background-color: $nav-color;
+  }
+
+  #hdr-index {
+    margin-right: 0px;
   }
 
   .body {
