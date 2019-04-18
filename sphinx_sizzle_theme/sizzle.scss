@@ -1242,10 +1242,10 @@ tr.field td:first-child {
   top: 0;
   padding-top: 4px;
   padding-right: 8px;
-  border-right: 1px solid silver;
-  border-bottom: 1px solid silver;
+  border: 1px solid silver;
   display: none;
   background-color: $nav-color;
+  width: 60vw;
   height: 80vh;
   overflow-y: scroll;
 
@@ -1311,6 +1311,10 @@ tr.field td:first-child {
   #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row,
   .sidebar-tocheading .fa, #nav {
     display: none;
+  }
+
+  #header-row {
+    background-color: $nav-color;
   }
 
   .body {
