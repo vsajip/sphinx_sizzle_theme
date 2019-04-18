@@ -294,6 +294,9 @@ $(document).ready(function() {
     var h = $('#page-content').height();
 
     $('#nav, #content').height(h);
+    if ($('#nav').is(':visible')) {
+      $('#mnav').hide();
+    }
   }
 
   adjust_size();
