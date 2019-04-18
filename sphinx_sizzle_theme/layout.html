@@ -18,7 +18,9 @@
       $(document).data('sizzle', {on_load: []});
     </script>
     {%- for scriptfile in script_files[1:] %}
+    {%- if scriptfile %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+    {%- endif %}
     {%- endfor %}
 {%- endmacro %}
 {%- macro navigation() %}
@@ -93,10 +95,12 @@
   <div id="header-row" class="row">
     <div id="header-container" class="col-md-12">
       <div id="hdr-left">
-      {% include "logo-text.html" %}
+        <i class="fa fa-bars"></i>
+        {% include "logo-text.html" %}
       </div>
       <div id="hdr-centre" class="text-center stretch">
         <h3>{{ title }}</h3>
+        <h6>{{ title }}</h6>
       </div>
       <div id="hdr-search">
         {{ sbox() }}

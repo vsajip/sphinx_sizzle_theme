@@ -1,4 +1,5 @@
 $body-pad: 45px;
+$narrow-body-pad: 8px;
 $toc-pad: 22px;
 $lvl-pad: 10px;
 $comment-color: #3b3b3b;
@@ -41,6 +42,13 @@ h1, h2, h3, h4, h5, h6 {
 
 h4, h5, h6 {
   font-style: italic;
+}
+
+#hdr-centre h6, #hdr-right h6 {
+  font-style: inherit;
+  color: #337ab7;
+  font-family: $sans-font;
+  font-size: 14px;
 }
 
 h1 {
@@ -349,7 +357,6 @@ html, .full-height {
 }
 
 #header-row {
-  background-image: linear-gradient(to right, #337ab7, #337ab7, white);
   border-bottom: 1px solid #eee;
 }
 
@@ -468,10 +475,6 @@ div {
   }
 }
 
-.body {
-  padding: 0 $body-pad;
-}
-
 div.body p.caption {
   text-align: inherit;
 }
@@ -577,11 +580,6 @@ noscript > div {
 
 #content-container {
   display: flex;
-}
-
-.section > h1, .body > h1 {
-  margin-left: -$body-pad;
-  margin-right: -$body-pad;
 }
 
 .body .section:first-child > h1, #search-documentation {
@@ -877,7 +875,7 @@ span.eqno {
   }
   h1 {
     margin-left: 0;
-    width: 100%;
+    /* width: 100%; VMS */
     padding: 10px;
     font-size: 40px;
   }
@@ -1233,6 +1231,10 @@ tr.field td:first-child {
   color: #009999;
 }
 
+#hdr-left .fa-bars {
+  color: #337ab7;
+}
+
 @media screen and (min-width: 1100px) {
 
   #sidebar-search {
@@ -1244,6 +1246,54 @@ tr.field td:first-child {
 @media screen and (max-width: 1100px) {
 
   #hdr-search {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row {
+    display: block;
+  }
+
+  #hdr-centre h6 {
+    display: none;
+  }
+
+  #header-row {
+    background-image: linear-gradient(to right, #337ab7, #337ab7, white);
+  }
+
+  .section > h1, .body > h1 {
+    margin-left: -$body-pad;
+    margin-right: -$body-pad;
+  }
+
+  .body {
+    padding: 0 $body-pad;
+  }
+
+  #hdr-left .fa-bars {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row {
+    display: none;
+  }
+
+  .body {
+    padding: 0 $narrow-body-pad;
+  }
+
+  .section > h1, .body > h1 {
+    margin-left: -$narrow-body-pad;
+    margin-right: -$narrow-body-pad;
+  }
+
+  #hdr-left .text-logo, #hdr-source, #hdr-centre h3 {
     display: none;
   }
 }
