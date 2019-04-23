@@ -88,6 +88,10 @@ def extract_keys(source, keys):
     return result
 
 class Translator(BaseTranslator):
+    def __init__(self, builder, *args, **kwargs):
+        super(Translator, self).__init__(builder, *args, **kwargs)
+        self.li_level = 0
+
     def visit_table(self, node, name=''):
         """
         Override docutils default table formatter to not include a border
@@ -151,6 +155,22 @@ class Translator(BaseTranslator):
             if icon:
                 handle.append(icon)
             para.insert(0, handle)
+
+    def visit_list_item(self, node):
+        super(Translator, self).visit_list_item(node)
+        self.li_level += 1
+
+    def depart_list_item(self, node):
+        self.li_level -= 1
+        super(Translator, self).depart_list_item(node)
+
+    def visit_reference(self, node):
+        an = node.get('anchorname')
+        ru = node.get('refuri')
+        if ru == '#' or an and an == ru:
+            # it's a local TOC node. Tag it with the appropriate class
+            node.attributes['classes'].append('lvl-%d' % self.li_level)
+        super(Translator, self).visit_reference(node)
 
     def visit_bullet_list(self, node):
         nda = node.non_default_attributes()
