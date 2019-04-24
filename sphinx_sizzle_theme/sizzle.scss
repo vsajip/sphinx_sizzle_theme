@@ -292,21 +292,11 @@ blockquote {
       padding-left: $toc-pad + 3*$lvl-pad;
     }
   }
-  li {
-    &.toctree-l2 {
-      /* padding-left: $lvl-pad; */
-    }
-    &.toctree-l3 {
-      /* padding-left: 2*$lvl-pad; */
-    }
-    &.toctree-l4 {
-      /* padding-left: 3*$lvl-pad; */
-    }
-  }
   .localtoc li a {
     padding-left: $toc-pad;
     margin-left: -$toc-pad;
     margin-right: -$toc-pad;
+    text-decoration: none;
   }
   .localtoc li a.lvl-2 {
     padding-left: $toc-pad + $lvl-pad;
@@ -1251,7 +1241,7 @@ tr.field td:first-child {
   position: absolute;
   top: 0;
   padding-top: 4px;
-  padding-right: 8px;
+  padding-right: 2*$lvl-pad;
   border: 1px solid silver;
   display: none;
   background-color: $nav-color;
@@ -1267,6 +1257,28 @@ tr.field td:first-child {
   a {
     color: #444;
     font-size: 16px;
+    display: block;
+    margin-right: -$lvl-pad;
+
+    &:hover {
+      background-color: #428bca;
+      color: #fff;
+      text-decoration: none;
+    }
+    &.lvl-1 {
+    }
+    &.lvl-2 {
+      margin-left: -$lvl-pad;
+      padding-left: $lvl-pad;
+    }
+    &.lvl-3 {
+      margin-left: -2*$lvl-pad;
+      padding-left: 2*$lvl-pad;
+    }
+    &.lvl-4 {
+      margin-left: -3*$lvl-pad;
+      padding-left: 3*$lvl-pad;
+    }
   }
 }
 
