@@ -3,7 +3,7 @@
 # Copyright 2019 by Vinay Sajip. All Rights Reserved.
 #
 
-from os import path
+from os import path, remove
 import xml.etree.ElementTree as ET
 
 try:
@@ -61,6 +61,30 @@ def create_sitemap(app):
 def on_build_finished(app, exception):
     if app.sitemap_urls:
         create_sitemap(app)
+    # remove unused files.
+    outdir = app.builder.outdir
+    unused = (
+        ('_static', 'jquery.js'),
+        ('_static', 'jquery-3.2.1.js'),
+        ('_static', 'underscore.js'),
+        ('_static', 'underscore-1.3.1.js'),
+        ('_static', 'ajax-loader.gif'),
+        ('_static', 'comment.png'),
+        ('_static', 'comment-bright.png'),
+        ('_static', 'comment-close.png'),
+        ('_static', 'file.png'),
+        ('_static', 'up.png'),
+        ('_static', 'up-pressed.png'),
+        ('_static', 'down.png'),
+        ('_static', 'down-pressed.png'),
+        ('_static', 'plus.png'),
+        ('_static', 'minus.png'),
+        ('_static', 'basic.css'),
+    )
+    for cp in unused:
+        p = path.join(outdir, *cp)
+        if path.isfile(p):
+            remove(p)
 
 def on_page(app, pagename, templatename, context, doctree):
     options = app.config['html_theme_options']

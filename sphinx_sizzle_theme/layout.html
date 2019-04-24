@@ -17,7 +17,7 @@
       };
       $(document).data('sizzle', {on_load: []});
     </script>
-    {%- for scriptfile in script_files[1:] %}
+    {%- for scriptfile in script_files[2:] %}
     {%- if scriptfile %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
     {%- endif %}
@@ -90,6 +90,7 @@
 {{ css() }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" integrity="sha256-G7A4JrJjJlFqP0yamznwPjAApIKPkadeHfyIwiaa9e0=" crossorigin="anonymous"></script>
 {%- block scripts %}
 {{- script() }}
 {%- endblock %}
