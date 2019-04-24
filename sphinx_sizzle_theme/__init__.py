@@ -4,6 +4,7 @@
 #
 
 from os import path, remove
+from shutil import rmtree
 import xml.etree.ElementTree as ET
 
 try:
@@ -85,6 +86,8 @@ def on_build_finished(app, exception):
         p = path.join(outdir, *cp)
         if path.isfile(p):
             remove(p)
+        elif path.isdir(p):
+            rmtree(p)
 
 def on_page(app, pagename, templatename, context, doctree):
     options = app.config['html_theme_options']
