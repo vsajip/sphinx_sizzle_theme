@@ -223,17 +223,21 @@ $(document).ready(function() {
     }
   });
   $search.parents('.input-group').find('.input-group-addon').on('click', perform_search);
-  $(document).on("click", ".summary .fa-caret-right", function(e) {
-    var $elem = $(e.target).parents("li");
+  $(document).on('click', '.summary .fa-caret-right', function(e) {
+    var $elem = $(e.target).parents('li');
     var $next = $elem.next();
-    $elem.addClass("hidden");
-    $next.removeClass("hidden");
+    $elem.addClass('hidden');
+    $next.removeClass('hidden');
   });
-  $(document).on("click", ".detail .fa-caret-down", function(e) {
-    var $elem = $(e.target).parents("li");
+  $(document).on('click', '.detail .fa-caret-down', function(e) {
+    var $elem = $(e.target).parents('li');
     var $prev = $elem.prev();
-    $elem.addClass("hidden");
-    $prev.removeClass("hidden");
+    $elem.addClass('hidden');
+    $prev.removeClass('hidden');
+  });
+
+  $('#content').on('click', function() {
+    $('#mnav').hide();
   });
 
   var counter = 0;

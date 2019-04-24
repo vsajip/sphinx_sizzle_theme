@@ -4,6 +4,7 @@ $toc-pad: 22px;
 $lvl-pad: 10px;
 $comment-color: #3b3b3b;
 $body-font-size: 18px;
+$toc-font-size: 16px;
 $nav-color: #fafafa;
 $sans-font: Roboto, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $serif-font: "Source Serif Pro", serif;
@@ -249,7 +250,7 @@ blockquote {
 }
 
 .sidebar-toc {
-  font-size: 17px;
+  font-size: $toc-font-size;
   ul li {
     a {
       display: block;
@@ -1254,9 +1255,10 @@ tr.field td:first-child {
   border: 1px solid silver;
   display: none;
   background-color: $nav-color;
-  width: 60vw;
-  height: 80vh;
-  overflow-y: scroll;
+  max-width: 60vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1;
 
   ul {
     list-style-type: none;
