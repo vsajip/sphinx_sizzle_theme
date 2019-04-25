@@ -362,6 +362,12 @@ html, .full-height {
 }
 
 #hdr-centre {
+  h3 {
+    max-width: 60vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   h4, h3 {
     color: white;
     margin-top: 10px;
@@ -1232,6 +1238,22 @@ tr.field td:first-child {
   color: #009999;
 }
 
+.prev-next {
+  a {
+    padding-bottom: 2px;
+  }
+  .fa {
+    position: relative;
+    top: -4px;
+  }
+  .btn-text {
+    max-width: 10em;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+  }
+}
+
 #hdr-left .fa-bars {
   color: #337ab7;
   cursor: pointer;
@@ -1301,6 +1323,7 @@ tr.field td:first-child {
 
   #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row {
     display: block;
+    white-space: nowrap;
   }
 
   #hdr-centre h6 {

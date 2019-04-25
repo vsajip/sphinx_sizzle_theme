@@ -43,12 +43,12 @@
   <div class="prev-next">
     {% if prev %}
       <div class="pull-left">
-        <a class="btn btn-default prev" href="{{ prev.link|e }}" title="{{ _('previous chapter')}} (use the left arrow)"><i class="fa fa-chevron-left mr-1em" aria-hidden="true"></i>{{ prev.title }}</a>
+        <a class="btn btn-default prev" href="{{ prev.link|e }}" title="{{ _('previous chapter')}}"><i class="fa fa-chevron-left mr-1em" aria-hidden="true"></i><span class="btn-text">{{ prev.title }}</span></a>
       </div>
     {% endif %}
     {%- if next and next.title != '&lt;no title&gt;' %}
       <div class="pull-right">
-        <a class="btn btn-default next" href="{{ next.link|e }}" title="{{ _('next chapter')}} (use the right arrow)">{{ next.title }}&nbsp;<i class="fa fa-chevron-right ml-1em" aria-hidden="true"></i></a>
+        <a class="btn btn-default next" href="{{ next.link|e }}" title="{{ _('next chapter')}}"><span class="btn-text">{{ next.title }}</span>&nbsp;<i class="fa fa-chevron-right ml-1em" aria-hidden="true"></i></a>
       </div>
     {%- endif %}
     </div>
@@ -110,7 +110,7 @@
         {% include "logo-text.html" %}
       </div>
       <div id="hdr-centre" class="text-center stretch">
-        <h3>{{ title }}</h3>
+        <h3 title="{{ title }}">{{ title }}</h3>
         <h6>{{ title }}</h6>
       </div>
       <div id="hdr-search">
