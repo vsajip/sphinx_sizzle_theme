@@ -102,7 +102,7 @@
     <div id="noscript-message">JavaScript is not enabled. It is needed for this website to work.</div>
   </div>
 </noscript>
-<div id="whole-page" class="container-fluid content full-height hidden">
+<div id="whole-page" class="container-fluid content full-height">
   <div id="header-row" class="row">
     <div id="header-container" class="col-md-12">
       <div id="hdr-left">
@@ -167,7 +167,7 @@ $(document).ready(function() {
 {% endif %}
   var $nav = $('#nav');
 
-  $('#whole-page').removeClass('hidden');
+  //$('#whole-page').removeClass('hidden');
   var nav_width = $nav.width();
 
 {% if pagename == 'search' %}
