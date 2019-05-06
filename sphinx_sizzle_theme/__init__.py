@@ -105,6 +105,21 @@ def on_page(app, pagename, templatename, context, doctree):
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
 
+def find_first_permalink(document):
+    result = None
+    for child in document.children:
+        if child.tagname == 'section':
+            ids = child.get('ids', [])
+            if ids:
+                result = ids[0]
+                break
+    return result
+
+def on_doctree(app, doctree, docname):
+    if not hasattr(app, 'first_permalinks'):
+        app.first_permalinks = {}
+    app.first_permalinks[docname] = find_first_permalink(doctree)
+
 def extract_keys(source, keys):
     result = {}
     if not isinstance(keys, (list, tuple)):
@@ -196,6 +211,13 @@ class Translator(BaseTranslator):
         ru = node.get('refuri')
         if ru == '#' or an and an == ru:
             # it's a local TOC node. Tag it with the appropriate class
+            if ru == '#':
+                docname = self.builder.current_docname
+                app = self.builder.app
+                if hasattr(app, 'first_permalinks'):
+                    link = app.first_permalinks.get(docname)
+                    if link:
+                        node['refuri'] = '#%s' % link
             node.attributes['classes'].append('lvl-%d' % self.li_level)
         super(Translator, self).visit_reference(node)
 
@@ -245,6 +267,7 @@ def setup(app):
     app.set_translator('html', Translator)
     app.connect('html-page-context', on_page)
     app.connect('build-finished', on_build_finished)
+    app.connect('doctree-resolved', on_doctree)
     app.add_role('fa', font_awesome)
     app.add_role('span', generic_span)
     app.sitemap_urls = []
