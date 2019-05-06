@@ -1304,6 +1304,24 @@ tr.field td:first-child {
   }
 }
 
+/*
+  See issue #2: docutils generates a 'container' class which conflicts with the
+  Bootstrap class of the same name. Fortunately, the 'docutils' class is also
+  set at the same time, allowing us to specify some rules, without which the
+  element width might increase and lead to a horizontal scrollbar.
+ */
+
+.container.docutils {
+  padding: 0;
+  margin: 0;
+  width: inherit;
+  max-width: inherit;
+  &:before, &:after {
+    display: none;
+    clear: none;
+  }
+}
+
 @media screen and (min-width: 1100px) {
 
   #sidebar-search {
