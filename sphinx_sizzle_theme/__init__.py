@@ -209,16 +209,26 @@ class Translator(BaseTranslator):
     def visit_reference(self, node):
         an = node.get('anchorname')
         ru = node.get('refuri')
+
+        def get_link():
+            result = None
+            app = self.builder.app
+            docname = self.builder.current_docname
+            if hasattr(app, 'first_permalinks'):
+                result = app.first_permalinks.get(docname)
+            return result
+
+        # Fix up a bare '#' fragment to be a more sensible value.
+        if ru == '#' or an == '':
+            link = get_link()
+            if link:
+                node['refuri'] = '#%s' % link
         if ru == '#' or an and an == ru:
             # it's a local TOC node. Tag it with the appropriate class
+            # and ensure the fragment is correctly set up.
             if ru == '#':
-                docname = self.builder.current_docname
-                app = self.builder.app
-                if hasattr(app, 'first_permalinks'):
-                    link = app.first_permalinks.get(docname)
-                    if link:
-                        node['refuri'] = '#%s' % link
-            node.attributes['classes'].append('lvl-%d' % self.li_level)
+                node.attributes['classes'].append('lvl-%d' % self.li_level)
+
         super(Translator, self).visit_reference(node)
 
     def visit_bullet_list(self, node):
