@@ -219,17 +219,14 @@ class Translator(BaseTranslator):
             return result
 
         # Fix up a bare '#' fragment to be a more sensible value.
-        if ru == '#' or an == '':
-            if node.get('iscurrent') and 'current' in node.get('classes'):
-                link = get_link()
-                if link:
-                    node['refuri'] = '#%s' % link
-        if ru == '#' or an and an == ru:
-            # it's a local TOC node. Tag it with the appropriate class
-            # and ensure the fragment is correctly set up.
-            if ru == '#':
-                node.attributes['classes'].append('lvl-%d' % self.li_level)
-
+        fragment_fixup = ((ru == '#') or                       # local TOC node
+                          ('current' in node.get('classes')))  # global TOC node
+        if fragment_fixup:
+            link = get_link()
+            if link:
+                node['refuri'] = '#%s' % link
+        if ru == '#':
+            node.attributes['classes'].append('lvl-%d' % self.li_level)
         super(Translator, self).visit_reference(node)
 
     def visit_bullet_list(self, node):
