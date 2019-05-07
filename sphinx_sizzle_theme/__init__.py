@@ -220,9 +220,10 @@ class Translator(BaseTranslator):
 
         # Fix up a bare '#' fragment to be a more sensible value.
         if ru == '#' or an == '':
-            link = get_link()
-            if link:
-                node['refuri'] = '#%s' % link
+            if node.get('iscurrent') and 'current' in node.get('classes'):
+                link = get_link()
+                if link:
+                    node['refuri'] = '#%s' % link
         if ru == '#' or an and an == ru:
             # it's a local TOC node. Tag it with the appropriate class
             # and ensure the fragment is correctly set up.
