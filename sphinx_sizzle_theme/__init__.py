@@ -13,9 +13,10 @@ try:
 except ImportError:
     from urlparse import urljoin
 
-from docutils.nodes import strong, emphasis, inline, Text
+from docutils.nodes import strong, emphasis, inline, Text, document
 from docutils.parsers.rst.roles import set_classes
 
+# from sphinx import version_info as sphinx_version
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
@@ -133,8 +134,16 @@ class Translator(BaseTranslator):
     def __init__(self, builder, *args, **kwargs):
         super(Translator, self).__init__(builder, *args, **kwargs)
         self.li_level = 0
-        document = args[0]
-        self.toctree = document.children[0].get('toctree', False)
+        toctree = False
+        # Depending on Sphinx version, the document can be in different
+        # positions in the argument list! Honestly ... just in case it moves
+        # again, we look in the whole arg list and stop when a document is
+        # found.
+        for arg in args:
+            if isinstance(arg, document):
+                toctree = arg.children[0].get('toctree', False)
+                break
+        self.toctree = toctree
 
     def visit_table(self, node, name=''):
         """
