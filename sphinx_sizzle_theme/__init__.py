@@ -133,6 +133,8 @@ class Translator(BaseTranslator):
     def __init__(self, builder, *args, **kwargs):
         super(Translator, self).__init__(builder, *args, **kwargs)
         self.li_level = 0
+        document = args[0]
+        self.toctree = document.children[0].get('toctree', False)
 
     def visit_table(self, node, name=''):
         """
@@ -207,7 +209,6 @@ class Translator(BaseTranslator):
         super(Translator, self).depart_list_item(node)
 
     def visit_reference(self, node):
-        ru = node.get('refuri')
 
         def get_link():
             result = None
@@ -217,6 +218,13 @@ class Translator(BaseTranslator):
                 result = app.first_permalinks.get(docname)
             return result
 
+        ru = node.get('refuri')
+        local = False
+        if not self.toctree and node.get('internal') and not node.get('refid'):
+            an = node.get('anchorname')
+            if ru == '#' or an and an == ru:
+                local = True
+
         # Fix up a bare '#' fragment to be a more sensible value.
         fragment_fixup = ((ru == '#') or                       # local TOC node
                           ('current' in node.get('classes')))  # global TOC node
@@ -224,7 +232,8 @@ class Translator(BaseTranslator):
             link = get_link()
             if link:
                 node['refuri'] = '#%s' % link
-        node.attributes['classes'].append('lvl-%d' % self.li_level)
+        if local:
+            node.attributes['classes'].append('lvl-%d' % self.li_level)
         super(Translator, self).visit_reference(node)
 
     def visit_bullet_list(self, node):
