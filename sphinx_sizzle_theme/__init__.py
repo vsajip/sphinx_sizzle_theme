@@ -224,8 +224,7 @@ class Translator(BaseTranslator):
             link = get_link()
             if link:
                 node['refuri'] = '#%s' % link
-        if ru == '#':
-            node.attributes['classes'].append('lvl-%d' % self.li_level)
+        node.attributes['classes'].append('lvl-%d' % self.li_level)
         super(Translator, self).visit_reference(node)
 
     def visit_bullet_list(self, node):
