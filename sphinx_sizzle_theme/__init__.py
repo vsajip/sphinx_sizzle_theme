@@ -207,7 +207,6 @@ class Translator(BaseTranslator):
         super(Translator, self).depart_list_item(node)
 
     def visit_reference(self, node):
-        an = node.get('anchorname')
         ru = node.get('refuri')
 
         def get_link():
