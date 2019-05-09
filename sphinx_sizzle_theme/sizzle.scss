@@ -3,6 +3,7 @@ $narrow-body-pad: 8px;
 $toc-pad: 22px;
 $lvl-pad: 10px;
 $comment-color: #3b3b3b;
+$hdr-blue: #337ab7;
 $body-font-size: 18px;
 $toc-font-size: 16px;
 $nav-color: #fafafa;
@@ -46,9 +47,9 @@ h4, h5, h6 {
   font-style: italic;
 }
 
-#hdr-centre h6, #hdr-right h6 {
+#hdr-centre h6, #hdr-right h6, #alt-hdr-right {
   font-style: inherit;
-  color: #337ab7;
+  color: $hdr-blue;
   font-family: $sans-font;
   font-size: 14px;
 }
@@ -341,15 +342,9 @@ blockquote {
   margin: 0;
   text-decoration: none;
   font-weight: bold;
-  /*
-    background-color: #337ab7;
-  */
   &:hover, &:focus {
     color: #fff;
     text-decoration: none;
-    /*
-      background-color: #337ab7;
-    */
   }
 }
 
@@ -364,6 +359,14 @@ html, .full-height {
 
 .mr-1em {
   margin-right: 1em;
+}
+
+.mr-4 {
+  margin-right: 4px;
+}
+
+.mr-8 {
+  margin-right: 8px;
 }
 
 .content {
@@ -802,7 +805,7 @@ dt:target, .highlight {
     line-height: 1.1;
     font-family: $sans-font;
     color: #fff;
-    background-color: #337ab7;
+    background-color: $hdr-blue;
   }
 }
 
@@ -1277,7 +1280,7 @@ tr.field td:first-child {
 }
 
 #hdr-left .fa-bars {
-  color: #337ab7;
+  color: $hdr-blue;
   cursor: pointer;
 }
 
@@ -1366,12 +1369,16 @@ tr.field td:first-child {
     white-space: nowrap;
   }
 
+  #alt-hdr-right {
+    display: none;
+  }
+
   #hdr-centre h6 {
     display: none;
   }
 
   #header-row {
-    background-image: linear-gradient(to right, #337ab7, #337ab7, white);
+    background-image: linear-gradient(to right, $hdr-blue, $hdr-blue, white);
   }
 
   .section > h1, .body > h1 {
@@ -1391,8 +1398,12 @@ tr.field td:first-child {
 @media screen and (max-width: 768px) {
 
   #hdr-left .text-logo, #hdr-source, #hdr-centre h3, #footer-row,
-  .sidebar-tocheading .fa, #nav, #hdr-right {
+  .sidebar-tocheading .fa, #nav, #hdr-right, #hdr-index {
     display: none;
+  }
+
+  #alt-hdr-right {
+    display: block;
   }
 
   #header-row {
