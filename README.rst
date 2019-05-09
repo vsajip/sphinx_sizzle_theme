@@ -20,10 +20,6 @@ and then specify the theme name `sizzle` when you build your documentation.
 Examples
 --------
 
-The following are examples of documentation themed using Sizzle:
+A number of examples of documentation themed using Sizzle can be found at:
 
-https://docs.red-dove.com/distlib/
-
-https://docs.red-dove.com/sarge/
-
-https://docs.red-dove.com/sphinx_sizzle_theme/
+https://docs.red-dove.com/

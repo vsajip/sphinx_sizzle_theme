@@ -335,3 +335,12 @@ use this approach to style tables in your content as you wish. For instance,
       padding-left: 6px;
     }
 
+Other Goodies
+~~~~~~~~~~~~~
+
+In larger documentation sets, the navigator is quite long - if you use it to
+navigate to a different page, then the navigator would normally be positioned
+at the top, rather than in the vicinity of the element you clicked to get to
+that page. The Sizzle theme JavaScript code tries to position the link which
+led you to a particular part of the documentation to near the vertical centre of
+the navigator.
