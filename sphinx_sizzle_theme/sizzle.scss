@@ -251,6 +251,11 @@ blockquote {
 
 .sidebar-toc {
   font-size: $toc-font-size;
+
+  code, pre, tt {
+    font-size: $toc-font-size;
+  }
+
   ul li {
     a {
       display: block;
