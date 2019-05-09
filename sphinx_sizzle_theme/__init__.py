@@ -131,8 +131,8 @@ def extract_keys(source, keys):
     return result
 
 class Translator(BaseTranslator):
-    def __init__(self, builder, *args, **kwargs):
-        super(Translator, self).__init__(builder, *args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super(Translator, self).__init__(*args, **kwargs)
         self.li_level = 0
         toctree = False
         # Depending on Sphinx version, the document can be in different
