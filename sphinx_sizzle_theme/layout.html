@@ -38,7 +38,7 @@
     {%- endif %}
   </div>
 {%- endmacro %}
-{% macro prev_next() -%}
+{%- macro prev_next() %}
   {% if prev or next %}
   <div class="prev-next">
     {% if prev %}
@@ -54,7 +54,7 @@
     </div>
   {% endif %}
 {%- endmacro %}
-{% macro sbox() -%}
+{%- macro sbox() %}
 <div class="input-group" title="Enter something to search for and then either press Enter or click the magnifying glass">
   <input type="text" class="form-control search-query" placeholder="Search docs ...">
   <div class="input-group-addon">
@@ -62,7 +62,7 @@
   </div>
 </div>
 {%- endmacro %}
-{% macro sometoc() -%}
+{%- macro sometoc() %}
   {% set toctree = toctree(maxdepth=theme_globaltoc_depth|toint, collapse=theme_globaltoc_collapse|tobool, includehidden=theme_globaltoc_includehidden|tobool) %}
   {% if toctree %}
     {{ toctree }}
@@ -71,7 +71,7 @@
     {{ toc }}
   </div>
   {% endif %}
-{%- endmacro %}
+{%- endmacro -%}
 <!DOCTYPE html>
 <html lang="en-gb">
 <head>
