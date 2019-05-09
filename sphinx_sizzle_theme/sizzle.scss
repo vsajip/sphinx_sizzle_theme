@@ -56,31 +56,49 @@ h4, h5, h6 {
 h1 {
   font-size: 38px;
   padding: 10px 10px 10px $body-pad;
-/* VMS margin: 20px 0 35px -45px; VMS */
   background-color: aliceblue;
-/* VMS  width: calc(100% + 90px); VMS */
   border-bottom: 1px solid #D8E4EF;
+
+  code, pre, tt {
+    font-size: 38px;
+  }
 }
 
 h2 {
   font-size: 34px;
   padding: .2em 0;
   border-bottom: 1px solid #ddd;
+
+  code, pre, tt {
+    font-size: 34px;
+  }
 }
 
 h3 {
   margin-top: 28px;
   font-size: 28px;
+
+  code, pre, tt {
+    font-size: 28px;
+  }
 }
 
 h4 {
   margin-top: 24px;
   font-size: 24px;
+
+  code, pre, tt {
+    font-size: 24px;
+  }
 }
 
 h5 {
   margin-top: 20px;
   font-size: 20px;
+
+  code, pre, tt {
+    font-size: 20px;
+  }
 }
 
 /* VMS not needed
@@ -175,16 +193,15 @@ code {
   line-height: 23px;
   margin: 20px 0;
   word-wrap: normal;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 pre {
   line-height: 23px;
   margin: 20px 0;
   word-wrap: normal;
-  background-color: #fff;
+  background-color: transparent;
   color: #333;
-  background-color: #fff;
   overflow: auto;
   border-width: 0 0 0 2px;
   border-color: #eee;
@@ -235,7 +252,7 @@ dl {
 .breadcrumb {
   font-size: 15px;
   margin-bottom: 12px;
-  background: #fff;
+  background-color: transparent;
 }
 
 blockquote {
