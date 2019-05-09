@@ -123,6 +123,7 @@ html_sidebars = {
     # ]
 }
 
+html_experimental_html5_builder = True
 
 # -- Options for HTMLHelp output ------------------------------------------
 
