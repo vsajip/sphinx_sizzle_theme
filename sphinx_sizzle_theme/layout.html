@@ -293,6 +293,28 @@ $(document).ready(function() {
     $('#mnav').toggle();
   });
 
+  function scroll_nav(frag) {
+    var sel = '#nav a[href="' + frag + '"]';
+    var $link = $(sel);
+
+    if ($link.length > 0) {
+      $link[0].scrollIntoView({block: 'center'});
+    }
+  }
+
+  // If the navigator is long, then the item we clicked on to get here might
+  // not be in view. Try to scroll it into the view - a slight delay is needed
+  // to get it to sync properly with other stuff going on (as the page has just
+  // loaded).
+
+  if (window.location.hash) {
+    function do_scroll() {
+      scroll_nav(window.location.hash);
+    }
+
+    setTimeout(do_scroll, 0);
+  }
+
   function adjust_size() {
     // we need to set the height explicitly so that scrolling regions in the
     // content area work properly.
