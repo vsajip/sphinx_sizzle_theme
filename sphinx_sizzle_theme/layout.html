@@ -132,9 +132,9 @@
       <div id="hdr-search">
         {{ sbox() }}
       </div>
-{% if pagename != 'genindex' and theme_show_index %}
+{% if hasdoc('genindex') and pagename != 'genindex' and theme_show_index %}
       <div id="hdr-index">
-        <a href="genindex.html" class="btn btn-default" title="Go to the index"><i class="fa fa-list"></i></a>
+        <a href="{{ pathto('genindex') }}" class="btn btn-default" title="Go to the index"><i class="fa fa-list"></i></a>
       </div>
 {% endif %}
 {%- if show_source and has_source and sourcename %}
@@ -152,8 +152,8 @@
 {% if pagename != 'index' %}
         <a href="index.html"><i class="fa fa-home mr-8"></i></a>
 {% endif %}
-{% if pagename != 'genindex' and theme_show_index %}
-        <a href="genindex.html"><i class="fa fa-list mr-8"></i></a>
+{% if hasdoc('genindex') and pagename != 'genindex' and theme_show_index %}
+        <a href="{{ pathto('genindex') }}"><i class="fa fa-list mr-8"></i></a>
 {% endif %}
 {% if next %}
         <a href="{{ next.link|e }}"><i class="fa fa-chevron-right"></i></a>
