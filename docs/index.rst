@@ -335,6 +335,20 @@ use this approach to style tables in your content as you wish. For instance,
       padding-left: 6px;
     }
 
+
+Device-Friendliness
+~~~~~~~~~~~~~~~~~~~
+
+The theme adapts well to smaller screens, as shown in the following images.
+
+.. cssclass:: table table-bordered
+
+==================================== ===================================
+Appearance on a small screen         Navigation menu on a small screen
+==================================== ===================================
+.. image:: _static/img/mobile_1.png  .. image:: _static/img/mobile_2.png
+==================================== ===================================
+
 Other Goodies
 ~~~~~~~~~~~~~
 

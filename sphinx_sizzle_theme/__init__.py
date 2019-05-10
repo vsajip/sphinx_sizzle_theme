@@ -151,7 +151,7 @@ def on_doctree_read(app, doctree):
     #
     # This is so that the first permalink information is available as early as
     # possible in the process. The build process reads all the docs, and then
-    # goes through each document doing a doctree-reolve and write operation.
+    # goes through each document doing a doctree-resolve and write operation.
     # The documents early in the process won't have the permalink information
     # that the later ones do.
     docname = find_docname()
@@ -163,8 +163,6 @@ def on_doctree_resolved(app, doctree, docname):
     if docname not in app.first_permalinks:
         app.first_permalinks[docname] = find_first_permalink(doctree)
     logger.debug('on_doctree_resolved: %s', docname)
-    # print('on_doctree_resolved: %s' % docname)
-    # import pdb; pdb.set_trace()
 
 def extract_keys(source, keys):
     result = {}
