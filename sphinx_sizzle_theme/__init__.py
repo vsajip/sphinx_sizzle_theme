@@ -3,8 +3,11 @@
 # Copyright 2019 by Vinay Sajip. All Rights Reserved.
 #
 
-from os import path, remove
+import inspect
+import logging
+from os import path, remove, close
 from shutil import rmtree
+import tempfile
 import xml.etree.ElementTree as ET
 
 try:
@@ -21,6 +24,11 @@ from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
 __version__ = '0.0.7'
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
+
+logging_enabled = False
 
 def font_awesome(role, rawtext, text, lineno, inliner,
                  options=None, content=None):
@@ -60,6 +68,16 @@ def create_sitemap(app):
     ET.ElementTree(root).write(filename)
     logger.info('done')
 
+def on_init(app):
+    app.first_permalinks = {}
+    if logging_enabled:
+        fd, fn = tempfile.mkstemp(prefix='sizzle-', suffix='.log')
+        close(fd)
+        fh = logging.FileHandler(fn, mode='w')
+        logger.addHandler(fh)
+        fh.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
+        logger.setLevel(logging.DEBUG)
+
 def on_build_finished(app, exception):
     if app.sitemap_urls:
         create_sitemap(app)
@@ -89,6 +107,7 @@ def on_build_finished(app, exception):
             remove(p)
         elif path.isdir(p):
             rmtree(p)
+    logger.debug('Build finished.')
 
 def on_page(app, pagename, templatename, context, doctree):
     options = app.config['html_theme_options']
@@ -105,6 +124,7 @@ def on_page(app, pagename, templatename, context, doctree):
     if pagename != 'search' and base_url:
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
+    logger.debug('on_page: %s', pagename)
 
 def find_first_permalink(document):
     result = None
@@ -116,10 +136,35 @@ def find_first_permalink(document):
                 break
     return result
 
-def on_doctree(app, doctree, docname):
-    if not hasattr(app, 'first_permalinks'):
-        app.first_permalinks = {}
-    app.first_permalinks[docname] = find_first_permalink(doctree)
+def find_docname():
+    # Walk the stack until we find a frame with 'docname' in the locals.
+    result = None
+    for s in inspect.stack():
+        if 'docname' in s.frame.f_locals:
+            result = s.frame.f_locals['docname']
+            break
+    return result
+
+def on_doctree_read(app, doctree):
+    # Ideally, the docname would also have been made available ... but it hasn't
+    # been. So, we try and use hackery to find it :-(
+    #
+    # This is so that the first permalink information is available as early as
+    # possible in the process. The build process reads all the docs, and then
+    # goes through each document doing a doctree-reolve and write operation.
+    # The documents early in the process won't have the permalink information
+    # that the later ones do.
+    docname = find_docname()
+    if docname:
+        app.first_permalinks[docname] = find_first_permalink(doctree)
+    logger.debug('on_doctree_read: %s', docname)
+
+def on_doctree_resolved(app, doctree, docname):
+    if docname not in app.first_permalinks:
+        app.first_permalinks[docname] = find_first_permalink(doctree)
+    logger.debug('on_doctree_resolved: %s', docname)
+    # print('on_doctree_resolved: %s' % docname)
+    # import pdb; pdb.set_trace()
 
 def extract_keys(source, keys):
     result = {}
@@ -144,6 +189,8 @@ class Translator(BaseTranslator):
                 toctree = arg.children[0].get('toctree', False)
                 break
         self.toctree = toctree
+        if toctree:
+            logger.debug('translate toctree: %s', self.builder.current_docname)
 
     def visit_table(self, node, name=''):
         """
@@ -219,10 +266,9 @@ class Translator(BaseTranslator):
 
     def visit_reference(self, node):
 
-        def get_link():
+        def get_link(docname):
             result = None
             app = self.builder.app
-            docname = self.builder.current_docname
             if hasattr(app, 'first_permalinks'):
                 result = app.first_permalinks.get(docname)
             return result
@@ -238,11 +284,20 @@ class Translator(BaseTranslator):
         fragment_fixup = ((ru == '#') or                       # local TOC node
                           ('current' in node.get('classes')))  # global TOC node
         if fragment_fixup:
-            link = get_link()
+            link = get_link(self.builder.current_docname)
             if link:
                 node['refuri'] = '#%s' % link
         if local:
             node.attributes['classes'].append('lvl-%d' % self.li_level)
+        if (self.toctree and ru is not None and '#' not in ru and
+            ru.endswith('.html')):
+            name = ru.rsplit('.', 1)[0]
+            while name.startswith('../'):
+                name = name[3:]
+            link = get_link(name)
+            if link:
+                node['refuri'] = '%s#%s' % (ru, link)
+                logger.debug('visit_reference: %s -> %s', ru, node['refuri'])
         super(Translator, self).visit_reference(node)
 
     def visit_bullet_list(self, node):
@@ -289,9 +344,11 @@ class Translator(BaseTranslator):
 def setup(app):
     app.add_html_theme('sizzle', path.abspath(path.dirname(__file__)))
     app.set_translator('html', Translator)
+    app.connect('builder-inited', on_init)
     app.connect('html-page-context', on_page)
     app.connect('build-finished', on_build_finished)
-    app.connect('doctree-resolved', on_doctree)
+    app.connect('doctree-read', on_doctree_read)
+    app.connect('doctree-resolved', on_doctree_resolved)
     app.add_role('fa', font_awesome)
     app.add_role('span', generic_span)
     app.sitemap_urls = []

@@ -23,7 +23,16 @@
     {%- endif %}
     {%- endfor %}
 {%- endmacro %}
-{%- macro navigation() %}
+{%- macro sometoc(toctree) %}
+  {% if toctree %}
+    {{ toctree }}
+  {% else %}
+  <div class="localtoc">
+    {{ toc }}
+  </div>
+  {% endif %}
+{%- endmacro %}
+{%- macro navigation(toctree) %}
   <div class="navsidebar">
     <div id="sidebar-search">
       {{ sbox() }}
@@ -34,7 +43,24 @@
       {%- include sidebartemplate %}
       {%- endfor %}
     {% else %}
-      {% include "globaltoc.html" %}
+      <div class="sidebar-block">
+        <div class="sidebar-tocheading">
+          <div class="pull-left">
+            <h2>{{ _('Table Of Contents') }}</h2>
+          </div>
+          <div class="pull-right" title="Hide this sidebar (hover at left edge to bring it back)"><i class="fa fa-chevron-left hidetoc"></i></div>
+        </div>
+        <div class="sidebar-toc">
+      {% if theme_show_filter %}
+          <div id="toc-filter" title="Type in here to show only matching topics">
+            <input class="form-control" id="toc-filter-query" placeholder="Filter by title ...">
+          </div>
+      {% else %}
+        <div style="clear: both"></div>
+      {% endif %}
+        {{ sometoc(toctree) }}
+        </div>
+      </div>
     {%- endif %}
   </div>
 {%- endmacro %}
@@ -61,16 +87,6 @@
     <i class="fa fa-search"></i>
   </div>
 </div>
-{%- endmacro %}
-{%- macro sometoc() %}
-  {% set toctree = toctree(maxdepth=theme_globaltoc_depth|toint, collapse=theme_globaltoc_collapse|tobool, includehidden=theme_globaltoc_includehidden|tobool) %}
-  {% if toctree %}
-    {{ toctree }}
-  {% else %}
-  <div class="localtoc">
-    {{ toc }}
-  </div>
-  {% endif %}
 {%- endmacro -%}
 <!DOCTYPE html>
 <html lang="en-gb">
@@ -145,15 +161,16 @@
       </div>
     </div>
   </div>
+{% set toctree = toctree(maxdepth=theme_globaltoc_depth|toint, collapse=theme_globaltoc_collapse|tobool, includehidden=theme_globaltoc_includehidden|tobool) %}
   <div id="content-row" class="row">
     <div id="page-content" class="col-md-12 flex-col">
       <div id="content-container">
         <div id="nav">
-          {{ navigation() }}
+          {{ navigation(toctree) }}
         </div>
         <div id="content" class="stretch">
           <div id="mnav">
-            {{ sometoc() }}
+            {{ sometoc(toctree) }}
           </div>
           <div class="body">
             {% block body %}{% endblock %}
@@ -326,9 +343,11 @@ $(document).ready(function() {
   // to get it to sync properly with other stuff going on (as the page has just
   // loaded).
 
-  if (window.location.hash) {
+  var loc = window.location.hash;
+
+  if (loc) {
     function do_scroll() {
-      scroll_nav(window.location.hash);
+      scroll_nav(loc);
     }
 
     setTimeout(do_scroll, 0);
