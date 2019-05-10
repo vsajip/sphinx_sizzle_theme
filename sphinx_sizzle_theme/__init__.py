@@ -23,7 +23,7 @@ from docutils.parsers.rst.roles import set_classes
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
