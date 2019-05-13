@@ -330,7 +330,8 @@ $(document).ready(function() {
   });
 
   function scroll_nav(frag) {
-    var sel = '#nav a[href="' + frag + '"]';
+    var sel = '#nav ' + (frag ? 'a[href="' + frag + '"]' : '.toctree-l1 a.current');
+
     var $link = $(sel);
 
     if ($link.length > 0) {
@@ -343,15 +344,11 @@ $(document).ready(function() {
   // to get it to sync properly with other stuff going on (as the page has just
   // loaded).
 
-  var loc = window.location.hash;
-
-  if (loc) {
-    function do_scroll() {
-      scroll_nav(loc);
-    }
-
-    setTimeout(do_scroll, 0);
+  function do_scroll() {
+    scroll_nav(window.location.hash);
   }
+
+  setTimeout(do_scroll, 0);
 
   function adjust_size() {
     // we need to set the height explicitly so that scrolling regions in the

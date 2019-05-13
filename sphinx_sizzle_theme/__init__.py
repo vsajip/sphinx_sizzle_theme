@@ -154,10 +154,15 @@ def on_doctree_read(app, doctree):
     # goes through each document doing a doctree-resolve and write operation.
     # The documents early in the process won't have the permalink information
     # that the later ones do.
-    docname = find_docname()
-    if docname:
-        app.first_permalinks[docname] = find_first_permalink(doctree)
-    logger.debug('on_doctree_read: %s', docname)
+    #
+    # OK - disabled the stack hack for now, but may have to reinstate later
+    #
+    use_stack_hack = False
+    if use_stack_hack:
+        docname = find_docname()
+        if docname:
+            app.first_permalinks[docname] = find_first_permalink(doctree)
+        logger.debug('on_doctree_read: %s', docname)
 
 def on_doctree_resolved(app, doctree, docname):
     if docname not in app.first_permalinks:
