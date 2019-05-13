@@ -4,6 +4,7 @@
 #
 
 import inspect
+import io
 import logging
 from os import path, remove, close
 from shutil import rmtree
@@ -83,7 +84,7 @@ def on_init(app):
     version = None
     try:
         fn = path.join(HERE, 'version.txt')
-        if os.path.exists(fn):
+        if path.exists(fn):
             with io.open(fn, encoding='utf-8') as f:
                 version = f.read().strip()
     except Exception:
@@ -136,7 +137,7 @@ def on_page(app, pagename, templatename, context, doctree):
     if pagename != 'search' and base_url:
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
-    conext['sizzle_version'] = app.sizzle_version
+    context['sizzle_version'] = app.sizzle_version
     logger.debug('on_page: %s', pagename)
 
 def find_first_permalink(document):
