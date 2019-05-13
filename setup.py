@@ -21,6 +21,7 @@ setup(
     package_data={'sphinx_sizzle_theme': [
         'theme.conf',
         '*.html',
+        'version.txt',
         'static/css/*.css',
         'static/js/*.js',
         'static/fonts/*.*'
