@@ -183,7 +183,12 @@
 {% block footer %}
     <div class="col-md-12">
         <span></span><span class="pull-right">&copy; Copyright {{ copyright }}.
-        Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> {{ sphinx_version }} and the <a href="https://pypi.org/project/sphinx-sizzle-theme/">Sizzle</a> theme.</span>
+        Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> {{ sphinx_version }} and the
+        <a href="https://pypi.org/project/sphinx-sizzle-theme/"
+{% if sizzle_version %}
+           title="{{ sizzle_version }}"
+{% endif %}
+        >Sizzle</a> theme.</span>
     </div>
 {% endblock %}
   </div>

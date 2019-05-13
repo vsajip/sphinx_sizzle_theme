@@ -23,6 +23,8 @@ from docutils.parsers.rst.roles import set_classes
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
+HERE = path.abspath(path.dirname(__file__))
+
 __version__ = '0.0.8'
 
 logger = logging.getLogger(__name__)
@@ -78,6 +80,16 @@ def on_init(app):
         fh.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
         logger.setLevel(logging.DEBUG)
 
+    version = None
+    try:
+        fn = path.join(HERE, 'version.txt')
+        if os.path.exists(fn):
+            with io.open(fn, encoding='utf-8') as f:
+                version = f.read().strip()
+    except Exception:
+        version = None
+    app.sizzle_version = version
+
 def on_build_finished(app, exception):
     if app.sitemap_urls:
         create_sitemap(app)
@@ -124,6 +136,7 @@ def on_page(app, pagename, templatename, context, doctree):
     if pagename != 'search' and base_url:
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
+    conext['sizzle_version'] = app.sizzle_version
     logger.debug('on_page: %s', pagename)
 
 def find_first_permalink(document):
