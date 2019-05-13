@@ -342,7 +342,7 @@ $(document).ready(function() {
   // If the navigator is long, then the item we clicked on to get here might
   // not be in view. Try to scroll it into the view - a slight delay is needed
   // to get it to sync properly with other stuff going on (as the page has just
-  // loaded).
+  // loaded). Hence the setTimeout with a timeout of 0.
 
   function do_scroll() {
     scroll_nav(window.location.hash);
