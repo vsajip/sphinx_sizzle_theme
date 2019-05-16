@@ -470,6 +470,9 @@ ul {
 
 table {
   margin-bottom: 20px;
+  &.docutils.footnote {
+   margin-bottom: 0px;
+  }
   &.indextable {
     width: 100%;
     td {
@@ -962,6 +965,10 @@ span.eqno {
 
 tr.field td:first-child {
   display: none;
+}
+
+td.footnote-label {
+  padding-right: 0.25em;
 }
 
 #hdr-search, #hdr-right .prev, #hdr-index, #hdr-source {
