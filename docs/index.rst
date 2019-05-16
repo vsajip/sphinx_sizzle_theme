@@ -110,6 +110,22 @@ Typography
 
     @real fox.quick(h) { *is_brown && it_jumps_over(doges.lazy) }
 
+Google Fonts
+~~~~~~~~~~~~
+
+If you want to use other Google fonts in your documentation, you can do this
+via a theme option::
+
+    html_theme_options = {
+        # other stuff omitted
+        'google_fonts': ['Acme', 'Raleway:400,700'],
+        # other stuff omitted
+    }
+
+This would make the ``Acme`` and ``Raleway`` fonts (the latter with the
+specific weights indicated) for use in your documentation, so that you could
+use ``Acme`` and ``Raleway`` in ``font-family`` values in your custom CSS.
+
 Custom Roles
 ~~~~~~~~~~~~
 
@@ -357,4 +373,4 @@ if you use it to navigate to a different page, then the navigator would normally
 be positioned at the top, rather than in the vicinity of the element you clicked
 to get to that page. The Sizzle theme JavaScript code tries to position the link
 which led you to a particular part of the documentation to near the vertical
-centre of the navigator.
+centre of the navigator, or at least in the visible portion of the navigator.
