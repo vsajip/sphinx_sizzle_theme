@@ -260,8 +260,18 @@ be shown like this:
 Custom Styles and JavaScript
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you have custom styles and/or JavaScript, you can install them in the
-following way: in your :file:`conf.py`, have code something like this:
+If you have custom styles and/or JavaScript, you can install them in one of
+two ways, depending on the version of Sphinx you're using. If you're using
+Sphinx 1.8 or later, you should use configuration options in :file:`conf.py`
+like this:
+
+.. code-block:: python
+
+    html_css_files = ['css/project.css']
+    html_js_files = ['js/project.js']
+
+If you're using an earlier Sphinx version than 1.8, then in your
+:file:`conf.py`, have code something like this:
 
 .. code-block:: python
 
