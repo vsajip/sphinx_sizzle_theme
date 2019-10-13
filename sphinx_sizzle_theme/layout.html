@@ -18,8 +18,12 @@
       $(document).data('sizzle', {on_load: []});
     </script>
     {%- for scriptfile in script_files[2:] %}
+    {%- if js_tag is defined %}
+    {{ js_tag(scriptfile) }}
+    {%- else %}
     {%- if scriptfile %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+    {%- endif %}
     {%- endif %}
     {%- endfor %}
 {%- endmacro %}
