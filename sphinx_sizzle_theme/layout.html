@@ -192,7 +192,7 @@
         <div id="nav">
           {{ navigation(toctree) }}
         </div>
-        <div id="content" class="stretch">
+        <div id="content" tabindex="0" class="stretch">
           <div id="mnav">
             {{ sometoc(toctree) }}
           </div>
@@ -393,6 +393,8 @@ $(document).ready(function() {
   adjust_size();
 
   $(window).on('resize', adjust_size);
+
+  $('#content').focus();  // so that keyboard can be used to scroll, etc.
 
   var sizzle = $(document).data('sizzle');
   if (sizzle.on_load) {
