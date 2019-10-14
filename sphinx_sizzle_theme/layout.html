@@ -394,7 +394,11 @@ $(document).ready(function() {
 
   $(window).on('resize', adjust_size);
 
-  $('#content').focus();  // so that keyboard can be used to scroll, etc.
+  function focus_content() {
+    $('#content').focus();  // so that keyboard can be used to scroll, etc.
+  }
+
+  setTimeout(focus_content, 150);
 
   var sizzle = $(document).data('sizzle');
   if (sizzle.on_load) {
