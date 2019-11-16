@@ -1,0 +1,9 @@
+.egg-info
+__pycache__
+build
+dist
+fonts
+.dict-validwords
+sizzle.css
+watcher.conf
+version.txt
