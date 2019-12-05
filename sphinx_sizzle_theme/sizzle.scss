@@ -1486,3 +1486,13 @@ td.footnote-label, th.stub {
     }
   }
 }
+
+.tc-heading {
+  display: none;
+}
+
+.class-members-heading {
+  font-size: 1.2em;
+  width: 50%;
+  border-bottom: 1px solid silver;
+}
