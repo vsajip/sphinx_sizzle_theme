@@ -5,6 +5,7 @@
 
 import inspect
 import io
+import json
 import logging
 from os import path, remove, close
 from shutil import rmtree
@@ -71,8 +72,16 @@ def create_sitemap(app):
     ET.ElementTree(root).write(filename)
     logger.info('done')
 
+def create_glossary_data(app):
+    filename = app.outdir + '/glossary.json'
+    logger.info(bold('creating glossary data... '), nonl=True)
+    with io.open(filename, 'w', encoding='utf-8') as f:
+        json.dump(app.glossary_info, f, indent=2)
+    logger.info('done')
+
 def on_init(app):
     app.first_permalinks = {}
+    app.glossary_info = {}
     if logging_enabled:
         fd, fn = tempfile.mkstemp(prefix='sizzle-', suffix='.log')
         close(fd)
@@ -94,6 +103,9 @@ def on_init(app):
 def on_build_finished(app, exception):
     if app.sitemap_urls:
         create_sitemap(app)
+    if app.glossary_info:
+        create_glossary_data(app)
+
     # remove unused files.
     outdir = app.builder.outdir
     unused = (
@@ -192,6 +204,11 @@ def extract_keys(source, keys):
             result[key] = source[key]
     return result
 
+def dump_node(node, level=0):  # used for debugging only
+    print('%s%r' %('  ' * level, node))
+    for child in node.children:
+        dump_node(child, level + 1)
+
 class Translator(BaseTranslator):
     def __init__(self, *args, **kwargs):
         super(Translator, self).__init__(*args, **kwargs)
@@ -208,6 +225,9 @@ class Translator(BaseTranslator):
         self.toctree = toctree
         if toctree:
             logger.debug('translate toctree: %s', self.builder.current_docname)
+        # Remove limit on field names (ensures parameters are in two columns)
+        self.settings.field_name_limit = 0
+        self.in_glossary = False
 
     def visit_table(self, node, name=''):
         """
@@ -372,6 +392,42 @@ class Translator(BaseTranslator):
                          '<tbody valign="top">\n'
                          '<tr>')
         self.footnote_backrefs(node)
+
+    # Glossary processing
+
+    def visit_glossary(self, node):
+        self.in_glossary = True
+        super(Translator, self).visit_glossary(node)
+
+    def depart_glossary(self, node):
+        super(Translator, self).depart_glossary(node)
+        self.in_glossary = False
+
+    def visit_term(self, node):
+        super(Translator, self).visit_term(node)
+        if self.in_glossary:
+            self.term_key = node.attributes['ids'][0]
+            self.term_pos = len(self.body)
+
+    def depart_term(self, node):
+        if self.in_glossary:
+            term_html = ''.join(self.body[self.term_pos:])
+            app = self.builder.app
+            app.glossary_info.setdefault(self.term_key, {})['term'] = term_html
+        super(Translator, self).depart_term(node)
+
+    def visit_definition(self, node):
+        super(Translator, self).visit_definition(node)
+        if self.in_glossary:
+            self.defn_pos = len(self.body)
+
+    def depart_definition(self, node):
+        if self.in_glossary:
+            defn_html = ''.join(self.body[self.defn_pos:])
+            app = self.builder.app
+            app.glossary_info.setdefault(self.term_key, {})['defn'] = defn_html
+        super(Translator, self).depart_definition(node)
+
 
 def setup(app):
     app.add_html_theme('sizzle', path.abspath(path.dirname(__file__)))

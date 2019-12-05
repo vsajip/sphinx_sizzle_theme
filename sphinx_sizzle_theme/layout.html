@@ -105,12 +105,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.css" integrity="sha256-xOpS+e/dER8z72w+qryCieOGysQI8cELAVt3MHG0phY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tooltipster@4.2.7/dist/css/tooltipster.bundle.min.css" integrity="sha256-Qc4lCfqZWYaHF5hgEOFrYzSIX9Rrxk0NPHRac+08QeQ=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tooltipster@4.2.7/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css" integrity="sha256-Wa1I4jhSXeWd3N6RhfPlkqr1WlT+zS3Vh2YGCg0129E=" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro|Source+Sans+Pro|Source+Serif+Pro|Roboto|Roboto+Mono{{ theme_google_fonts }}" rel="stylesheet">
 <link href="https://fonts.red-dove.com/iosevka-ss09-regular/webfont.css" rel="stylesheet">
 {{ css() }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" integrity="sha256-G7A4JrJjJlFqP0yamznwPjAApIKPkadeHfyIwiaa9e0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/tooltipster@4.2.7/dist/js/tooltipster.bundle.min.js" integrity="sha256-NOU7KrY2aTI4PxDegqYUIknk9qfxVCS0E4JfE9aMwaA=" crossorigin="anonymous"></script>
 {%- block scripts %}
 {{- script() }}
 {%- endblock %}
@@ -217,6 +220,10 @@
 {% endblock %}
   </div>
 </div>
+{% if pagename != 'glossary' %}
+<div id="tooltips" class="hidden">
+</div>
+{% endif %}
 <script>
 $(document).ready(function() {
   'use strict';
@@ -399,6 +406,64 @@ $(document).ready(function() {
   }
 
   setTimeout(focus_content, 150);
+
+{% if pagename != 'glossary' %}
+  function add_glossary_tooltips() {
+    var links = $('a');  // can qualify with .reference.internal
+    var glinks = {};
+    var found = false;
+    var pat = /glossary.html#(term-.*)$/;
+
+    $.each(links, function(i, link) {
+        var $link = $(link);
+        var href = $link.attr('href');
+        var m = href.match(pat);
+
+        if (m) {
+            glinks[m[1]] = $link;
+            found = true;
+        }
+    });
+    if (found) {
+      $.ajax('/glossary.json', {
+        success: function(data, sts, xhr) {
+          // Add tooltip content to the document in a hidden div
+          var $t = $('#tooltips');
+
+          $.each(glinks, function(k, v) {
+            var d = data[k];
+
+            if (d) {
+              var s = 'tc-'+ k;
+              var $e = $('<div>').attr('id', s);
+              var $h = $('<div>').addClass('tc-heading').html(d.term);
+              var $b = $('<div>').addClass('tc-body').html(d.defn);
+              var span = v.find('span');
+              $e.append($h);
+              $e.append($b);
+              $t.append($e);
+
+              v.addClass('tt').attr('data-tooltip-content', '#' + s);
+            }
+          });
+        }
+      });
+
+      function activate_tooltips() {
+        var $tt = $('.tt');
+
+        //console.log('tt links:', $tt.length);
+        $tt.tooltipster({
+          theme: 'tooltipster-light',
+          contentCloning: true
+        });
+      }
+      setTimeout(activate_tooltips, 1000);
+    }
+  }
+
+  add_glossary_tooltips();
+{% endif %}
 
   var sizzle = $(document).data('sizzle');
   if (sizzle.on_load) {
