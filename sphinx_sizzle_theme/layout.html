@@ -430,7 +430,7 @@ $(document).ready(function() {
           }
       });
       if (found) {
-        $.ajax('/glossary.json', {
+        $.ajax('glossary.json', {
           success: function(data, sts, xhr) {
             // Add tooltip content to the document in a hidden div
             var $t = $('#tooltips');
@@ -460,6 +460,7 @@ $(document).ready(function() {
           //console.log('tt links:', $tt.length);
           $tt.tooltipster({
             theme: ['tooltipster-light', 'tooltipster-light-customized'],
+            interactive: true,
             contentCloning: true
           });
         }
@@ -467,7 +468,7 @@ $(document).ready(function() {
       }
     }
 
-    $.ajax('/glossary-docs.json', {
+    $.ajax('glossary-docs.json', {
       success: function(data, sts, xhr) {
         $.each(data, function(i, name) {
           glossary_docs[name] = true;
