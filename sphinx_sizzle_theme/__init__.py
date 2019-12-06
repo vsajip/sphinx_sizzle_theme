@@ -72,20 +72,23 @@ def create_sitemap(app):
     ET.ElementTree(root).write(filename)
     logger.info('done')
 
-def create_glossary_data(app):
-    logger.info(bold('creating glossary data... '), nonl=True)
-    filename = app.outdir + '/glossary.json'
+def create_app_data(app):
+    logger.info(bold('creating app data... '), nonl=True)
+    filename = app.outdir + '/app-data.json'
+    data = {
+        'glossary': {
+            'document': app.glossary_doc,
+            'terms': app.glossary_info,
+        },
+    }
     with io.open(filename, 'w', encoding='utf-8') as f:
-        json.dump(app.glossary_info, f)
-    filename = app.outdir + '/glossary-docs.json'
-    with io.open(filename, 'w', encoding='utf-8') as f:
-        json.dump(list(app.glossary_docs), f)
+        json.dump(data, f)
     logger.info('done')
 
 def on_init(app):
     app.first_permalinks = {}
     app.glossary_info = {}
-    app.glossary_docs = set()
+    app.glossary_doc = None
     if logging_enabled:
         fd, fn = tempfile.mkstemp(prefix='sizzle-', suffix='.log')
         close(fd)
@@ -107,8 +110,7 @@ def on_init(app):
 def on_build_finished(app, exception):
     if app.sitemap_urls:
         create_sitemap(app)
-    if app.glossary_info:
-        create_glossary_data(app)
+    create_app_data(app)
 
     # remove unused files.
     outdir = app.builder.outdir
@@ -401,7 +403,9 @@ class Translator(BaseTranslator):
 
     def visit_glossary(self, node):
         self.in_glossary = True
-        self.builder.app.glossary_docs.add(self.builder.current_docname)
+        b = self.builder
+        if b.app.glossary_doc is None:
+            b.app.glossary_doc = b.current_docname
         super(Translator, self).visit_glossary(node)
 
     def depart_glossary(self, node):

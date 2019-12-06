@@ -384,3 +384,12 @@ be positioned at the top, rather than in the vicinity of the element you clicked
 to get to that page. The Sizzle theme JavaScript code tries to position the link
 which led you to a particular part of the documentation to near the vertical
 centre of the navigator, or at least in the visible portion of the navigator.
+
+Glossary Tooltips
+~~~~~~~~~~~~~~~~~
+
+Starting with version 0.0.9, limited support for tooltips for glossary terms
+is availble. The caveat is that it only works in top-level pages (i.e.
+``index.html`` and its sibling pages, but not ones in subdirectories). At the
+moment, you can't turn them off - it's still work in progress. You can try
+them out in the `Supervisor documentation set <https://docs.red-dove.com/supervisor/>`_.
