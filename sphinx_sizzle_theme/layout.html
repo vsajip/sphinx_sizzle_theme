@@ -467,9 +467,9 @@ $(document).ready(function() {
     scan_links();
   }
 {% endif %}
-  var url = '{{ pathto("index") }}';
+  var url = '{{ pathto("search") }}';
 
-  url = url.replace('index.html', 'app-data.json');
+  url = url.replace('search.html', 'app-data.json');
   $.ajax(url, {
     success: function(data, sts, xhr) {
       app_data = data;
