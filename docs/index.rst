@@ -389,7 +389,15 @@ Glossary Tooltips
 ~~~~~~~~~~~~~~~~~
 
 Starting with version 0.0.9, limited support for tooltips for glossary terms
-is availble. The caveat is that it only works in top-level pages (i.e.
-``index.html`` and its sibling pages, but not ones in subdirectories). At the
-moment, you can't turn them off - it's still work in progress. You can try
-them out in the `Supervisor documentation set <https://docs.red-dove.com/supervisor/>`_.
+is available. There are a couple of caveats:
+
+* Tooltips only work in top-level pages (i.e. ``index.html`` and its sibling
+  pages, but not ones in subdirectories).
+* Tooltips only work when documentation is served by an HTTP server - not when
+  the documentation is read from files locally.
+
+At the moment, you can't turn the tooltips off - it's still work in progress.
+You can try them out in the `Supervisor documentation set
+<https://docs.red-dove.com/supervisor/>`_: there are some glossary terms at
+the top of the home page - just hover over them to see the tooltips with the
+glossary definitions of those terms.

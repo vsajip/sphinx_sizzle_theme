@@ -261,7 +261,7 @@ $(document).ready(function() {
     var q = $elem.val().trim();
 
     if (q) {
-      var url = 'search.html?q=' + q + '&check_keywords=yes&area=default';
+      var url = '{{ pathto('search') }}?q=' + q + '&check_keywords=yes&area=default';
 
       location.href = url;
     }
@@ -467,12 +467,14 @@ $(document).ready(function() {
     scan_links();
   }
 {% endif %}
+  var url = '{{ pathto("index") }}';
 
-  $.ajax('app-data.json', {
+  url = url.replace('index.html', 'app-data.json');
+  $.ajax(url, {
     success: function(data, sts, xhr) {
       app_data = data;
 {% if pagename != 'glossary' %}
-      if (app_data.glossary) {
+      if (app_data.glossary && app_data.glossary.document) {
         add_glossary_tooltips();
       }
 {%- endif %}
