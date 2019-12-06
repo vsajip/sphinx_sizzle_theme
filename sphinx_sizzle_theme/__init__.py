@@ -73,15 +73,19 @@ def create_sitemap(app):
     logger.info('done')
 
 def create_glossary_data(app):
-    filename = app.outdir + '/glossary.json'
     logger.info(bold('creating glossary data... '), nonl=True)
+    filename = app.outdir + '/glossary.json'
     with io.open(filename, 'w', encoding='utf-8') as f:
-        json.dump(app.glossary_info, f, indent=2)
+        json.dump(app.glossary_info, f)
+    filename = app.outdir + '/glossary-docs.json'
+    with io.open(filename, 'w', encoding='utf-8') as f:
+        json.dump(list(app.glossary_docs), f)
     logger.info('done')
 
 def on_init(app):
     app.first_permalinks = {}
     app.glossary_info = {}
+    app.glossary_docs = set()
     if logging_enabled:
         fd, fn = tempfile.mkstemp(prefix='sizzle-', suffix='.log')
         close(fd)
@@ -397,6 +401,7 @@ class Translator(BaseTranslator):
 
     def visit_glossary(self, node):
         self.in_glossary = True
+        self.builder.app.glossary_docs.add(self.builder.current_docname)
         super(Translator, self).visit_glossary(node)
 
     def depart_glossary(self, node):

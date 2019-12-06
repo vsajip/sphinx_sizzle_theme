@@ -408,58 +408,74 @@ $(document).ready(function() {
   setTimeout(focus_content, 150);
 
 {% if pagename != 'glossary' %}
+
   function add_glossary_tooltips() {
-    var links = $('a');  // can qualify with .reference.internal
-    var glinks = {};
-    var found = false;
-    var pat = /glossary.html#(term-.*)$/;
+    var glossary_docs = {};
+    var found = false;  // any glossary
 
-    $.each(links, function(i, link) {
-        var $link = $(link);
-        var href = $link.attr('href');
-        var m = href.match(pat);
+    function scan_links() {
+      var links = $('a');  // can qualify with .reference.internal
+      var glinks = {};
+      var pat = /(.*)\.html#(term-.*)$/;
+      var found = false;  // links in this document
 
-        if (m) {
-            glinks[m[1]] = $link;
-            found = true;
-        }
-    });
-    if (found) {
-      $.ajax('/glossary.json', {
-        success: function(data, sts, xhr) {
-          // Add tooltip content to the document in a hidden div
-          var $t = $('#tooltips');
+      $.each(links, function(i, link) {
+          var $link = $(link);
+          var href = $link.attr('href');
+          var m = href.match(pat);
 
-          $.each(glinks, function(k, v) {
-            var d = data[k];
+          if (m && (m[1] in glossary_docs)) {
+              glinks[m[2]] = $link;
+              found = true;
+          }
+      });
+      if (found) {
+        $.ajax('/glossary.json', {
+          success: function(data, sts, xhr) {
+            // Add tooltip content to the document in a hidden div
+            var $t = $('#tooltips');
 
-            if (d) {
-              var s = 'tc-'+ k;
-              var $e = $('<div>').attr('id', s);
-              var $h = $('<div>').addClass('tc-heading').html(d.term);
-              var $b = $('<div>').addClass('tc-body').html(d.defn);
-              var span = v.find('span');
-              $e.append($h);
-              $e.append($b);
-              $t.append($e);
+            $.each(glinks, function(k, v) {
+              var d = data[k];
 
-              v.addClass('tt').attr('data-tooltip-content', '#' + s);
-            }
+              if (d) {
+                var s = 'tc-'+ k;
+                var $e = $('<div>').attr('id', s);
+                var $h = $('<div>').addClass('tc-heading').html(d.term);
+                var $b = $('<div>').addClass('tc-body').html(d.defn);
+                var span = v.find('span');
+                $e.append($h);
+                $e.append($b);
+                $t.append($e);
+
+                v.addClass('tt').attr('data-tooltip-content', '#' + s);
+              }
+            });
+          }
+        });
+
+        function activate_tooltips() {
+          var $tt = $('.tt');
+
+          //console.log('tt links:', $tt.length);
+          $tt.tooltipster({
+            theme: ['tooltipster-light', 'tooltipster-light-customized'],
+            contentCloning: true
           });
         }
-      });
-
-      function activate_tooltips() {
-        var $tt = $('.tt');
-
-        //console.log('tt links:', $tt.length);
-        $tt.tooltipster({
-          theme: 'tooltipster-light',
-          contentCloning: true
-        });
+        setTimeout(activate_tooltips, 1000);
       }
-      setTimeout(activate_tooltips, 1000);
     }
+
+    $.ajax('/glossary-docs.json', {
+      success: function(data, sts, xhr) {
+        $.each(data, function(i, name) {
+          glossary_docs[name] = true;
+        });
+        scan_links();
+      }
+    });
+
   }
 
   add_glossary_tooltips();
