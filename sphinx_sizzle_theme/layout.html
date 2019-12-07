@@ -415,67 +415,61 @@ $(document).ready(function() {
   setTimeout(focus_content, 150);
 
   var sizzle = $(document).data('sizzle');
-
 {% if pagename != 'glossary' %}
 
   function add_glossary_tooltips() {
+    var links = $('a');  // can qualify with .reference.internal
+    var glinks = {};
+    var pat = /(.*)\.html#(term-.*)$/;
+    var found = false;  // links in this document
 
-    function scan_links() {
-      var links = $('a');  // can qualify with .reference.internal
-      var glinks = {};
-      var pat = /(.*)\.html#(term-.*)$/;
-      var found = false;  // links in this document
+    $.each(links, function(i, link) {
+        var $link = $(link);
+        var href = $link.attr('href');
+        var m = href.match(pat);
 
-      $.each(links, function(i, link) {
-          var $link = $(link);
-          var href = $link.attr('href');
-          var m = href.match(pat);
+        if (m) {
+          var s = m[1].replace(/^(\.\.\/)+/, '');
 
-          if (m) {
-            var s = m[1].replace(/^(\.\.\/)+/, '');
-
-            if (s === sizzle.app_data.glossary.document) {
-              glinks[m[2]] = $link;
-              found = true;
-            }
+          if (s === sizzle.app_data.glossary.document) {
+            glinks[m[2]] = $link;
+            found = true;
           }
-      });
-      if (found) {
-        var $t = $('#tooltips');
-        var data = sizzle.app_data.glossary.terms;
-
-        $.each(glinks, function(k, v) {
-          var d = data[k];
-
-          if (d) {  // as a sanity check
-            var s = 'tc-'+ k;
-            var $e = $('<div>').attr('id', s);
-            var $h = $('<div>').addClass('tc-heading').html(d.term);
-            var $b = $('<div>').addClass('tc-body').html(d.defn);
-            var span = v.find('span');
-            $e.append($h);
-            $e.append($b);
-            $t.append($e);
-
-            v.addClass('tt').attr('data-tooltip-content', '#' + s);
-          }
-        });
-
-        function activate_tooltips() {
-          var $tt = $('.tt');
-
-          //console.log('tt links:', $tt.length);
-          $tt.tooltipster({
-            theme: ['tooltipster-light', 'tooltipster-light-customized'],
-            interactive: true,
-            contentCloning: true
-          });
         }
-        setTimeout(activate_tooltips, 1000);
-      }
-    }
+    });
+    if (found) {
+      var $t = $('#tooltips');
+      var data = sizzle.app_data.glossary.terms;
 
-    scan_links();
+      $.each(glinks, function(k, v) {
+        var d = data[k];
+
+        if (d) {  // as a sanity check
+          var s = 'tc-'+ k;
+          var $e = $('<div>').attr('id', s);
+          var $h = $('<div>').addClass('tc-heading').html(d.term);
+          var $b = $('<div>').addClass('tc-body').html(d.defn);
+          var span = v.find('span');
+          $e.append($h);
+          $e.append($b);
+          $t.append($e);
+
+          v.addClass('tt').attr('data-tooltip-content', '#' + s);
+        }
+      });
+
+      function activate_tooltips() {
+        var $tt = $('.tt');
+
+        //console.log('tt links:', $tt.length);
+        $tt.tooltipster({
+          theme: ['tooltipster-light', 'tooltipster-light-customized'],
+          interactive: true,
+          contentCloning: true
+        });
+      }
+      setTimeout(activate_tooltips, 1000);
+    }
   }
 
   if (sizzle.app_data && sizzle.app_data.glossary &&
