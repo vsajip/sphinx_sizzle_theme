@@ -27,7 +27,7 @@ from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
 HERE = path.abspath(path.dirname(__file__))
 
-__version__ = '0.0.9'
+__version__ = '0.0.9.dev0'
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -72,17 +72,27 @@ def create_sitemap(app):
     ET.ElementTree(root).write(filename)
     logger.info('done')
 
+_APP_JS_SNIPPET = '''
+(function() {
+  var sizzle = $(document).data('sizzle');
+
+  sizzle.app_data = JSON.parse('%s');
+})();
+'''
+
 def create_app_data(app):
     logger.info(bold('creating app data... '), nonl=True)
-    filename = app.outdir + '/app-data.json'
+    filename = app.outdir + '/app-data.js'
     data = {
         'glossary': {
             'document': app.glossary_doc,
             'terms': app.glossary_info,
         },
     }
+    s = json.dumps(data).replace('\\', '\\\\').replace('\'', '\\\'')
+    s = _APP_JS_SNIPPET % s
     with io.open(filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f)
+        f.write(s)
     logger.info('done')
 
 def on_init(app):
@@ -156,6 +166,11 @@ def on_page(app, pagename, templatename, context, doctree):
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
     context['sizzle_version'] = app.sizzle_version
+    if pagename != 'search':
+        app_data_path = context['pathto']('search').replace('search.html',
+                                                            'app-data.js')
+        if app_data_path != '#':
+            context['app_data_path'] = app_data_path
     logger.debug('on_page: %s', pagename)
 
 def find_first_permalink(document):

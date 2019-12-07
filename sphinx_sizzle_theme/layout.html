@@ -26,6 +26,13 @@
     {%- endif %}
     {%- endif %}
     {%- endfor %}
+    {%- if app_data_path is defined %}
+      {%- if js_tag is defined %}
+      {{ js_tag(app_data_path) }}
+      {%- else %}
+    <script type="text/javascript" src="{{ app_data_path }}"></script>
+      {%- endif %}
+    {%- endif %}
 {%- endmacro %}
 {%- macro sometoc(toctree) %}
   {% if toctree %}
@@ -407,7 +414,7 @@ $(document).ready(function() {
 
   setTimeout(focus_content, 150);
 
-  var app_data = null;
+  var sizzle = $(document).data('sizzle');
 
 {% if pagename != 'glossary' %}
 
@@ -424,14 +431,18 @@ $(document).ready(function() {
           var href = $link.attr('href');
           var m = href.match(pat);
 
-          if (m && (m[1] === app_data.glossary.document)) {
+          if (m) {
+            var s = m[1].replace(/^(\.\.\/)+/, '');
+
+            if (s === sizzle.app_data.glossary.document) {
               glinks[m[2]] = $link;
               found = true;
+            }
           }
       });
       if (found) {
         var $t = $('#tooltips');
-        var data = app_data.glossary.terms;
+        var data = sizzle.app_data.glossary.terms;
 
         $.each(glinks, function(k, v) {
           var d = data[k];
@@ -466,22 +477,13 @@ $(document).ready(function() {
 
     scan_links();
   }
+
+  if (sizzle.app_data && sizzle.app_data.glossary &&
+      sizzle.app_data.glossary.document) {
+    add_glossary_tooltips();
+  }
 {% endif %}
-  var url = '{{ pathto("search") }}';
 
-  url = url.replace('search.html', 'app-data.json');
-  $.ajax(url, {
-    success: function(data, sts, xhr) {
-      app_data = data;
-{% if pagename != 'glossary' %}
-      if (app_data.glossary && app_data.glossary.document) {
-        add_glossary_tooltips();
-      }
-{%- endif %}
-    }
-  });
-
-  var sizzle = $(document).data('sizzle');
   if (sizzle.on_load) {
     sizzle.on_load.forEach(function(f) {
       f();

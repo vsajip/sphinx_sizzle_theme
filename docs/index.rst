@@ -43,7 +43,8 @@ Sizzle inherits from Sphinx's ``basic`` theme. The following theme options are d
 * ``show_filter`` -- controls whether a filter to apply to TOC titles is shown.
   This defaults to ``true`` - set it to ``False`` to hide the filter (which is
   not needed if you have a short enough list of entries in the TOC).
-
+* ``enable_tooltips`` -- controls if tooltips are shown. This defaults to
+  ``true`` - set it to ``False`` to disable tooltips.
 Layout
 ~~~~~~
 
@@ -388,16 +389,8 @@ centre of the navigator, or at least in the visible portion of the navigator.
 Glossary Tooltips
 ~~~~~~~~~~~~~~~~~
 
-Starting with version 0.0.9, limited support for tooltips for glossary terms
-is available. There are a couple of caveats:
-
-* Tooltips only work in top-level pages (i.e. ``index.html`` and its sibling
-  pages, but not ones in subdirectories).
-* Tooltips only work when documentation is served by an HTTP server - not when
-  the documentation is read from files locally.
-
-At the moment, you can't turn the tooltips off - it's still work in progress.
-You can try them out in the `Supervisor documentation set
+Starting with version 0.0.9, support for tooltips for glossary terms is
+available. You can try them out in the `Supervisor documentation set
 <https://docs.red-dove.com/supervisor/>`_: there are some glossary terms at
 the top of the home page - just hover over them to see the tooltips with the
 glossary definitions of those terms.
