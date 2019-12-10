@@ -970,6 +970,11 @@ span.eqno {
   list-style-type: none;
 }
 
+.field-body ul.bulleted li {
+  list-style-type: inherit;
+  margin-left: 2em;
+}
+
 tr.field td:first-child {
   display: none;
 }

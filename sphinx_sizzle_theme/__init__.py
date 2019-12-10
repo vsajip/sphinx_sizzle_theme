@@ -9,6 +9,7 @@ import json
 import logging
 from os import path, remove, close
 from shutil import rmtree
+import sys
 import tempfile
 import xml.etree.ElementTree as ET
 
@@ -18,10 +19,13 @@ try:
 except ImportError:
     from urlparse import urljoin
 
-from docutils.nodes import strong, emphasis, inline, Text, document
+from docutils.nodes import (strong, emphasis, inline, Text, document,
+                            paragraph, reprunicode)
+
 from docutils.parsers.rst.roles import set_classes
 
 # from sphinx import version_info as sphinx_version
+from sphinx.addnodes import literal_strong
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
@@ -225,10 +229,10 @@ def extract_keys(source, keys):
             result[key] = source[key]
     return result
 
-def dump_node(node, level=0):  # used for debugging only
-    print('%s%r' %('  ' * level, node))
+def dump_node(node, level=0, file=sys.stdout):  # used for debugging only
+    print('%s%r' %('  ' * level, node), file=file)
     for child in node.children:
-        dump_node(child, level + 1)
+        dump_node(child, level + 1, file=file)
 
 class Translator(BaseTranslator):
     def __init__(self, *args, **kwargs):
@@ -248,10 +252,11 @@ class Translator(BaseTranslator):
             logger.debug('translate toctree: %s', self.builder.current_docname)
         # Remove limit on field names (ensures parameters are in two columns)
         self.settings.field_name_limit = 0
-        self.in_glossary = False
+        self.in_glossary = self.in_field_body = False
         ctx = self.builder.globalcontext
         self.enable_tooltips = ctx.get('theme_enable_tooltips') in (True, 'true')
         self.glossary_permalinks = ctx.get('theme_glossary_permalinks') in (True, 'true')
+        self.debugging = False
 
     def visit_table(self, node, name=''):
         """
@@ -360,6 +365,25 @@ class Translator(BaseTranslator):
                 node['refuri'] = '%s#%s' % (ru, link)
                 logger.debug('visit_reference: %s -> %s', ru, node['refuri'])
         super(Translator, self).visit_reference(node)
+
+    def visit_field_body(self, node):
+        self.in_field_body = True
+        # is this a parameter declaration with an oddly-parsed structure such
+        # that we have a literal_strong for the parameter name, an ndash
+        # separator, and then a paragraph? That needs slight massaging so we
+        # don't have a dangling ndash ...
+        child = node[0]
+        if (isinstance(child[0], literal_strong) and
+            (child[1] == ' \u2013 ') and isinstance(child[2], paragraph) and
+            (len(child[2]) == 1) and isinstance(child[2][0], reprunicode)):
+            # child 2 is a singleton paragraph with some text. Hoik it out
+            # to lose the paragraph
+            child[2] = child[2][0]
+        super(Translator, self).visit_field_body(node)
+
+    def depart_field_body(self, node):
+        super(Translator, self).depart_field_body(node)
+        self.in_field_body = False
 
     def visit_bullet_list(self, node):
         nda = node.non_default_attributes()
