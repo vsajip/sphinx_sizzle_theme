@@ -1490,6 +1490,8 @@ td.footnote-label, th.stub {
   }
 }
 
+/* Tooltips */
+
 .tc-heading {
   display: none;
 }
@@ -1498,4 +1500,10 @@ td.footnote-label, th.stub {
   font-size: 1.2em;
   width: 50%;
   border-bottom: 1px solid silver;
+}
+
+.tooltipster-sidetip.tooltipster-light.tooltipster-light-customized .tooltipster-box {
+  border: 1px solid #999;
+  border-radius: 6px;
+  box-shadow: 3px 3px 2px 0 rgba(0,0,0,0.4);
 }
