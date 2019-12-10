@@ -45,6 +45,9 @@ Sizzle inherits from Sphinx's ``basic`` theme. The following theme options are d
   not needed if you have a short enough list of entries in the TOC).
 * ``enable_tooltips`` -- controls if tooltips are shown. This defaults to
   ``true`` - set it to ``False`` to disable tooltips.
+* ``glossary_permalinks`` -- controls if glossary terms have permalinks. This
+  defaults to ``true`` - set it to ``False`` to disable the permalinks.
+
 Layout
 ~~~~~~
 
@@ -386,11 +389,29 @@ to get to that page. The Sizzle theme JavaScript code tries to position the link
 which led you to a particular part of the documentation to near the vertical
 centre of the navigator, or at least in the visible portion of the navigator.
 
-Glossary Tooltips
-~~~~~~~~~~~~~~~~~
+Glossary Improvements
+~~~~~~~~~~~~~~~~~~~~~
 
-Starting with version 0.0.9, support for tooltips for glossary terms is
-available. You can try them out in the `Supervisor documentation set
+Starting with version 0.0.9, there have been some improvements to Sphinx
+glossary functionality.
+
+Tooltips
+++++++++
+
+By default, you can see tooltips when you hover over a glossary term in
+documentation. You can try them out in the `Supervisor documentation set
 <https://docs.red-dove.com/supervisor/>`_: there are some glossary terms at
 the top of the home page - just hover over them to see the tooltips with the
 glossary definitions of those terms.
+
+You can disable tooltips by setting ``enable_tooltips`` to ``False`` in the
+theme options.
+
+Permalinks
+++++++++++
+
+In the glossary, the term headings have a hover-over permalink which allows
+you to bookmark them by right-clicking -- the same as headings.
+
+You can disable glossary permalinks by setting ``glossary_permalinks`` to
+``False`` in the theme options.

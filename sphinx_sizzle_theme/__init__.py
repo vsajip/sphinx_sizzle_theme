@@ -249,6 +249,9 @@ class Translator(BaseTranslator):
         # Remove limit on field names (ensures parameters are in two columns)
         self.settings.field_name_limit = 0
         self.in_glossary = False
+        ctx = self.builder.globalcontext
+        self.enable_tooltips = ctx.get('theme_enable_tooltips') in (True, 'true')
+        self.glossary_permalinks = ctx.get('theme_glossary_permalinks') in (True, 'true')
 
     def visit_table(self, node, name=''):
         """
@@ -429,24 +432,28 @@ class Translator(BaseTranslator):
 
     def visit_term(self, node):
         super(Translator, self).visit_term(node)
-        if self.in_glossary:
+        if self.in_glossary and self.enable_tooltips:
             self.term_key = node.attributes['ids'][0]
             self.term_pos = len(self.body)
 
     def depart_term(self, node):
-        if self.in_glossary:
+        if self.in_glossary and self.enable_tooltips:
             term_html = ''.join(self.body[self.term_pos:])
             app = self.builder.app
             app.glossary_info.setdefault(self.term_key, {})['term'] = term_html
+        if self.in_glossary and self.glossary_permalinks:
+            s = ('<a class="headerlink" href="#%s" '
+                 'title="Permalink to this term">\xb6</a>' % self.term_key)
+            self.body.append(s)
         super(Translator, self).depart_term(node)
 
     def visit_definition(self, node):
         super(Translator, self).visit_definition(node)
-        if self.in_glossary:
+        if self.in_glossary and self.enable_tooltips:
             self.defn_pos = len(self.body)
 
     def depart_definition(self, node):
-        if self.in_glossary:
+        if self.in_glossary and self.enable_tooltips:
             defn_html = ''.join(self.body[self.defn_pos:])
             app = self.builder.app
             app.glossary_info.setdefault(self.term_key, {})['defn'] = defn_html
