@@ -323,6 +323,8 @@ class Translator(BaseTranslator):
             para.insert(0, handle)
 
     def visit_list_item(self, node):
+        if self.in_field_body:
+            self.fixup_parameter(node[0])
         super(Translator, self).visit_list_item(node)
         self.li_level += 1
 
@@ -366,19 +368,22 @@ class Translator(BaseTranslator):
                 logger.debug('visit_reference: %s -> %s', ru, node['refuri'])
         super(Translator, self).visit_reference(node)
 
-    def visit_field_body(self, node):
-        self.in_field_body = True
+    def fixup_parameter(self, node):
         # is this a parameter declaration with an oddly-parsed structure such
         # that we have a literal_strong for the parameter name, an ndash
         # separator, and then a paragraph? That needs slight massaging so we
         # don't have a dangling ndash ...
-        child = node[0]
-        if (isinstance(child[0], literal_strong) and
-            (child[1] == ' \u2013 ') and isinstance(child[2], paragraph) and
-            (len(child[2]) == 1) and isinstance(child[2][0], reprunicode)):
-            # child 2 is a singleton paragraph with some text. Hoik it out
-            # to lose the paragraph
-            child[2] = child[2][0]
+        if (isinstance(node[0], literal_strong) and
+            (node[1] == ' \u2013 ') and isinstance(node[2], paragraph)):
+            para = node[2]
+            del node[2]
+            #remove the paras children and insert them in place of the para
+            for n in reversed(para.children):
+                node.children.insert(2, n)
+
+    def visit_field_body(self, node):
+        self.in_field_body = True
+        self.fixup_parameter(node[0])
         super(Translator, self).visit_field_body(node)
 
     def depart_field_body(self, node):
