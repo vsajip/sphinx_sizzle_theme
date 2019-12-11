@@ -1512,3 +1512,20 @@ td.footnote-label, th.stub {
   border-radius: 6px;
   box-shadow: 3px 3px 2px 0 rgba(0,0,0,0.4);
 }
+
+/* Keyboard keys style */
+
+kbd
+{
+  background-color:#f7f7f7;
+  border:1px solid #ccc;
+  border-radius:3px;
+  color:#333;
+  display:inline-block;
+  font-family: $mono-font;
+  /* line-height:1.4; */
+  margin:0 .1em;
+  padding:.1em .3em;
+  text-shadow:0 1px 0 #fff;
+  box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.4);
+}
