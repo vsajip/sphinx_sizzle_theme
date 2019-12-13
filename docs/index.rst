@@ -415,3 +415,10 @@ you to bookmark them by right-clicking -- the same as headings.
 
 You can disable glossary permalinks by setting ``glossary_permalinks`` to
 ``False`` in the theme options.
+
+Code Block Improvements
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting with version 0.0.9, code blocks with captions get a little button
+which, when clicked, copies the contents of the code block to the clipboard.
+This idea was shamelessly borrowed from recent Django documentation!

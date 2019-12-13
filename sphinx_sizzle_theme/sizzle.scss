@@ -817,6 +817,16 @@ dt:target, .highlight {
     /* color: #fff; */
     /* background-color: $hdr-blue; */
   }
+  .clip-copy {
+    float: right;
+    cursor: pointer;
+    margin: 8px;
+  }
+  .copied {
+    margin-right: 0.5em;
+    font-size: 0.8em;
+    display: inline-block;
+  }
 }
 
 td.linenos pre {
