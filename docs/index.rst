@@ -421,4 +421,14 @@ Code Block Improvements
 
 Starting with version 0.0.9, code blocks with captions get a little button
 which, when clicked, copies the contents of the code block to the clipboard.
-This idea was shamelessly borrowed from recent Django documentation!
+The idea was shamelessly borrowed from recent Django documentation! Here's an
+example:
+
+.. code-block:: python3
+   :caption: dump_node.py
+
+   def dump_node(node, level=0, file=sys.stdout):  # used for debugging only
+       print('%s%r' %('  ' * level, node), file=file)
+       for child in node.children:
+           dump_node(child, level + 1, file=file)
+
