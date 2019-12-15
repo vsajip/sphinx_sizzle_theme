@@ -980,11 +980,11 @@ span.eqno {
 
 .field-body li {
   list-style-type: none;
-}
 
-.field-body ul.bulleted li {
-  list-style-type: disc;
-  margin-left: 2em;
+  ul.bulleted li {
+    list-style-type: disc;
+    margin-left: 2em;
+  }
 }
 
 tr.field td:first-child {
@@ -1540,4 +1540,10 @@ kbd
   padding:.1em .3em;
   text-shadow:0 1px 0 #fff;
   box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.4);
+}
+
+/* Misc margin and padding */
+
+.mt10 {
+  margin-top: 10px;
 }
