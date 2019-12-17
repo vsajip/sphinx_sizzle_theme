@@ -318,6 +318,9 @@ blockquote {
     &.toctree-l4 a {
       padding-left: $toc-pad + 3*$lvl-pad;
     }
+    &.toctree-l5 a {
+      padding-left: $toc-pad + 4*$lvl-pad;
+    }
   }
   .localtoc li a {
     padding-left: $toc-pad;
