@@ -252,10 +252,13 @@ $(document).ready(function() {
 
 {% if pagename == 'search' %}
   var params = $.getQueryParameters();
+  var search_url = '';
   if (params.q) {
       var query = params.q[0];
       $search.val(query).filter(':visible').focus();
   }
+{% else %}
+  var search_url = '{{ pathto('search') }}';
 {% endif %}
   function perform_search(e) {
     var $elem;
@@ -269,7 +272,7 @@ $(document).ready(function() {
     var q = $elem.val().trim();
 
     if (q) {
-      var url = '{{ pathto('search') }}?q=' + q + '&check_keywords=yes&area=default';
+      var url = search_url + '?q=' + q + '&check_keywords=yes&area=default';
 
       location.href = url;
     }
