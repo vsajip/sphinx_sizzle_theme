@@ -1386,7 +1386,6 @@ td.footnote-label, th.stub {
   #sidebar-search {
     display: none;
   }
-
 }
 
 @media screen and (max-width: 1100px) {
@@ -1403,7 +1402,7 @@ td.footnote-label, th.stub {
     white-space: nowrap;
   }
 
-  #alt-hdr-right {
+  #alt-hdr-right, .search-page-form {
     display: none;
   }
 
@@ -1436,7 +1435,7 @@ td.footnote-label, th.stub {
     display: none;
   }
 
-  #alt-hdr-right {
+  #alt-hdr-right, .search-page-form {
     display: block;
   }
 

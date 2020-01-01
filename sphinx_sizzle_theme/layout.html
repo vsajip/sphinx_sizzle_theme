@@ -187,6 +187,9 @@
 {% if pagename != 'index' %}
         <a href="{{ pathto('index') }}"><i class="fa fa-home mr-8"></i></a>
 {% endif %}
+{% if pagename != 'search' %}
+        <a href="{{ pathto('search') }}"><i class="fa fa-search mr-8"></i></a>
+{% endif %}
 {% if hasdoc('genindex') and pagename != 'genindex' and theme_show_index %}
         <a href="{{ pathto('genindex') }}"><i class="fa fa-list mr-8"></i></a>
 {% endif %}
