@@ -1439,6 +1439,10 @@ td.footnote-label, th.stub {
     display: block;
   }
 
+  #search-hint {
+    display: none;
+  }
+
   #header-row {
     background-color: $nav-color;
   }

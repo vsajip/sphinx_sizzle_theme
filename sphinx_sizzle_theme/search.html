@@ -10,14 +10,14 @@
   </div>
   <div class="search-page-form">
     <div class="section">
-      <p>{% trans %}Enter your search words into the box below and click
+      <p>{% trans %}Enter your search words into the box below and hit
       "search". Note that the search function will automatically search for all
       of the words. Pages containing fewer words won't appear in the result
       list.{% endtrans %}</p>
     </div>
     <form class="form-inline" action="{{ pathto('search') }}" method="GET" role="form">
       <div class="input-group">
-        <input name="q" type="text" class="form-control" />
+        <input name="q" type="text" class="form-control" placeholder="Search docs"/>
         <span class="input-group-btn">
           <button class="btn btn-default" type="button">{{ _('search') }}</button>
         </span>
@@ -26,21 +26,20 @@
     </form>
   </div>
 
-  {% if search_performed %}
-    <h2>{{ _('Search Results') }}</h2>
-    {% if not search_results %}
-      <p>{{ _('Your search did not match any documents. Please make sure that all words are spelled correctly and that you\'ve selected enough categories.') }}</p>
-    {% endif %}
-  {% endif %}
-  <div id="search-results">
-  {% if search_results %}
-    <ul>
-    {% for href, caption, context in search_results %}
-      <li><a href="{{ pathto(item.href) }}">{{ caption }}</a>
-        <div class="context">{{ context|e }}</div>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  </div>
+  <div id="search-hint" class="hidden">Enter your search criteria in the search
+  box above or at left.</div>
+  <div id="search-results">{# will be populated by JS code #}</div>
+  <script>
+  function prepare_page() {
+    var params = $.getQueryParameters();
+
+    if (!params.q) {
+      $('#search-hint').removeClass('hidden');
+    }
+  }
+
+  var sizzle = $(document).data('sizzle');
+
+  sizzle.on_load.push(prepare_page);
+  </script>
 {% endblock %}
