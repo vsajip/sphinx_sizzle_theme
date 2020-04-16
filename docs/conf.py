@@ -98,7 +98,7 @@ THEME_OPTIONS = {
         'info-tips': {
             # key maps to HTML to be shown in a tooltip. The string tci-{key} will
             # typically appear in an HTML attribute in the built documentation.
-            'ver-0.0.9': 'This feature <em>will be</em> added in version 0.0.9.',
+            'ver-0.0.9': 'This feature was added in version 0.0.9.',
             'win-only': 'This doodad only works on Windows.',
             'linux-only': 'This thingummy is for Linux only.',
         },

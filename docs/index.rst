@@ -413,6 +413,9 @@ glossary definitions of those terms.
 You can disable tooltips by setting ``enable_tooltips`` to ``False`` in the
 theme options.
 
+.. versionadded:: 0.0.9
+   The tooltip functionality was added and applied to glossary terms.
+
 Permalinks
 ++++++++++
 
@@ -438,18 +441,24 @@ example:
        for child in node.children:
            dump_node(child, level + 1, file=file)
 
+.. versionadded:: 0.0.9
+   The code block copy functionality was added.
+
 Providing Customized Tooltips
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Starting with version 0.0.9, you can provide customized tooltips. For example, here's
-an info icon with a customized tooltip: :fa:`info-circle,tci-ver-0.0.9`
+an info icon with a customized tooltip: :fa:`info-circle,tc-infotip,tci-ver-0.0.9`
 :span:`tc-info|` If you hover over it, you'll see a tooltip saying something like
-"This feature will be added in version 0.0.9." This was achieved using the following
+"This feature was added in version 0.0.9." This was achieved using the following
 steps:
 
-* Have a span with a class starting with ``tci-``, where the suffix is treated as a key
-  to use when finding the tooltip's HTML. In the above example, that's done using the
-  markup ``:fa:`info-circle,tci-ver-0.0.9```.
+* Have a span with a CSS class ``tc-infotip`` and another CSS class starting with ``tci-``,
+  where the suffix is treated as a key. to use when finding the tooltip's HTML. In the
+  above example, that's done using the markup
+  ``:fa:`info-circle,tc-infotip,tci-ver-0.0.9```. The ``tc-infotip`` class is used to
+  style the content with the tip (by default, it just indicates via the cursor that
+  help is available).
 * Immediately following that, have a span which has the ``tc-info`` class. IN the above
   example, that's just ```:span:`tc-info|``` (the span here has no text; it simply
   serves as a marker for the preceding element. But it's fine to have text, too, as in
@@ -461,26 +470,91 @@ steps:
 
       'custom_data': {
         'info-tips': {
-            'ver-0.0.9': 'This feature <em>will be</em> added in version 0.0.9.',
+            'ver-0.0.9': 'This feature was added in version 0.0.9.',
         },
     }
 
-When the documentation is built, code in the Sizzle theme ensures that the contents of
-``custom_data`` are made available to the JavaScript code in the built documentation.
-When the page is loaded, JavaScript code in the Sizzle theme looks for elements with
-class ``tc-info`` and for each of them, if an element is found immediately preceding it
-with a class beginning with ``tci-``, that prefix is stripped off to provide a key (in
-this case, it would be ``ver-0.0.9``. If that key is found in the ``info-tips``
-mapping, the corresponding value is treated as HTML to appear in the tooltip. (If the
-key is not found, then no tooltip will appear.)
+When the documentation is built, Python code in the Sizzle theme ensures that the
+contents of ``custom_data`` are made available to the JavaScript code in the built
+documentation. When the page is loaded, JavaScript code in the Sizzle theme looks for
+elements with class ``tc-info`` and for each of them, if an element is found
+immediately preceding it with a class beginning with ``tci-``, that prefix is stripped
+off to provide a key (in this case, it would be ``ver-0.0.9``. If that key is found in
+the ``info-tips`` mapping, the corresponding value is treated as HTML to appear in the
+tooltip. (If the key is not found, e.g. because missing or misspelt in
+``custom_data['info-tips']``, then no tooltip will appear.)
 
 Of course, Sphinx has ``versionadded`` and ``versionchanged`` directives to provide
 this type of information in the body of the document. But this example is just for the
 purposes of illustration -- in practice, this feature could be used to provide
 info-tips which are about platform-specific or product-specific features, with a
 suitable icon to draw attention to them. For example, to mark something as only
-working on :fa:`windows,tci-win-only` :span:`tc-info|Windows`, or something else as
-only working on :fa:`linux,tci-linux-only` :span:`tc-info|Linux`.
+working on :fa:`windows,tc-infotip,tci-win-only` :span:`tc-info|Windows`, or something else as
+only working on :fa:`linux,tc-infotip,tci-linux-only` :span:`tc-info|Linux`.
 
 .. versionadded:: 0.0.9
    Customized tooltip functionality was added.
+
+Change Log
+~~~~~~~~~~
+
+
+
+.. cssclass:: summary-detail
+
+    * :span:`Changes for recent releases are shown here (click the arrow at left to
+      expand).`
+
+      .. cssclass:: table table-striped
+
+      +------------+------------+----------------------------------------------------+
+      |Version     |Released on |Changes                                             |
+      +============+============+====================================================+
+      |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
+      |            |            |terms, providing tooltips for term definitions.     |
+      |            |            |                                                    |
+      |            |            |Allow code blocks with captions to be copied with a |
+      |            |            |click.                                              |
+      |            |            |                                                    |
+      |            |            |Provide a means of showing customized tooltips.     |
+      +------------+------------+----------------------------------------------------+
+      |0.0.8       |16 Oct 2019 |Improved documentation.                             |
+      |            |            |                                                    |
+      |            |            |Fixed some minor styling nits (e.g. equation        |
+      |            |            |colors).                                            |
+      |            |            |                                                    |
+      |            |            |Added the 'linktags' block to the layout.           |
+      |            |            |                                                    |
+      |            |            |Allowed keyboard navigation without having to click |
+      |            |            |on the page first.                                  |
+      +------------+------------+----------------------------------------------------+
+      |0.0.7       |10 May 2019 |Improved tarball generation.                        |
+      |            |            |                                                    |
+      |            |            |Updated documentation, layout, styles and logic.    |
+      +------------+------------+----------------------------------------------------+
+      |0.0.6       |07 May 2019 |Removed unused files when building documentation.   |
+      |            |            |                                                    |
+      |            |            |Improved navigation logic further.                  |
+      +------------+------------+----------------------------------------------------+
+      |0.0.5       |18 Apr 2019 |Updated styles and layout.                          |
+      |            |            |                                                    |
+      |            |            |Improved navigation logic.                          |
+      +------------+------------+----------------------------------------------------+
+      |0.0.4       |12 Apr 2019 |Updated README.                                     |
+      |            |            |                                                    |
+      |            |            |Added documentation and prepared to dogfood theme.  |
+      |            |            |                                                    |
+      |            |            |Made changes to styles, layout and JavaScript code. |
+      |            |            |                                                    |
+      |            |            |Announced on sphinx-users, asked for feedback.      |
+      +------------+------------+----------------------------------------------------+
+      |0.0.3       |09 Apr 2019 |Made style, layout and JavaScript changes.          |
+      |            |            |                                                    |
+      |            |            |Added LICENSE file.                                 |
+      |            |            |                                                    |
+      |            |            |Switched to SCSS for style source.                  |
+      +------------+------------+----------------------------------------------------+
+      |0.0.2       |07 Apr 2019 |Updated README.                                     |
+      +------------+------------+----------------------------------------------------+
+      |0.0.1       |07 Apr 2019 |Initial release.                                    |
+      +------------+------------+----------------------------------------------------+

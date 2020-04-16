@@ -449,7 +449,7 @@ $(document).ready(function() {
     $tt.tooltipster(default_tt_options);
   }
 
-{% if pagename != 'glossary' %}
+{% if pagename != 'glossary' and theme_enable_tooltips %}
 
   function add_glossary_tooltips() {
     var links = $('a');  // can qualify with .reference.internal
@@ -504,6 +504,8 @@ $(document).ready(function() {
   }
 {% endif %}
 
+{% if theme_enable_tooltips %}
+
   function add_custom_tooltips() {
     var info_tips = sizzle.app_data.custom_data['info-tips'] || {};
 
@@ -532,6 +534,7 @@ $(document).ready(function() {
   add_custom_tooltips();
 
   setTimeout(activate_tooltips, 1000);
+{% endif %}
 
   // Clipboard copy for code blocks with captions
 
