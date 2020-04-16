@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Sizzle'
-copyright = '2019, Vinay Sajip'
+copyright = '2020, Vinay Sajip'
 author = 'Vinay Sajip'
 
 # The version info for the project you're documenting, acts as replacement for

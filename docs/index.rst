@@ -161,8 +161,8 @@ your projects:
   This approach is preferable when your usage of a particular style is
   systematic rather than *ad hoc*.
 
-  The section on :ref:`summary_detail` gives an example where the ``span`` role
-  can be useful.
+  The sections on :ref:`summary_detail` and :ref:`custom_tooltips` give examples where
+  the ``span`` role can be useful.
 
 Use of JavaScript, CSS and font assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -444,6 +444,8 @@ example:
 .. versionadded:: 0.0.9
    The code block copy functionality was added.
 
+.. _custom_tooltips:
+
 Providing Customized Tooltips
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -471,6 +473,8 @@ steps:
       'custom_data': {
         'info-tips': {
             'ver-0.0.9': 'This feature was added in version 0.0.9.',
+            'win-only': 'This doodad only works on Windows.',
+            'linux-only': 'This thingummy is for Linux only.',
         },
     }
 
@@ -511,7 +515,7 @@ Change Log
       |Version     |Released on |Changes                                             |
       +============+============+====================================================+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
-      |            |            |terms, providing tooltips for term definitions.     |
+      |            |            |terms, providing tooltips for term definitions).    |
       |            |            |                                                    |
       |            |            |Allow code blocks with captions to be copied with a |
       |            |            |click.                                              |
@@ -546,7 +550,7 @@ Change Log
       |            |            |                                                    |
       |            |            |Made changes to styles, layout and JavaScript code. |
       |            |            |                                                    |
-      |            |            |Announced on sphinx-users, asked for feedback.      |
+      |            |            |Announced on sphinx-users, feedback solicited.      |
       +------------+------------+----------------------------------------------------+
       |0.0.3       |09 Apr 2019 |Made style, layout and JavaScript changes.          |
       |            |            |                                                    |
