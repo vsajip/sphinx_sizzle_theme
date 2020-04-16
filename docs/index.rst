@@ -47,6 +47,12 @@ Sizzle inherits from Sphinx's ``basic`` theme. The following theme options are d
   ``true`` - set it to ``False`` to disable tooltips.
 * ``glossary_permalinks`` -- controls if glossary terms have permalinks. This
   defaults to ``true`` - set it to ``False`` to disable the permalinks.
+* ``custom_data`` -- any custom data used by the theme. This defaults to an empty
+  dictionary. This data needs to be loaded by JavaScript code in the HTML
+  documentation, and so it should only contain content which is amenable to being
+  serialized using JSON.
+
+.. versionadded:: 0.0.9 The ``custom_data`` theme element was added.
 
 Layout
 ~~~~~~
@@ -432,3 +438,49 @@ example:
        for child in node.children:
            dump_node(child, level + 1, file=file)
 
+Providing Customized Tooltips
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting with version 0.0.9, you can provide customized tooltips. For example, here's
+an info icon with a customized tooltip: :fa:`info-circle,tci-ver-0.0.9`
+:span:`tc-info|` If you hover over it, you'll see a tooltip saying something like
+"This feature will be added in version 0.0.9." This was achieved using the following
+steps:
+
+* Have a span with a class starting with ``tci-``, where the suffix is treated as a key
+  to use when finding the tooltip's HTML. In the above example, that's done using the
+  markup ``:fa:`info-circle,tci-ver-0.0.9```.
+* Immediately following that, have a span which has the ``tc-info`` class. IN the above
+  example, that's just ```:span:`tc-info|``` (the span here has no text; it simply
+  serves as a marker for the preceding element. But it's fine to have text, too, as in
+  the examples below).
+* In :file:`conf.py`, the ``custom_data`` theme option was set to have some pertinent
+  information, like this:
+
+  .. code-block:: python
+
+      'custom_data': {
+        'info-tips': {
+            'ver-0.0.9': 'This feature <em>will be</em> added in version 0.0.9.',
+        },
+    }
+
+When the documentation is built, code in the Sizzle theme ensures that the contents of
+``custom_data`` are made available to the JavaScript code in the built documentation.
+When the page is loaded, JavaScript code in the Sizzle theme looks for elements with
+class ``tc-info`` and for each of them, if an element is found immediately preceding it
+with a class beginning with ``tci-``, that prefix is stripped off to provide a key (in
+this case, it would be ``ver-0.0.9``. If that key is found in the ``info-tips``
+mapping, the corresponding value is treated as HTML to appear in the tooltip. (If the
+key is not found, then no tooltip will appear.)
+
+Of course, Sphinx has ``versionadded`` and ``versionchanged`` directives to provide
+this type of information in the body of the document. But this example is just for the
+purposes of illustration -- in practice, this feature could be used to provide
+info-tips which are about platform-specific or product-specific features, with a
+suitable icon to draw attention to them. For example, to mark something as only
+working on :fa:`windows,tci-win-only` :span:`tc-info|Windows`, or something else as
+only working on :fa:`linux,tci-linux-only` :span:`tc-info|Linux`.
+
+.. versionadded:: 0.0.9
+   Customized tooltip functionality was added.

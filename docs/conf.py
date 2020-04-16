@@ -93,7 +93,16 @@ html_theme = os.environ.get('DOCS_THEME', 'sizzle')
 THEME_OPTIONS = {
   'sizzle': {
     'show_index': False,
-    'show_filter': False
+    'show_filter': False,
+    'custom_data': {
+        'info-tips': {
+            # key maps to HTML to be shown in a tooltip. The string tci-{key} will
+            # typically appear in an HTML attribute in the built documentation.
+            'ver-0.0.9': 'This feature <em>will be</em> added in version 0.0.9.',
+            'win-only': 'This doodad only works on Windows.',
+            'linux-only': 'This thingummy is for Linux only.',
+        },
+    }
   }
 }
 

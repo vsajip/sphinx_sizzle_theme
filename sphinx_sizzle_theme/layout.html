@@ -422,6 +422,33 @@ $(document).ready(function() {
   setTimeout(focus_content, 150);
 
   var sizzle = $(document).data('sizzle');
+
+  function make_tooltip(id, h, b) {
+    var $e = $('<div>').attr('id', id);
+    var $b = $('<div>').addClass('tc-body').html(b);
+
+    if (h) {
+      var $h = $('<div>').addClass('tc-heading').html(h);
+      $e.append($h);
+    }
+    $e.append($b);
+    return $e;
+  }
+
+  var default_tt_options = {
+    theme: ['tooltipster-light', 'tooltipster-light-customized'],
+    interactive: true,
+    maxWidth: 600,
+    contentCloning: true
+  };
+
+  function activate_tooltips() {
+    var $tt = $('.tt');
+
+    //console.log('tt links:', $tt.length);
+    $tt.tooltipster(default_tt_options);
+  }
+
 {% if pagename != 'glossary' %}
 
   function add_glossary_tooltips() {
@@ -460,11 +487,7 @@ $(document).ready(function() {
 
         if (d) {  // as a sanity check
           var s = 'tc-'+ k;
-          var $e = $('<div>').attr('id', s);
-          var $h = $('<div>').addClass('tc-heading').html(d.term);
-          var $b = $('<div>').addClass('tc-body').html(d.defn);
-          $e.append($h);
-          $e.append($b);
+          var $e = make_tooltip(s, d.term, d.defn);
           $t.append($e);
 
           $.each(v, function(i, link) {
@@ -472,19 +495,6 @@ $(document).ready(function() {
           });
         }
       });
-
-      function activate_tooltips() {
-        var $tt = $('.tt');
-
-        //console.log('tt links:', $tt.length);
-        $tt.tooltipster({
-          theme: ['tooltipster-light', 'tooltipster-light-customized'],
-          interactive: true,
-          maxWidth: 600,
-          contentCloning: true
-        });
-      }
-      setTimeout(activate_tooltips, 1000);
     }
   }
 
@@ -493,6 +503,35 @@ $(document).ready(function() {
     add_glossary_tooltips();
   }
 {% endif %}
+
+  function add_custom_tooltips() {
+    var info_tips = sizzle.app_data.custom_data['info-tips'] || {};
+
+    if ($.isEmptyObject(info_tips)) {
+      return;
+    }
+
+    var tt_options = $.extend({contentAsHTML: true}, default_tt_options);
+
+    $('.tc-info').each(function() {
+      var $elem = $(this).prev();
+      var classes = $elem.attr('class');
+      var m = /\btci-([\S]+)/.exec(classes);
+
+      if (m !== null) {
+        var key = m[1];
+
+        if (key in info_tips) {
+          var v = info_tips[key];
+          var tt = $elem.tooltipster(tt_options).tooltipster('content', v);
+        }
+      }
+    });
+  }
+
+  add_custom_tooltips();
+
+  setTimeout(activate_tooltips, 1000);
 
   // Clipboard copy for code blocks with captions
 

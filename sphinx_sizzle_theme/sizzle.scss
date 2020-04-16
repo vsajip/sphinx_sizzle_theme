@@ -1436,16 +1436,14 @@ td.footnote-label, th.stub {
   display: none;
 }
 
-.class-members-heading {
-  font-size: 1.2em;
-  width: 50%;
-  border-bottom: 1px solid silver;
-}
-
 .tooltipster-sidetip.tooltipster-light.tooltipster-light-customized .tooltipster-box {
   border: 1px solid #999;
   border-radius: 6px;
   box-shadow: 3px 3px 2px 0 rgba(0,0,0,0.4);
+}
+
+.tc-infotip {
+  cursor: help;
 }
 
 /* Keyboard keys style */
@@ -1469,4 +1467,12 @@ kbd
 
 .mt10 {
   margin-top: 10px;
+}
+
+/* Other stuff */
+
+.class-members-heading {
+  font-size: 1.2em;
+  width: 50%;
+  border-bottom: 1px solid silver;
 }

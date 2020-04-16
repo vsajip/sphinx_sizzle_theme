@@ -92,6 +92,7 @@ def create_app_data(app):
             'document': app.glossary_doc,
             'terms': app.glossary_info,
         },
+        'custom_data': app.config.html_theme_options.get('custom_data', {})
     }
     s = json.dumps(data).replace('\\', '\\\\').replace('\'', '\\\'')
     s = _APP_JS_SNIPPET % s
