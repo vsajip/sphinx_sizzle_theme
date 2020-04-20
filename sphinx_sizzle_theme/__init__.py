@@ -384,7 +384,8 @@ class Translator(BaseTranslator):
 
     def visit_field_body(self, node):
         self.in_field_body = True
-        self.fixup_parameter(node[0])
+        if len(node):
+            self.fixup_parameter(node[0])
         super(Translator, self).visit_field_body(node)
 
     def depart_field_body(self, node):
