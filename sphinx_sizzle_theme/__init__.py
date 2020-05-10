@@ -3,6 +3,7 @@
 # Copyright 2019 by Vinay Sajip. All Rights Reserved.
 #
 
+import datetime
 import inspect
 import io
 import json
@@ -171,6 +172,7 @@ def on_page(app, pagename, templatename, context, doctree):
         url = urljoin(base_url, pagename + '.html')
         app.sitemap_urls.append(url)
     context['sizzle_version'] = app.sizzle_version
+    context['build_date'] = datetime.date.today().strftime('%Y-%m-%d')
     if pagename != 'search':
         app_data_path = context['pathto']('search').replace('search.html',
                                                             'app-data.js')
