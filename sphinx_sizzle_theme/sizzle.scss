@@ -400,7 +400,6 @@ html, .full-height {
 
 #hdr-centre {
   h3 {
-    max-width: 60vh;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1007,8 +1006,14 @@ td.footnote-label, th.stub {
   margin-right: 8px;
 }
 
-#hdr-search .input-group-addon {
-  cursor: pointer;
+#hdr-search {
+  .input-group-addon {
+    cursor: pointer;
+  }
+
+  input {
+    min-width: 8em;
+  }
 }
 
 /* Pygments highlight styles */
