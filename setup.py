@@ -37,7 +37,7 @@ setup(
     classifiers=[
         'Framework :: Sphinx',
         'Framework :: Sphinx :: Theme',
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Environment :: Console',
         'Environment :: Web Environment',

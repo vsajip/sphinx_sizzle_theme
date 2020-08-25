@@ -514,6 +514,15 @@ Change Log
       +------------+------------+----------------------------------------------------+
       |Version     |Released on |Changes                                             |
       +============+============+====================================================+
+      |0.1.0       |Not yet.    |Add metatags to layout, so that the meta directive  |
+      |            |            |can be used.                                        |
+      |            |            |                                                    |
+      |            |            |Change size constraints on header elements.         |
+      |            |            |                                                    |
+      |            |            |Add build date tooltip to footer.                   |
+      |            |            |                                                    |
+      |            |            |Handle empty field bodies correctly.                |
+      +------------+------------+----------------------------------------------------+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
       |            |            |terms, providing tooltips for term definitions).    |
       |            |            |                                                    |
