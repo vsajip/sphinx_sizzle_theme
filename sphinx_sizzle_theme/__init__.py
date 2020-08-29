@@ -139,13 +139,13 @@ def on_build_finished(app, exception):
         ('_static', 'comment.png'),
         ('_static', 'comment-bright.png'),
         ('_static', 'comment-close.png'),
-        ('_static', 'file.png'),
+        #('_static', 'file.png'),
         ('_static', 'up.png'),
         ('_static', 'up-pressed.png'),
         ('_static', 'down.png'),
         ('_static', 'down-pressed.png'),
-        ('_static', 'plus.png'),
-        ('_static', 'minus.png'),
+        #('_static', 'plus.png'),
+        #('_static', 'minus.png'),
         ('_static', 'basic.css'),
     )
     for cp in unused:
