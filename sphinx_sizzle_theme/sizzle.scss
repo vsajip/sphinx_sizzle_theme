@@ -459,11 +459,12 @@ html, .full-height {
 
 ul {
   &.search {
+    list-style-type: none;
     margin: 10px 0 0 20px;
     padding: 0;
     li {
       padding: 5px 0 5px 20px;
-      background: url(file.png) no-repeat 0 7px;
+      background: url(../file.png) no-repeat 0 0.7em;
       a {
         font-weight: bold;
       }
