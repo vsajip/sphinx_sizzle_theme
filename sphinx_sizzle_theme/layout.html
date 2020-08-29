@@ -508,6 +508,10 @@ $(document).ready(function() {
 {% if theme_enable_tooltips %}
 
   function add_custom_tooltips() {
+    if (!sizzle.app_data) {
+      return;
+    }
+
     var info_tips = sizzle.app_data.custom_data['info-tips'] || {};
 
     if ($.isEmptyObject(info_tips)) {
