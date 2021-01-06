@@ -12,6 +12,7 @@
         VERSION:     '{{ release|e }}',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '{{ '' if no_search_suffix else file_suffix }}',
+        LINK_SUFFIX: '{{ link_suffix }}',
         HAS_SOURCE:  false,
         SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
       };
@@ -27,11 +28,7 @@
     {%- endif %}
     {%- endfor %}
     {%- if app_data_path is defined %}
-      {%- if js_tag is defined %}
-      {{ js_tag(app_data_path) }}
-      {%- else %}
-    <script type="text/javascript" src="{{ app_data_path }}"></script>
-      {%- endif %}
+    <script src="{{ app_data_path }}"></script>
     {%- endif %}
 {%- endmacro %}
 {%- macro sometoc(toctree) %}
