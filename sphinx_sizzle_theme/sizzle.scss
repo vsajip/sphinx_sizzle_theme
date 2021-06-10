@@ -420,6 +420,8 @@ html, .full-height {
 
 #toc-filter {
   margin-bottom: 4px;
+  position: sticky;
+  top: 0;
 }
 
 #nav, #content {
