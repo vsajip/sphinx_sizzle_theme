@@ -148,6 +148,7 @@ div.related {
   position: relative;
   top: 2px;
   cursor: pointer;
+  z-index: 1; /* otherwise obscured by filter element */
 }
 
 .sidebar-toc {
