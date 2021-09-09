@@ -526,6 +526,9 @@ Change Log
       |            |            |Add build date tooltip to footer.                   |
       |            |            |                                                    |
       |            |            |Handle empty field bodies correctly.                |
+      |            |            |                                                    |
+      |            |            |Make TOC input box stick to near top of browser     |
+      |            |            |window.                                             |
       +------------+------------+----------------------------------------------------+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
       |            |            |terms, providing tooltips for term definitions).    |
