@@ -88,7 +88,9 @@ The sidebar contains the following, from top to bottom:
   is handy to be able to filter the TOC entries by title. If you type into it,
   only TOC entries with titles matching the filter text will be shown. The
   ``show_filter`` theme option can be used to control the visibility of the
-  box.
+  box. The input box is marked as 'sticky', so that if there is a lot of text in the
+  sidebar and you scroll down, the input box still remains visible so that you don't
+  need to scroll all the way back to the top before you can use it.
 
 If the sidebar is collapsed, you can bring it back by hovering the mouse at the
 left edge of the browser window for a second or two.
