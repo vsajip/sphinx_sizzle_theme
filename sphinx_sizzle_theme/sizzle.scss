@@ -1485,3 +1485,13 @@ kbd
   width: 50%;
   border-bottom: 1px solid silver;
 }
+
+table.release-info {
+  border: 1px solid #f3f6f6;
+  th, td {
+    padding: 6px 8px;
+  }
+  td:last-child {
+    background-color: #f3f6f6;
+  }
+}
