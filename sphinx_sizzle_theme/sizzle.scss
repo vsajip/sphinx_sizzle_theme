@@ -1495,3 +1495,7 @@ table.release-info {
     background-color: #f3f6f6;
   }
 }
+
+#content:focus {
+  outline: none; /* Needed for Chrome :-( */
+}
