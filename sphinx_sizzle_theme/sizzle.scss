@@ -1499,3 +1499,8 @@ table.release-info {
 #content:focus {
   outline: none; /* Needed for Chrome :-( */
 }
+
+.octicon {
+  display: inline-block;
+  vertical-align: text-bottom;
+}

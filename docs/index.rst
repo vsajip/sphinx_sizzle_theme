@@ -105,9 +105,21 @@ You can also hide and show the sidebar via the keyboard:
 Typography
 ~~~~~~~~~~
 
-* `Font Awesome <https://fontawesome.com/v4.7.0/>`_ is integrated. You can use
-  the markup role ``fa`` to introduce an icon into your content. For example,
-  the markup ``:fa:`diamond``` produces :fa:`diamond` in the finished output.
+* `Font Awesome 4.7.0 <https://fontawesome.com/v4.7.0/>`_ is integrated. You can use
+  the markup role ``fa`` to introduce a Font Awesome icon into your content. For
+  example, the markup ``:fa:`diamond``` produces :fa:`diamond` in the finished output.
+  You can append additional classes separated by commas, and they will be added to the
+  icon. For example, ``:fa:`diamond,foo,bar``` will have classes ``foo`` and ``bar``
+  added to the icon. You can inspect this in your browser: :fa:`diamond,foo,bar`.
+* `Octicons <https://primer.github.io/octicons/>`_ are integrated. You can use the
+  markup role ``oi`` to introduce an Octicons icon into your content. for example, the
+  markup ``:oi:`git-branch``` produces :oi:`git-branch` in the finished output. After
+  the Octicon name, you can append an integer height (either 16 or 24) and additional
+  CSS classes, all separated by commas. If a height is not provided, 16 is assumed.
+  Thus, ``:oi:`git-branch``` and ``:oi:`git-branch,16``` will result in
+  :oi:`git-branch` and ``:oi:`git-branch,24,foo,bar``` will result in
+  :oi:`git-branch,24,foo,bar`. If a height is specified that isn't available for a
+  specific icon, an error will be raised.
 * Document and section titles use `Source Serif Pro
   <https://en.wikipedia.org/wiki/Source_Serif_Pro>`_.
 * The default body font is `Roboto <https://en.wikipedia.org/wiki/Roboto>`_,
@@ -123,6 +135,9 @@ Typography
   .. code::
 
     @real fox.quick(h) { *is_brown && it_jumps_over(doges.lazy) }
+
+.. versionadded:: 0.1.0
+   Octicon support was introduced.
 
 Google Fonts
 ~~~~~~~~~~~~
@@ -529,6 +544,9 @@ Change Log
       |            |            |                                                    |
       |            |            |Make TOC input box stick to near top of browser     |
       |            |            |window.                                             |
+      |            |            |                                                    |
+      |            |            |Add support for Octicons.                           |
+      |            |            |                                                    |
       +------------+------------+----------------------------------------------------+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
       |            |            |terms, providing tooltips for term definitions).    |

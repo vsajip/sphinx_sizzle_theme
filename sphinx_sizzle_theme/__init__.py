@@ -9,6 +9,7 @@ import io
 import json
 import logging
 from os import path, remove, close
+import re
 from shutil import rmtree
 import sys
 import tempfile
@@ -21,7 +22,7 @@ except ImportError:
     from urlparse import urljoin
 
 from docutils.nodes import (strong, emphasis, inline, Text, document,
-                            paragraph, reprunicode)
+                            paragraph, reprunicode, raw)
 
 from docutils.parsers.rst.roles import set_classes
 
@@ -61,6 +62,71 @@ def generic_span(role, rawText, text, lineno, inliner, options=None, context=Non
     content = Text(text)
     node = inline(**options)
     node.append(content)
+    return [node], []
+
+_ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+}
+
+_ESCAPE_CHARS = re.compile('[&<>\'"]')
+
+_OCTICON_DATA = None
+
+def _escape(s):
+    replacer = lambda m: _ESCAPE_MAP[m.group(0)]
+    if isinstance(s, bytes):
+        s = s.decode('utf-8')
+    return _ESCAPE_CHARS.sub(replacer, s)
+
+def _escape_attr(k, v):
+    if v is True:
+        return k
+    elif v is False or v is None:
+        return ''
+    elif k == 'class':
+        if not isinstance(v, str):
+            v = ' '.join(str.strip(item) for item in v)
+    return '%s="%s"' % (k, _escape(str(v)))
+
+def octicon(role, rawText, text, lineno, inliner, options=None, context=None):
+    global _OCTICON_DATA
+
+    if _OCTICON_DATA is None:
+        fn = path.join(HERE, 'data', 'octicons.json')
+        with io.open(fn, encoding='utf-8') as f:
+            _OCTICON_DATA = json.load(f)
+    parts = text.split(',')
+    icon = parts.pop(0).replace('_', '-')
+    if icon not in _OCTICON_DATA:
+        raise ValueError('Unknown octicon %r' % icon)
+    data = _OCTICON_DATA[icon]
+    if parts and parts[0] in ('16', '24'):
+        h = parts.pop(0)
+    else:
+        h = '16'
+    if h not in data['heights']:
+        raise ValueError('Invalid size %s for octicon %r' % (h, icon))
+    classes = ['octicon', 'octicon-%s' % icon]
+    if parts:
+        classes.extend(parts)
+    d = data['heights'][h]
+    w = d['width']
+    attrs = {
+        'width': w,
+        'height': h,
+        'viewBox': '0 0 %s %s' % (w, h),
+        'class': classes,
+    }
+    s = ' '.join(_escape_attr(k, v) for (k, v) in attrs.items())
+    s = '<svg %ss>%s</svg>' % (s, d['path'])
+    content = Text(s)
+    node = raw(format='html')
+    node.append(content)
+    # import pdb; pdb.set_trace()
     return [node], []
 
 def create_sitemap(app):
@@ -502,5 +568,6 @@ def setup(app):
     app.connect('doctree-read', on_doctree_read)
     app.connect('doctree-resolved', on_doctree_resolved)
     app.add_role('fa', font_awesome)
+    app.add_role('oi', octicon)
     app.add_role('span', generic_span)
     app.sitemap_urls = []
