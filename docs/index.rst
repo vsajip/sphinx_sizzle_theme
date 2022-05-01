@@ -111,20 +111,32 @@ Typography
   You can append additional classes separated by commas, and they will be added to the
   icon. For example, ``:fa:`diamond,foo,bar``` will have classes ``foo`` and ``bar``
   added to the icon. You can inspect this in your browser: :fa:`diamond,foo,bar`.
-* `Octicons <https://primer.github.io/octicons/>`_ are integrated. You can use the
-  markup role ``oi`` to introduce an Octicons icon into your content. for example, the
-  markup ``:oi:`git-branch``` produces :oi:`git-branch` in the finished output. After
-  the Octicon name, you can append an integer height (either 16 or 24) and additional
-  CSS classes, all separated by commas. If a height is not provided, 16 is assumed.
-  Thus, ``:oi:`git-branch``` and ``:oi:`git-branch,16``` will result in
-  :oi:`git-branch` and ``:oi:`git-branch,24,foo,bar``` will result in
-  :oi:`git-branch,24,foo,bar`. If a height is specified that isn't available for a
-  specific icon, an error will be raised.
+
+* `Iconify Icons <https://iconify.design/>`_ (open source) are integrated. You can use
+  the markup role ``icon`` to introduce an SVG icon into your content. for example, the
+  markup ``:icon:`octicon:git-branch-24``` produces :icon:`octicon:git-branch-24` in
+  the finished output. The icon name is composed of the icon set identifier and the
+  icon identifier separated by a colon. After the icon name, you can append a height
+  and additional CSS classes, all separated by commas. The height needs to be an
+  integer or floating-point number immediately followed by an optional unit such as
+  ``px``, ``em``, or ``rem`` (assumed to be ``px`` if omitted).  Thus,
+  ``:icon:`octicon:git-branch-24,1.25em,foo,bar``` will produce
+  :icon:`octicon:git-branch-24,1.25em,foo,bar` in the output. The produced icon
+  element will have the ``iconify`` class added automatically.
+
+  There are over 100,000 icons (including emojis) available - see `the available icon
+  sets <https://icon-sets.iconify.design/>`_. Sets include more recent Font Awesome,
+  Octicons, Material Design, VS Code and many more.
+
+  If the named icon isn't found, an error will be raised.
+
 * Document and section titles use `Source Serif Pro
   <https://en.wikipedia.org/wiki/Source_Serif_Pro>`_.
+
 * The default body font is `Roboto <https://en.wikipedia.org/wiki/Roboto>`_,
   falling back to Guzzle's slightly less compact choice of
   `Open Sans <https://en.wikipedia.org/wiki/Open_Sans>`_.
+
 * The monospace font used for code blocks is `Iosevka
   <https://en.wikipedia.org/wiki/Iosevka>`_, which is a condensed font allowing
   more content to be shown than the fallbacks of `Roboto Mono
@@ -137,7 +149,7 @@ Typography
     @real fox.quick(h) { *is_brown && it_jumps_over(doges.lazy) }
 
 .. versionadded:: 0.1.0
-   Octicon support was introduced.
+   Iconify icon support was introduced.
 
 Google Fonts
 ~~~~~~~~~~~~
@@ -545,7 +557,7 @@ Change Log
       |            |            |Make TOC input box stick to near top of browser     |
       |            |            |window.                                             |
       |            |            |                                                    |
-      |            |            |Add support for Octicons.                           |
+      |            |            |Add support for Iconify icons.                      |
       |            |            |                                                    |
       +------------+------------+----------------------------------------------------+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
