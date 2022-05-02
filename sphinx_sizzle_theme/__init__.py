@@ -67,6 +67,8 @@ def generic_span(role, rawText, text, lineno, inliner, options=None, context=Non
 
 _ICONIFY_PATTERN = re.compile(r'^(?P<icon_set>[\w-]+):(?P<icon>[\w-]+)(,(?P<height>\d+(\.\d+)?(px|r?em)))?(,(?P<classes>#?[\w-]+(,[\w-]+)*))?$')
 
+_REMOVE_PATTERN = re.compile(r'xmlns(:xlink)?="[^"]+" ')
+
 _ICON_DATA = {}
 
 def iconify(role, rawText, text, lineno, inliner, options=None, context=None):
@@ -98,6 +100,7 @@ def iconify(role, rawText, text, lineno, inliner, options=None, context=None):
                 parts.append('iconfify')
             attrs += ' class="%s"' % (' '.join(parts))
         svg = s.replace('<svg', '<svg%s' % attrs)
+        svg = _REMOVE_PATTERN.sub('', svg)
         _ICON_DATA[text] = svg
     content = Text(svg)
     node = raw(format='html')
