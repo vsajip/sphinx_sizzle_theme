@@ -110,7 +110,7 @@ Typography
   example, the markup ``:fa:`diamond``` produces :fa:`diamond` in the finished output.
   You can append additional classes separated by commas, and they will be added to the
   icon. For example, ``:fa:`diamond,foo,bar``` will have classes ``foo`` and ``bar``
-  added to the icon. You can inspect this in your browser: :fa:`diamond,foo,bar`.
+  added to the icon. You can inspect this in your browser: :fa:`diamond,foo,bar`
 
 * `Iconify Icons <https://iconify.design/>`_ (open source) are integrated. You can use
   the markup role ``icon`` to introduce an SVG icon into your content. for example, the
@@ -121,11 +121,14 @@ Typography
   integer or floating-point number immediately followed by an optional unit such as
   ``px``, ``em``, or ``rem`` (assumed to be ``px`` if omitted).  Thus,
   ``:icon:`octicon:git-branch-24,1.25em,foo,bar``` will produce
-  :icon:`octicon:git-branch-24,1.25em,foo,bar` in the output. The produced icon
-  element will have the ``iconify`` class added automatically.
+  :icon:`octicon:git-branch-24,1.25em,foo,bar` in the output. You can easily include
+  emojis -- for example, the markup ``:icon:`noto:rolling-on-the-floor-laughing``` will
+  produce :icon:`noto:rolling-on-the-floor-laughing` in the output.
 
-  There are over 100,000 icons (including emojis) available - see `the available icon
-  sets <https://icon-sets.iconify.design/>`_. Sets include more recent Font Awesome,
+  The produced icon element will have the ``iconify`` class added automatically.
+
+  There are over 100,000 icons available - see `the available icon sets
+  <https://icon-sets.iconify.design/>`_. Sets include more recent Font Awesome,
   Octicons, Material Design, VS Code and many more.
 
   If the named icon isn't found, an error will be raised.

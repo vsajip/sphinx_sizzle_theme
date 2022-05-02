@@ -97,7 +97,7 @@ def iconify(role, rawText, text, lineno, inliner, options=None, context=None):
                 id = parts.pop(0)
                 attrs = ' id="%s"' % id[1:]
             if 'iconify' not in parts:
-                parts.append('iconfify')
+                parts.append('iconify')
             attrs += ' class="%s"' % (' '.join(parts))
         svg = s.replace('<svg', '<svg%s' % attrs)
         svg = _REMOVE_PATTERN.sub('', svg)
