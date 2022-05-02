@@ -2,7 +2,7 @@
 #
 # Copyright 2019-2022 by Vinay Sajip. All Rights Reserved.
 #
-
+from __future__ import print_function
 import datetime
 import inspect
 import io
@@ -10,17 +10,19 @@ import json
 import logging
 from os import path, remove, close
 import re
-import requests
 from shutil import rmtree
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
 
 try:
-    from urllib.parse import urljoin
+    from urllib.parse import urljoin, urlencode
+    from urllib.request import urlopen, Request
     basestring = str
 except ImportError:
     from urlparse import urljoin
+    from urllib import urlencode
+    from urllib2 import urlopen, Request
 
 from docutils.nodes import (strong, emphasis, inline, Text, document,
                             paragraph, reprunicode, raw)
@@ -34,7 +36,7 @@ from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
 HERE = path.abspath(path.dirname(__file__))
 
-__version__ = '0.1.0.dev0'
+__version__ = '0.1.0'
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -83,11 +85,17 @@ def iconify(role, rawText, text, lineno, inliner, options=None, context=None):
         params = {}
         if d['height']:
             params['height'] = d['height']
-        resp = requests.get(url, params=params)
-        if resp.status_code != 200:
+        # import pdb; pdb.set_trace()
+        if params:
+            qs = urlencode(params)
+            url = '%s?%s' % (url, qs)
+        req = Request(url, headers={'User-Agent': 'sphinx-sizzle-theme'})
+        resp = urlopen(req)
+        # resp = requests.get(url, params=params)
+        if resp.status != 200:
             s = '%s:%s' % (d['icon_set'], d['icon'])
             raise ValueError('Icon not found: %r' % s)
-        s = resp.text
+        s = resp.read().decode('utf-8')  # Might need to revisit
         if not d['classes']:
             attrs = ' class="iconify"'
         else:
