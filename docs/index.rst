@@ -548,7 +548,9 @@ Change Log
       +------------+------------+----------------------------------------------------+
       |Version     |Released on |Changes                                             |
       +============+============+====================================================+
-      |0.1.0       |Not yet.    |Add metatags to layout, so that the meta directive  |
+      |0.1.1       |Not yet.    |                                                    |
+      +------------+------------+----------------------------------------------------+
+      |0.1.0       |02 May 2022 |Add metatags to layout, so that the meta directive  |
       |            |            |can be used.                                        |
       |            |            |                                                    |
       |            |            |Change size constraints on header elements.         |
@@ -561,6 +563,9 @@ Change Log
       |            |            |window.                                             |
       |            |            |                                                    |
       |            |            |Add support for Iconify icons.                      |
+      |            |            |                                                    |
+      |            |            |Update client-side libraries and move scripts to the|
+      |            |            |body.                                               |
       |            |            |                                                    |
       +------------+------------+----------------------------------------------------+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
