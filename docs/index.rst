@@ -564,9 +564,6 @@ Change Log
       |            |            |                                                    |
       |            |            |Add support for Iconify icons.                      |
       |            |            |                                                    |
-      |            |            |Update client-side libraries and move scripts to the|
-      |            |            |body.                                               |
-      |            |            |                                                    |
       +------------+------------+----------------------------------------------------+
       |0.0.9       |17 Apr 2020 |Add glossary improvements (allowing permalinks to   |
       |            |            |terms, providing tooltips for term definitions).    |
