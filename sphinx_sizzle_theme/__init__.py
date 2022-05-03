@@ -36,7 +36,7 @@ from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
 HERE = path.abspath(path.dirname(__file__))
 
-__version__ = '0.1.1'
+__version__ = '0.1.2.dev0'
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
