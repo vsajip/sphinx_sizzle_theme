@@ -550,7 +550,7 @@ Change Log
       +============+============+====================================================+
       |0.1.1       |Not yet.    |                                                    |
       +------------+------------+----------------------------------------------------+
-      |0.1.0       |02 May 2022 |Add metatags to layout, so that the meta directive  |
+      |0.1.0       |03 May 2022 |Add metatags to layout, so that the meta directive  |
       |            |            |can be used.                                        |
       |            |            |                                                    |
       |            |            |Change size constraints on header elements.         |
