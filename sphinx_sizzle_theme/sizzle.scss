@@ -508,6 +508,10 @@ table {
       }
     }
   }
+  &.generic-table.hpad td, &.generic-table.hpad th {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
 }
 
 img.toggler {
