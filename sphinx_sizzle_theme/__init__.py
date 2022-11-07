@@ -25,7 +25,7 @@ except ImportError:
     from urllib2 import urlopen, Request
 
 from docutils.nodes import (strong, emphasis, inline, Text, document,
-                            paragraph, reprunicode, raw)
+                            paragraph, reprunicode, raw, literal)
 
 from docutils.parsers.rst.roles import set_classes
 
@@ -37,9 +37,6 @@ from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 HERE = path.abspath(path.dirname(__file__))
 
 __version__ = '0.1.2.dev0'
-
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
 
 logging_enabled = False
 
@@ -116,6 +113,26 @@ def iconify(role, rawText, text, lineno, inliner, options=None, context=None):
     # import pdb; pdb.set_trace()
     return [node], []
 
+def hover(role, rawText, text, lineno, inliner, options=None, context=None):
+    #
+    # format is e.g. hover:`meth:~module.klass.member`
+    #
+    kind, ref = text.split(':', 1)
+    if ref.startswith('~'):
+        ref = ref[1:]
+        text = ref.rsplit('.', 1)[-1]
+    else:
+        text = ref.split('.', 1)[-1]
+    if kind in ('meth', 'func') and not text.endswith('()'):
+        text += '()'
+    node = literal()
+    node['classes'].append('hover')
+    node['data-hoverref'] = ref
+    content = Text(text)
+    node.append(content)
+    # import pdb; pdb.set_trace()
+    return [node], []
+
 def create_sitemap(app):
     filename = app.outdir + '/sitemap.xml'
     logger.info(bold('creating sitemap... '), nonl=True)
@@ -148,6 +165,7 @@ def create_app_data(app):
         },
         'custom_data': app.config.html_theme_options.get('custom_data', {})
     }
+    # import pdb; pdb.set_trace()
     s = json.dumps(data).replace('\\', '\\\\').replace('\'', '\\\'')
     s = _APP_JS_SNIPPET % s
     with io.open(filename, 'w', encoding='utf-8') as f:
@@ -503,6 +521,40 @@ class Translator(BaseTranslator):
                          '<tr>')
         self.footnote_backrefs(node)
 
+    def visit_literal(self, node):
+        #
+        # This code had to be copied from the parent class, as there's no
+        # useful way of extending the parent class behaviour
+        #
+        if 'kbd' in node['classes']:
+            self.body.append(self.starttag(node, 'kbd', '',
+                                           CLASS='docutils literal notranslate'))
+            return
+        lang = node.get("language", None)
+        if 'code' not in node['classes'] or not lang:
+            kwargs = {
+                'CLASS': 'docutils literal notranslate'
+            }
+            for k, v in node.attributes.items():
+                if k.startswith('data-'):
+                    kwargs[k] = v
+            self.body.append(self.starttag(node, 'code', '',
+                                           **kwargs))
+            self.protect_literal_text += 1
+            return
+
+        opts = self.config.highlight_options.get(lang, {})
+        highlighted = self.highlighter.highlight_block(
+            node.astext(), lang, opts=opts, location=node, nowrap=True)
+        starttag = self.starttag(
+            node,
+            "code",
+            suffix="",
+            CLASS="docutils literal highlight highlight-%s" % lang
+        )
+        self.body.append(starttag + highlighted.strip() + "</code>")
+        raise nodes.SkipNode
+
     # Glossary processing
 
     def visit_glossary(self, node):
@@ -557,4 +609,5 @@ def setup(app):
     app.add_role('fa', font_awesome)
     app.add_role('icon', iconify)
     app.add_role('span', generic_span)
+    app.add_role('hover', hover)
     app.sitemap_urls = []

@@ -490,13 +490,13 @@ an info icon with a customized tooltip: :fa:`info-circle,tc-infotip,tci-ver-0.0.
 steps:
 
 * Have a span with a CSS class ``tc-infotip`` and another CSS class starting with ``tci-``,
-  where the suffix is treated as a key. to use when finding the tooltip's HTML. In the
+  where the suffix is treated as a key to use when finding the tooltip's HTML. In the
   above example, that's done using the markup
   ``:fa:`info-circle,tc-infotip,tci-ver-0.0.9```. The ``tc-infotip`` class is used to
   style the content with the tip (by default, it just indicates via the cursor that
   help is available).
-* Immediately following that, have a span which has the ``tc-info`` class. IN the above
-  example, that's just ```:span:`tc-info|``` (the span here has no text; it simply
+* Immediately following that, have a span which has the ``tc-info`` class. In the above
+  example, that's just ``:span:`tc-info|``` (the span here has no text; it simply
   serves as a marker for the preceding element. But it's fine to have text, too, as in
   the examples below).
 * In :file:`conf.py`, the ``custom_data`` theme option was set to have some pertinent
@@ -548,7 +548,7 @@ Change Log
       +------------+------------+----------------------------------------------------+
       |Version     |Released on |Changes                                             |
       +============+============+====================================================+
-      |0.1.2       |Not yet.    |                                                    |
+      |0.1.2       |Not yet.    |Add table padding styles.                           |
       +------------+------------+----------------------------------------------------+
       |0.1.1       |03 May 2022 |Add metatags to layout, so that the meta directive  |
       |            |            |can be used.                                        |

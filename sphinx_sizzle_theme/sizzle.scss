@@ -1459,6 +1459,28 @@ td.footnote-label, th.stub {
   cursor: help;
 }
 
+.hovertip {
+  .function {
+    border-bottom: 1px solid black;
+    margin-bottom: 0.5em;
+    margin-top: 0.25em;
+    padding-bottom: 0.25em;
+    color: black;
+    font-size: 110%;
+  }
+  blockquote {
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    font-size: 100%;
+  }
+  h6 {
+    font-size: 100%;
+    font-weight: bold;
+    font-family: $sans-font;
+  }
+}
+
 /* Keyboard keys style */
 
 kbd

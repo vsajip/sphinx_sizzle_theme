@@ -510,27 +510,56 @@ $(document).ready(function() {
     }
 
     var info_tips = sizzle.app_data.custom_data['info-tips'] || {};
+    var hover_tips = sizzle.app_data.custom_data['hovers'] || {};
 
-    if ($.isEmptyObject(info_tips)) {
+    if ($.isEmptyObject(info_tips) && $.isEmptyObject(hover_tips)) {
       return;
     }
 
     var tt_options = $.extend({contentAsHTML: true}, default_tt_options);
 
-    $('.tc-info').each(function() {
-      var $elem = $(this).prev();
-      var classes = $elem.attr('class');
-      var m = /\btci-([\S]+)/.exec(classes);
+    if (!$.isEmptyObject(info_tips)) {
+      $('.tc-info').each(function() {
+        var $elem = $(this).prev();
+        var classes = $elem.attr('class');
+        var m = /\btci-([\S]+)/.exec(classes);
 
-      if (m !== null) {
-        var key = m[1];
+        if (m !== null) {
+          var key = m[1];
 
-        if (key in info_tips) {
-          var v = info_tips[key];
-          var tt = $elem.tooltipster(tt_options).tooltipster('content', v);
+          if (key in info_tips) {
+            var v = info_tips[key];
+            var tt = $elem.tooltipster(tt_options).tooltipster('content', v);
+          }
         }
-      }
-    });
+      });
+    }
+    if (!$.isEmptyObject(hover_tips)) {
+      $('.hover').each(function() {
+        var $e = $(this);
+        var ref = $e.data('hoverref');
+
+        if (ref) {
+          var tip = hover_tips[ref];
+
+          if (tip) {
+            $e.tooltipster(tt_options).tooltipster('content', tip);
+          }
+        }
+      });
+      $('a,reference.internal').each(function() {
+        var $e = $(this);
+        var ref = $e.attr('title');
+
+        if (ref) {
+          var tip = hover_tips[ref];
+
+          if (tip) {
+            $e.tooltipster(tt_options).tooltipster('content', tip);
+          }
+        }
+      });
+    }
   }
 
   add_custom_tooltips();
