@@ -119,13 +119,18 @@ base_resolve_xref = PythonDomain.resolve_xref
 def resolve_xref(self, env, fromdocname, builder,
                  type, target, node, contnode):
     modname = node['py:module']
-    assert modname
-    prefix = '%s.' % modname
     ref = node['reftarget']
-    if not ref.startswith(prefix):
-        ref = '%s%s' % (prefix, ref)
-    contnode['classes'].append('hover')
-    contnode['data-hoverref'] = ref
+    if modname:
+        prefix = '%s.' % modname
+        if not ref.startswith(prefix):
+            ref = '%s%s' % (prefix, ref)
+    if not isinstance(contnode, str):
+        try:
+            contnode['classes'].append('hover')
+            contnode['data-hoverref'] = ref
+        except Exception as e:
+            print(e)
+            import pdb; pdb.set_trace()
     result = base_resolve_xref(self, env, fromdocname, builder, type, target, node, contnode)
     return result
 
