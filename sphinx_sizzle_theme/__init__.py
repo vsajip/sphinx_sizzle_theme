@@ -125,12 +125,8 @@ def resolve_xref(self, env, fromdocname, builder,
         if not ref.startswith(prefix):
             ref = '%s%s' % (prefix, ref)
     if not isinstance(contnode, str):
-        try:
-            contnode['classes'].append('hover')
-            contnode['data-hoverref'] = ref
-        except Exception as e:
-            print(e)
-            import pdb; pdb.set_trace()
+        contnode['classes'].append('hover')
+        contnode['data-hoverref'] = ref
     result = base_resolve_xref(self, env, fromdocname, builder, type, target, node, contnode)
     return result
 
