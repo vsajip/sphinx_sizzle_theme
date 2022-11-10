@@ -1460,13 +1460,15 @@ td.footnote-label, th.stub {
 }
 
 .hovertip {
+  color: black;
+  font-size: 100%;
+
   .function {
     border-bottom: 1px solid black;
     margin-bottom: 0.5em;
     margin-top: 0.25em;
     padding-bottom: 0.25em;
-    color: black;
-    font-size: 110%;
+    font-size: 105%;
   }
   blockquote {
     padding: 0px;

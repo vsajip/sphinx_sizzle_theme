@@ -31,6 +31,7 @@ from docutils.parsers.rst.roles import set_classes
 
 # from sphinx import version_info as sphinx_version
 from sphinx.addnodes import literal_strong
+from sphinx.domains.python import PythonDomain
 from sphinx.util.console import bold
 from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
@@ -113,25 +114,22 @@ def iconify(role, rawText, text, lineno, inliner, options=None, context=None):
     # import pdb; pdb.set_trace()
     return [node], []
 
-def hover(role, rawText, text, lineno, inliner, options=None, context=None):
-    #
-    # format is e.g. hover:`meth:~module.klass.member`
-    #
-    kind, ref = text.split(':', 1)
-    if ref.startswith('~'):
-        ref = ref[1:]
-        text = ref.rsplit('.', 1)[-1]
-    else:
-        text = ref.split('.', 1)[-1]
-    if kind in ('meth', 'func') and not text.endswith('()'):
-        text += '()'
-    node = literal()
-    node['classes'].append('hover')
-    node['data-hoverref'] = ref
-    content = Text(text)
-    node.append(content)
-    # import pdb; pdb.set_trace()
-    return [node], []
+base_resolve_xref = PythonDomain.resolve_xref
+
+def resolve_xref(self, env, fromdocname, builder,
+                 type, target, node, contnode):
+    modname = node['py:module']
+    assert modname
+    prefix = '%s.' % modname
+    ref = node['reftarget']
+    if not ref.startswith(prefix):
+        ref = '%s%s' % (prefix, ref)
+    contnode['classes'].append('hover')
+    contnode['data-hoverref'] = ref
+    result = base_resolve_xref(self, env, fromdocname, builder, type, target, node, contnode)
+    return result
+
+PythonDomain.resolve_xref = resolve_xref
 
 def create_sitemap(app):
     filename = app.outdir + '/sitemap.xml'
@@ -609,5 +607,4 @@ def setup(app):
     app.add_role('fa', font_awesome)
     app.add_role('icon', iconify)
     app.add_role('span', generic_span)
-    app.add_role('hover', hover)
     app.sitemap_urls = []
