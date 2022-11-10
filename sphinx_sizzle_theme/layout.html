@@ -544,20 +544,7 @@ $(document).ready(function() {
 
           if (tip) {
             $e.tooltipster(tt_options).tooltipster('content', tip);
-            //if (/gen_key_input/.test(ref)) { console.log(tip); }
-          }
-        }
-      });
-      $('a,reference.internal').each(function() {
-        var $e = $(this);
-        var ref = $e.attr('title');
-
-        if (ref) {
-          var tip = hover_tips[ref];
-
-          if (tip) {
-            $e.tooltipster(tt_options).tooltipster('content', tip);
-            //if (/gen_key_input/.test(ref)) { console.log(tip); }
+            //if (/scan_keys/.test(ref)) { console.log(tip); }
           }
         }
       });

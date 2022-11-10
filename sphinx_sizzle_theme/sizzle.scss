@@ -1481,6 +1481,9 @@ td.footnote-label, th.stub {
     font-weight: bold;
     font-family: $sans-font;
   }
+  .pdoc-alert p {
+    padding-left: 1em;
+  }
 }
 
 /* Keyboard keys style */
