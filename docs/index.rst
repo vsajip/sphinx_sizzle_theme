@@ -555,6 +555,11 @@ To achieve the same effect in your documentation, you need to take the following
 #. Optionally, add or update custom CSS to style your tooltips according to your requirements. You can use the CSS
    class on the top-level ``div`` in your HTML tooltip snippets to make the styles specific to your tooltips.
 
+You can see the source docstrings for those tooltips `here
+<https://github.com/vsajip/pagesign/blob/main/pagesign.py>`__. Although that project uses docstrings formatted in the
+Google style, you aren't restricted to this, as long as any tool you use for creating the snippet JSON supports your
+preferred style (for example, ``pdoc`` supports docstrings in Markdown, reStructuredText, NumPy or Google formats).
+
 .. _custom_tooltips:
 
 Providing Customized Tooltips
