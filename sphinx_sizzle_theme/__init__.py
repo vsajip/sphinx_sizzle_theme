@@ -205,6 +205,7 @@ def on_build_finished(app, exception):
         ('_static', 'jquery-3.2.1.js'),
         ('_static', 'underscore.js'),
         ('_static', 'underscore-1.3.1.js'),
+        ('_static', 'underscore-1.13.1.js'),
         ('_static', 'ajax-loader.gif'),
         ('_static', 'comment.png'),
         ('_static', 'comment-bright.png'),
