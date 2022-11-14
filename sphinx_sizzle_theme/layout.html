@@ -535,6 +535,22 @@ $(document).ready(function() {
       });
     }
     if (!$.isEmptyObject(hover_tips)) {
+      var current_origin, current_instance;
+
+      var h_options = {
+        functionBefore: function(instance, helper) {
+          current_instance = instance;
+          current_origin = helper.origin;
+          //console.log('before', current_instance, current_origin);
+        },
+        functionAfter: function(instance, helper) {
+          current_instance = null;
+          current_origin = null;
+          //console.log('after', current_instance, current_origin);
+        }
+      };
+
+      var ht_options = $.extend(h_options, tt_options);
       $('.hover').each(function() {
         var $e = $(this);
         var ref = $e.data('hoverref');
@@ -543,11 +559,28 @@ $(document).ready(function() {
           var tip = hover_tips[ref];
 
           if (tip) {
-            $e.tooltipster(tt_options).tooltipster('content', tip);
-            //if (/encrypt$/.test(ref)) { console.log(tip); }
+            $e.tooltipster(ht_options).tooltipster('content', tip);
+            //if (/encrypt_and_sign/.test(ref)) { console.log(tip); }
           }
         }
       });
+/*
+      $(document).on('click', '.hovertip a.hoverlink', function(e) {
+        if (!sizzle.app_data) {
+          return;
+        }
+        var $this = $(this);
+        var $content = $this.parent('.tooltipster-content');
+        var ref = $this.data('href');
+        var hover_tips = sizzle.app_data.custom_data['hovers'] || {};
+        var tip = hover_tips[ref];
+
+        if (tip && current_instance) {
+          current_instance.content(tip);
+        }
+
+      });
+ */
     }
   }
 

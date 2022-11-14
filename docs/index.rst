@@ -560,6 +560,9 @@ You can see the source docstrings for those tooltips `here
 Google style, you aren't restricted to this, as long as any tool you use for creating the snippet JSON supports your
 preferred style (for example, ``pdoc`` supports docstrings in Markdown, reStructuredText, NumPy or Google formats).
 
+.. versionadded:: 0.1.2
+   API tooltip functionality was added.
+
 .. _custom_tooltips:
 
 Providing Customized Tooltips
@@ -631,7 +634,8 @@ Change Log
       |Version     |Released on |Changes                                             |
       +============+============+====================================================+
       |0.1.2       |Not yet.    |Add table padding styles.                           |
-      |            |            |Add scheme for code tooltips.                       |
+      |            |            |                                                    |
+      |            |            |Add logic for code tooltips.                        |
       +------------+------------+----------------------------------------------------+
       |0.1.1       |03 May 2022 |Add metatags to layout, so that the meta directive  |
       |            |            |can be used.                                        |
