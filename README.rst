@@ -1,8 +1,9 @@
-Sizzle theme for Sphinx
-=======================
+The Sizzle theme for Sphinx
+===========================
 
 This repository contains the Sizzle theme for Sphinx_. Sizzle was inspired by,
-and used some of the styling of, the Guzzle_ theme for Sphinx.
+and used some of the styling of, the Guzzle_ theme for Sphinx. It has now diverged
+quite a lot, both in terms of styling and other functionality.
 
 .. _Sphinx: https://www.sphinx-doc.org/
 

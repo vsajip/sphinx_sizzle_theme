@@ -8,14 +8,14 @@ The Sizzle theme for Sphinx
 
 This documentation describes Sizzle, a theme for Sphinx_. This theme was
 inspired by another theme, Guzzle_. Sizzle uses some of the styling elements of
-Guzzle, but has diverged a fair bit in numerous areas.
+Guzzle, but has diverged quite a bit, both in terms of styling and other functionality.
 
 .. _Sphinx: https://www.sphinx-doc.org/
 
 .. _Guzzle: https://github.com/guzzle/guzzle_sphinx_theme
 
 The repository where this theme is developed is to be found `here
-<https://bitbucket.org/vinay.sajip/sphinx_sizzle_theme/>`_.
+<https://github.com/vsajip/sphinx_sizzle_theme/>`__.
 
 
 Theme Options
@@ -314,14 +314,15 @@ like this:
     html_css_files = ['css/project.css']
     html_js_files = ['js/project.js']
 
-If you're using an earlier Sphinx version than 1.8, then in your
-:file:`conf.py`, have code something like this:
+.. superseded:
+    If you're using an earlier Sphinx version than 1.8, then in your
+    :file:`conf.py`, have code something like this:
 
-.. code-block:: python
+    .. code-block:: python
 
-    def setup(app):
-        app.add_stylesheet('css/project.css')
-        app.add_javascript('js/project.js')
+        def setup(app):
+            app.add_stylesheet('css/project.css')
+            app.add_javascript('js/project.js')
 
 The CSS file will be loaded *after* Sizzle's own CSS, allowing you to tweak
 styles where needed. The JavaScript file will be added after all other external
@@ -633,9 +634,13 @@ Change Log
       +------------+------------+----------------------------------------------------+
       |Version     |Released on |Changes                                             |
       +============+============+====================================================+
-      |0.1.2       |Not yet.    |Add table padding styles.                           |
+      |0.1.3       |Not yet.    |                                                    |
+      +------------+------------+----------------------------------------------------+
+      |0.1.2       |05 May 2023 |Add table padding styles.                           |
       |            |            |                                                    |
       |            |            |Add logic for code tooltips.                        |
+      |            |            |                                                    |
+      |            |            |Support for Sphinx older than 5.3.0 dropped.        |
       +------------+------------+----------------------------------------------------+
       |0.1.1       |03 May 2022 |Add metatags to layout, so that the meta directive  |
       |            |            |can be used.                                        |

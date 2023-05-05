@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2019-2022 by Vinay Sajip. All Rights Reserved.
+# Copyright 2019-2023 by Vinay Sajip. All Rights Reserved.
 #
 from __future__ import print_function
 import datetime
@@ -37,7 +37,7 @@ from sphinx.writers.html import logger, HTMLTranslator as BaseTranslator
 
 HERE = path.abspath(path.dirname(__file__))
 
-__version__ = '0.1.2.dev0'
+__version__ = '0.1.2'
 
 logging_enabled = False
 
@@ -157,6 +157,8 @@ _APP_JS_SNIPPET = '''
 def create_app_data(app):
     logger.info(bold('creating app data... '), nonl=True)
     filename = app.outdir + '/app-data.js'
+    # if not path.exists(app.outdir):
+        # makedirs(app.outdir)
     data = {
         'glossary': {
             'document': app.glossary_doc,
@@ -505,6 +507,7 @@ class Translator(BaseTranslator):
         if node.attributes:
             kwargs = extract_keys(node.attributes, 'title')
         self.body.append(self.starttag(node, 'span', '', **kwargs))
+        node.html5tagname = 'span'  # needed for Sphinx 7
 
     # For issue #6. Too bad we have to do copy-paste-edit here :-(
     def visit_label(self, node):
