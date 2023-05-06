@@ -511,8 +511,9 @@ class Translator(BaseTranslator):
 
     # For issue #6. Too bad we have to do copy-paste-edit here :-(
     def visit_label(self, node):
-        self.body.append(self.starttag(node, 'td', '%s[' % self.context.pop(),
-                                       CLASS='footnote-label'))
+        if self.context:  # sometimes empty in Sphinx 7
+            self.body.append(self.starttag(node, 'td', '%s[' % self.context.pop(),
+                                           CLASS='footnote-label'))
 
     # For issue #6. Too bad we have to do copy-paste-edit here :-(
     def visit_footnote(self, node):
@@ -522,7 +523,8 @@ class Translator(BaseTranslator):
         self.body.append('<colgroup><col class="footnote-label" /><col /></colgroup>\n'
                          '<tbody valign="top">\n'
                          '<tr>')
-        self.footnote_backrefs(node)
+        if hasattr(self, 'footnote_backrefs'):  # Not there in Sphinx 7
+            self.footnote_backrefs(node)
 
     def visit_literal(self, node):
         #
