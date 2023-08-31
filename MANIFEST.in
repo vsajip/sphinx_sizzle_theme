@@ -1,6 +1,6 @@
 include LICENSE README.rst Makefile
 recursive-include sphinx_sizzle_theme *
 recursive-include docs *
-global-exclude *.log __pycache__ *.pyc *.pyo *.conf
+global-exclude *.log __pycache__ *.pyc *.pyo docs/*.conf
 prune docs/_build
 prune sphinx_sizzle_theme.egg-info
