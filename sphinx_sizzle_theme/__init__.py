@@ -25,7 +25,7 @@ except ImportError:
     from urllib2 import urlopen, Request
 
 from docutils.nodes import (strong, emphasis, inline, Text, document,
-                            paragraph, reprunicode, raw, literal)
+                            paragraph, raw, literal)
 
 from docutils.parsers.rst.roles import set_classes
 
